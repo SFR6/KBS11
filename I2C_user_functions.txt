@@ -1,0 +1,160 @@
+/********************************************************************************************************/
+/* 	Functions for I2C communication with the BMA280 sensor.						*/
+/* 	These functions are present in the BMA280 driver.						*/ 		
+/*	See: https://github.com/BoschSensortec/BMA2x2_driver 						*/
+/*	Replace the read/write/delay functions(bma2x2_support.c) with the following implementations:	*/
+/********************************************************************************************************/
+
+
+ /*	\Brief: The function is used as I2C bus write
+ *	\Return : Status of the I2C write
+ *	\param dev_addr : The device address of the sensor
+ *	\param reg_addr : Address of the first register,
+ *              will data is going to be written
+ *	\param reg_data : It is a value hold in the array,
+ *		will be used for write the value into the register
+ *	\param cnt : The no of byte of data to be write
+ */
+s8 BMA2x2_I2C_bus_write(u8 dev_id, u8 reg_addr, u8 *reg_data, u8 len)
+{
+    uint8_t i = 0;          // Index 
+    int8_t rslt = 0;        // Return 0 for Success, non-zero for failure 
+
+    /*
+     * The parameter dev_id can be used as a variable to store the I2C address of the device
+     */
+
+    /*
+     * Data on the bus should be like
+     * |------------+---------------------|
+     * | I2C action | Data                |
+     * |------------+---------------------|
+     * | Start      | -                   |
+     * | Write      | (reg_addr)          |
+     * | Write      | (reg_data[0])       |
+     * | Write      | (....)              |
+     * | Write      | (reg_data[len - 1]) |
+     * | Stop       | -                   |
+     * |------------+---------------------|
+     */
+
+    uint8_t data[10];           // Array to store the data to be written     
+    
+    /* Set start address */
+    data[0]=reg_addr;                   
+    
+    /* Add data to be written */
+    for(i = 1; i <= len; i++)
+    {
+        data[i] = *reg_data;
+        /* Go to next element */
+        reg_data++;
+    }
+    
+    /* Send START */
+    rslt = I2C_I2CMasterSendStart(dev_id,I2C_I2C_WRITE_XFER_MODE,I2C_TIMEOUT);
+    
+    /* Write data, byte by byte */
+    i=0;
+    while ((i<=len)&&(rslt == I2C_I2C_MSTR_NO_ERROR))
+    {
+            rslt = I2C_I2CMasterWriteByte(data[i],I2C_TIMEOUT);
+            i++;
+    }
+    
+    /* Send STOP */
+    I2C_I2CMasterSendStop(I2C_TIMEOUT);
+    
+    return rslt;
+}
+
+
+/*   \Brief: The function is used as I2C bus read
+ *    \Return : Status of the I2C read
+ *    \param dev_addr : The device address of the sensor
+ *    \param reg_addr : Address of the first register,
+ *            will data is going to be read
+ *    \param reg_data : This data read from the sensor,
+ *            which is hold in an array
+ *    \param cnt : The no of byte of data to be read
+ */
+s8 BMA2x2_I2C_bus_read(u8 dev_id, u8 reg_addr, u8 *reg_data, u8 len)
+{
+    int8_t rslt = 0;            // Return 0 for Success, non-zero for failure 
+
+    /*
+     * The parameter dev_id can be used as a variable to store the I2C address of the device
+     */
+
+    /*
+     * Data on the bus should be like
+     * |------------+---------------------|
+     * | I2C action | Data                |
+     * |------------+---------------------|
+     * | Start      | -                   |
+     * | Write      | (reg_addr)          |
+     * | Stop       | -                   |
+     * | Start      | -                   |
+     * | Read       | (reg_data[0])       |
+     * | Read       | (....)              |
+     * | Read       | (reg_data[len - 1]) |
+     * | Stop       | -                   |
+     * |------------+---------------------|
+     */
+
+    uint8_t *ptr = reg_data;        // Pointer to the register address from where the data will be read
+    
+    /* Send START */
+    rslt = I2C_I2CMasterSendStart(dev_id,I2C_I2C_WRITE_XFER_MODE,I2C_TIMEOUT);
+    
+    /* Write address to read from */
+    if (rslt == I2C_I2C_MSTR_NO_ERROR)
+    {
+        rslt = I2C_I2CMasterWriteByte(reg_addr,I2C_TIMEOUT);
+    }
+    
+    /* Send STOP */
+    if (rslt == I2C_I2C_MSTR_NO_ERROR)
+    {
+        rslt = I2C_I2CMasterSendStop(I2C_TIMEOUT);
+    }
+    
+    /* Send START */
+    if (rslt == I2C_I2C_MSTR_NO_ERROR)
+    {
+        rslt = I2C_I2CMasterSendStart(dev_id,I2C_I2C_READ_XFER_MODE,I2C_TIMEOUT);
+    }
+    
+    /* Read data, byte by byte */
+    while( len-- > 1 )
+    {
+        /* Check for errors at master reading */
+        if (rslt == I2C_I2C_MSTR_NO_ERROR)
+        {
+            /* Send an AK to notify that the reading operation continues */
+            rslt = I2C_I2CMasterReadByte(I2C_I2C_ACK_DATA,ptr++,I2C_TIMEOUT);
+        }
+    }
+    
+    /* Read last BYTE */
+    if (rslt == I2C_I2C_MSTR_NO_ERROR)
+    {
+        /* Send a NAK to notify that the reading operation is complete */
+        rslt = I2C_I2CMasterReadByte(I2C_I2C_NAK_DATA,ptr,I2C_TIMEOUT);
+    }
+    
+    /* Send STOP */
+    I2C_I2CMasterSendStop(I2C_TIMEOUT);
+    
+    return rslt;
+}
+
+
+/*	Brief : The delay routine
+ *	\param : delay in ms
+*/
+void BMA2x2_delay_msek(u32 msek)
+{
+	/*Here you can write your own delay routine*/
+    CyDelay(msek);
+}

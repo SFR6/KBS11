@@ -1,0 +1,2732 @@
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc9veP4D.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m0
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 0
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"bma2x2_support.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.bma2x2_shock_setup,"ax",%progbits
+  20              		.align	2
+  21              		.global	bma2x2_shock_setup
+  22              		.code	16
+  23              		.thumb_func
+  24              		.type	bma2x2_shock_setup, %function
+  25              	bma2x2_shock_setup:
+  26              	.LFB35:
+  27              		.file 1 "bma2x2_support.c"
+   1:bma2x2_support.c **** /*
+   2:bma2x2_support.c **** ****************************************************************************
+   3:bma2x2_support.c **** * Copyright (C) 2015 - 2016 Bosch Sensortec GmbH
+   4:bma2x2_support.c **** *
+   5:bma2x2_support.c **** * bma2x2_support.c
+   6:bma2x2_support.c **** * Date: 2016/03/09
+   7:bma2x2_support.c **** * Revision: 1.0.4 $
+   8:bma2x2_support.c **** *
+   9:bma2x2_support.c **** * Usage: Sensor Driver support file for  BMA2x2 sensor
+  10:bma2x2_support.c **** *
+  11:bma2x2_support.c **** ****************************************************************************
+  12:bma2x2_support.c **** * Disclaimer
+  13:bma2x2_support.c **** *
+  14:bma2x2_support.c **** * Common:
+  15:bma2x2_support.c **** * Bosch Sensortec products are developed for the consumer goods industry.
+  16:bma2x2_support.c **** * They may only be used within the parameters of the respective valid
+  17:bma2x2_support.c **** * product data sheet.  Bosch Sensortec products are provided with the
+  18:bma2x2_support.c **** * express understanding that there is no warranty of fitness for a
+  19:bma2x2_support.c **** * particular purpose.They are not fit for use in life-sustaining,
+  20:bma2x2_support.c **** * safety or security sensitive systems or any system or device
+  21:bma2x2_support.c **** * that may lead to bodily harm or property damage if the system
+  22:bma2x2_support.c **** * or device malfunctions. In addition,Bosch Sensortec products are
+  23:bma2x2_support.c **** * not fit for use in products which interact with motor vehicle systems.
+  24:bma2x2_support.c **** * The resale and or use of products are at the purchasers own risk and
+  25:bma2x2_support.c **** * his own responsibility. The examination of fitness for the intended use
+  26:bma2x2_support.c **** * is the sole responsibility of the Purchaser.
+  27:bma2x2_support.c **** *
+  28:bma2x2_support.c **** * The purchaser shall indemnify Bosch Sensortec from all third party
+  29:bma2x2_support.c **** * claims, including any claims for incidental, or consequential damages,
+  30:bma2x2_support.c **** * arising from any product use not covered by the parameters of
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc9veP4D.s 			page 2
+
+
+  31:bma2x2_support.c **** * the respective valid product data sheet or not approved by
+  32:bma2x2_support.c **** * Bosch Sensortec and reimburse Bosch Sensortec for all costs in
+  33:bma2x2_support.c **** * connection with such claims.
+  34:bma2x2_support.c **** *
+  35:bma2x2_support.c **** * The purchaser must monitor the market for the purchased products,
+  36:bma2x2_support.c **** * particularly with regard to product safety and inform Bosch Sensortec
+  37:bma2x2_support.c **** * without delay of all security relevant incidents.
+  38:bma2x2_support.c **** *
+  39:bma2x2_support.c **** * Engineering Samples are marked with an asterisk (*) or (e).
+  40:bma2x2_support.c **** * Samples may vary from the valid technical specifications of the product
+  41:bma2x2_support.c **** * series. They are therefore not intended or fit for resale to third
+  42:bma2x2_support.c **** * parties or for use in end products. Their sole purpose is internal
+  43:bma2x2_support.c **** * client testing. The testing of an engineering sample may in no way
+  44:bma2x2_support.c **** * replace the testing of a product series. Bosch Sensortec assumes
+  45:bma2x2_support.c **** * no liability for the use of engineering samples.
+  46:bma2x2_support.c **** * By accepting the engineering samples, the Purchaser agrees to indemnify
+  47:bma2x2_support.c **** * Bosch Sensortec from all claims arising from the use of engineering
+  48:bma2x2_support.c **** * samples.
+  49:bma2x2_support.c **** *
+  50:bma2x2_support.c **** * Special:
+  51:bma2x2_support.c **** * This software module (hereinafter called "Software") and any information
+  52:bma2x2_support.c **** * on application-sheets (hereinafter called "Information") is provided
+  53:bma2x2_support.c **** * free of charge for the sole purpose to support your application work.
+  54:bma2x2_support.c **** * The Software and Information is subject to the following
+  55:bma2x2_support.c **** * terms and conditions:
+  56:bma2x2_support.c **** *
+  57:bma2x2_support.c **** * The Software is specifically designed for the exclusive use for
+  58:bma2x2_support.c **** * Bosch Sensortec products by personnel who have special experience
+  59:bma2x2_support.c **** * and training. Do not use this Software if you do not have the
+  60:bma2x2_support.c **** * proper experience or training.
+  61:bma2x2_support.c **** *
+  62:bma2x2_support.c **** * This Software package is provided `` as is `` and without any expressed
+  63:bma2x2_support.c **** * or implied warranties,including without limitation, the implied warranties
+  64:bma2x2_support.c **** * of merchantability and fitness for a particular purpose.
+  65:bma2x2_support.c **** *
+  66:bma2x2_support.c **** * Bosch Sensortec and their representatives and agents deny any liability
+  67:bma2x2_support.c **** * for the functional impairment
+  68:bma2x2_support.c **** * of this Software in terms of fitness, performance and safety.
+  69:bma2x2_support.c **** * Bosch Sensortec and their representatives and agents shall not be liable
+  70:bma2x2_support.c **** * for any direct or indirect damages or injury, except as
+  71:bma2x2_support.c **** * otherwise stipulated in mandatory applicable law.
+  72:bma2x2_support.c **** *
+  73:bma2x2_support.c **** * The Information provided is believed to be accurate and reliable.
+  74:bma2x2_support.c **** * Bosch Sensortec assumes no responsibility for the consequences of use
+  75:bma2x2_support.c **** * of such Information nor for any infringement of patents or
+  76:bma2x2_support.c **** * other rights of third parties which may result from its use.
+  77:bma2x2_support.c **** * No license is granted by implication or otherwise under any patent or
+  78:bma2x2_support.c **** * patent rights of Bosch. Specifications mentioned in the Information are
+  79:bma2x2_support.c **** * subject to change without notice.
+  80:bma2x2_support.c **** **************************************************************************/
+  81:bma2x2_support.c **** /*---------------------------------------------------------------------------*/
+  82:bma2x2_support.c **** /* Includes*/
+  83:bma2x2_support.c **** /*---------------------------------------------------------------------------*/
+  84:bma2x2_support.c **** //#include "bma2x2.h"
+  85:bma2x2_support.c **** #include "bma2x2_support.h"
+  86:bma2x2_support.c **** 
+  87:bma2x2_support.c **** 
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc9veP4D.s 			page 3
+
+
+  88:bma2x2_support.c ****  s32 bma2x2_shock_setup(struct bma2x2_t *bma2x2)
+  89:bma2x2_support.c **** {
+  28              		.loc 1 89 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 16
+  31              		@ frame_needed = 1, uses_anonymous_args = 0
+  32 0000 90B5     		push	{r4, r7, lr}
+  33              		.cfi_def_cfa_offset 12
+  34              		.cfi_offset 4, -12
+  35              		.cfi_offset 7, -8
+  36              		.cfi_offset 14, -4
+  37 0002 85B0     		sub	sp, sp, #20
+  38              		.cfi_def_cfa_offset 32
+  39 0004 00AF     		add	r7, sp, #0
+  40              		.cfi_def_cfa_register 7
+  41 0006 7860     		str	r0, [r7, #4]
+  90:bma2x2_support.c ****     /*Setting the deafault value of the bandwidth*/
+  91:bma2x2_support.c ****     u8 bw_value_u8 = 0x08;
+  42              		.loc 1 91 0
+  43 0008 0E23     		movs	r3, #14
+  44 000a FB18     		adds	r3, r7, r3
+  45 000c 0822     		movs	r2, #8
+  46 000e 1A70     		strb	r2, [r3]
+  92:bma2x2_support.c ****     
+  93:bma2x2_support.c ****     /**
+  94:bma2x2_support.c ****     Initializing the com_rslt that is going to be returned as an ERROR
+  95:bma2x2_support.c ****     It's going to change inside this function to something else
+  96:bma2x2_support.c ****     Otherwise it will return the ERROR, meaning that something went wrong during the setup of the a
+  97:bma2x2_support.c ****     */
+  98:bma2x2_support.c ****     BMA2x2_RETURN_FUNCTION_TYPE com_rslt = ERROR;
+  47              		.loc 1 98 0
+  48 0010 0F23     		movs	r3, #15
+  49 0012 FB18     		adds	r3, r7, r3
+  50 0014 FF22     		movs	r2, #255
+  51 0016 1A70     		strb	r2, [r3]
+  99:bma2x2_support.c ****     
+ 100:bma2x2_support.c ****     /*Calling the routine function to check if the I2C works correctly and to enable it in the mean
+ 101:bma2x2_support.c ****     com_rslt = I2C_routine(bma2x2);
+  52              		.loc 1 101 0
+  53 0018 0F23     		movs	r3, #15
+  54 001a FC18     		adds	r4, r7, r3
+  55 001c 7B68     		ldr	r3, [r7, #4]
+  56 001e 1800     		movs	r0, r3
+  57 0020 FFF7FEFF 		bl	I2C_routine
+  58 0024 0300     		movs	r3, r0
+  59 0026 2370     		strb	r3, [r4]
+ 102:bma2x2_support.c ****     
+ 103:bma2x2_support.c ****     /*Executing a soft reset before initializing the accelerometer*/
+ 104:bma2x2_support.c ****     u8 soft_reset = 0xB6;
+  60              		.loc 1 104 0
+  61 0028 0D23     		movs	r3, #13
+  62 002a FB18     		adds	r3, r7, r3
+  63 002c B622     		movs	r2, #182
+  64 002e 1A70     		strb	r2, [r3]
+ 105:bma2x2_support.c ****     bma2x2_write_reg(0x14,&soft_reset,1);
+  65              		.loc 1 105 0
+  66 0030 0D23     		movs	r3, #13
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc9veP4D.s 			page 4
+
+
+  67 0032 FB18     		adds	r3, r7, r3
+  68 0034 0122     		movs	r2, #1
+  69 0036 1900     		movs	r1, r3
+  70 0038 1420     		movs	r0, #20
+  71 003a FFF7FEFF 		bl	bma2x2_write_reg
+ 106:bma2x2_support.c ****     
+ 107:bma2x2_support.c ****     /*Initializing the accelerometer and checking if it works accordingly*/
+ 108:bma2x2_support.c ****     com_rslt = bma2x2_init(bma2x2);
+  72              		.loc 1 108 0
+  73 003e 0F23     		movs	r3, #15
+  74 0040 FC18     		adds	r4, r7, r3
+  75 0042 7B68     		ldr	r3, [r7, #4]
+  76 0044 1800     		movs	r0, r3
+  77 0046 FFF7FEFF 		bl	bma2x2_init
+  78 004a 0300     		movs	r3, r0
+  79 004c 2370     		strb	r3, [r4]
+ 109:bma2x2_support.c ****     
+ 110:bma2x2_support.c ****     /*Declaring and initializing the variables for the registers of the accelerometer*/
+ 111:bma2x2_support.c ****     u8 high_g = 0b00000010;
+  80              		.loc 1 111 0
+  81 004e 0C23     		movs	r3, #12
+  82 0050 FB18     		adds	r3, r7, r3
+  83 0052 0222     		movs	r2, #2
+  84 0054 1A70     		strb	r2, [r3]
+ 112:bma2x2_support.c ****     u8 acc_xyz = 0b00000111;
+  85              		.loc 1 112 0
+  86 0056 0B23     		movs	r3, #11
+  87 0058 FB18     		adds	r3, r7, r3
+  88 005a 0722     		movs	r2, #7
+  89 005c 1A70     		strb	r2, [r3]
+ 113:bma2x2_support.c ****     u8 th = 0b11000000;
+  90              		.loc 1 113 0
+  91 005e 0A23     		movs	r3, #10
+  92 0060 FB18     		adds	r3, r7, r3
+  93 0062 C022     		movs	r2, #192
+  94 0064 1A70     		strb	r2, [r3]
+ 114:bma2x2_support.c ****     
+ 115:bma2x2_support.c ****     /*If the is no ERROR then we can set the accelerometer to it's normal mode and set the default 
+ 116:bma2x2_support.c ****     if (!com_rslt)
+  95              		.loc 1 116 0
+  96 0066 0F23     		movs	r3, #15
+  97 0068 FB18     		adds	r3, r7, r3
+  98 006a 1B78     		ldrb	r3, [r3]
+  99 006c 5BB2     		sxtb	r3, r3
+ 100 006e 002B     		cmp	r3, #0
+ 101 0070 0CD1     		bne	.L2
+ 117:bma2x2_support.c ****     {
+ 118:bma2x2_support.c ****         com_rslt+=bma2x2_set_power_mode(BMA2x2_MODE_NORMAL);
+ 102              		.loc 1 118 0
+ 103 0072 0020     		movs	r0, #0
+ 104 0074 FFF7FEFF 		bl	bma2x2_set_power_mode
+ 105 0078 0300     		movs	r3, r0
+ 106 007a DAB2     		uxtb	r2, r3
+ 107 007c 0F23     		movs	r3, #15
+ 108 007e FB18     		adds	r3, r7, r3
+ 109 0080 1B78     		ldrb	r3, [r3]
+ 110 0082 D318     		adds	r3, r2, r3
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc9veP4D.s 			page 5
+
+
+ 111 0084 DAB2     		uxtb	r2, r3
+ 112 0086 0F23     		movs	r3, #15
+ 113 0088 FB18     		adds	r3, r7, r3
+ 114 008a 1A70     		strb	r2, [r3]
+ 115              	.L2:
+ 119:bma2x2_support.c ****     }
+ 120:bma2x2_support.c ****     if (!com_rslt)
+ 116              		.loc 1 120 0
+ 117 008c 0F23     		movs	r3, #15
+ 118 008e FB18     		adds	r3, r7, r3
+ 119 0090 1B78     		ldrb	r3, [r3]
+ 120 0092 5BB2     		sxtb	r3, r3
+ 121 0094 002B     		cmp	r3, #0
+ 122 0096 0FD1     		bne	.L3
+ 121:bma2x2_support.c ****     {
+ 122:bma2x2_support.c ****         com_rslt+=bma2x2_set_bw(bw_value_u8);
+ 123              		.loc 1 122 0
+ 124 0098 0E23     		movs	r3, #14
+ 125 009a FB18     		adds	r3, r7, r3
+ 126 009c 1B78     		ldrb	r3, [r3]
+ 127 009e 1800     		movs	r0, r3
+ 128 00a0 FFF7FEFF 		bl	bma2x2_set_bw
+ 129 00a4 0300     		movs	r3, r0
+ 130 00a6 DAB2     		uxtb	r2, r3
+ 131 00a8 0F23     		movs	r3, #15
+ 132 00aa FB18     		adds	r3, r7, r3
+ 133 00ac 1B78     		ldrb	r3, [r3]
+ 134 00ae D318     		adds	r3, r2, r3
+ 135 00b0 DAB2     		uxtb	r2, r3
+ 136 00b2 0F23     		movs	r3, #15
+ 137 00b4 FB18     		adds	r3, r7, r3
+ 138 00b6 1A70     		strb	r2, [r3]
+ 139              	.L3:
+ 123:bma2x2_support.c ****     }
+ 124:bma2x2_support.c ****     
+ 125:bma2x2_support.c ****     /*If there is no ERROR we are setting the high g interrupt, the threshold value and specifying 
+ 126:bma2x2_support.c ****     if (!com_rslt)
+ 140              		.loc 1 126 0
+ 141 00b8 0F23     		movs	r3, #15
+ 142 00ba FB18     		adds	r3, r7, r3
+ 143 00bc 1B78     		ldrb	r3, [r3]
+ 144 00be 5BB2     		sxtb	r3, r3
+ 145 00c0 002B     		cmp	r3, #0
+ 146 00c2 1AD1     		bne	.L4
+ 127:bma2x2_support.c ****     {
+ 128:bma2x2_support.c ****         bma2x2_write_reg(0x19,&high_g,1);
+ 147              		.loc 1 128 0
+ 148 00c4 0C23     		movs	r3, #12
+ 149 00c6 FB18     		adds	r3, r7, r3
+ 150 00c8 0122     		movs	r2, #1
+ 151 00ca 1900     		movs	r1, r3
+ 152 00cc 1920     		movs	r0, #25
+ 153 00ce FFF7FEFF 		bl	bma2x2_write_reg
+ 129:bma2x2_support.c ****         bma2x2_write_reg(0x26,&th,1);
+ 154              		.loc 1 129 0
+ 155 00d2 0A23     		movs	r3, #10
+ 156 00d4 FB18     		adds	r3, r7, r3
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc9veP4D.s 			page 6
+
+
+ 157 00d6 0122     		movs	r2, #1
+ 158 00d8 1900     		movs	r1, r3
+ 159 00da 2620     		movs	r0, #38
+ 160 00dc FFF7FEFF 		bl	bma2x2_write_reg
+ 130:bma2x2_support.c ****         CyDelay(25);
+ 161              		.loc 1 130 0
+ 162 00e0 1920     		movs	r0, #25
+ 163 00e2 FFF7FEFF 		bl	CyDelay
+ 131:bma2x2_support.c ****         bma2x2_write_reg(0x17,&acc_xyz,1);
+ 164              		.loc 1 131 0
+ 165 00e6 0B23     		movs	r3, #11
+ 166 00e8 FB18     		adds	r3, r7, r3
+ 167 00ea 0122     		movs	r2, #1
+ 168 00ec 1900     		movs	r1, r3
+ 169 00ee 1720     		movs	r0, #23
+ 170 00f0 FFF7FEFF 		bl	bma2x2_write_reg
+ 132:bma2x2_support.c ****         CyDelay(25);
+ 171              		.loc 1 132 0
+ 172 00f4 1920     		movs	r0, #25
+ 173 00f6 FFF7FEFF 		bl	CyDelay
+ 174              	.L4:
+ 133:bma2x2_support.c ****     }
+ 134:bma2x2_support.c ****     return com_rslt;
+ 175              		.loc 1 134 0
+ 176 00fa 0F23     		movs	r3, #15
+ 177 00fc FB18     		adds	r3, r7, r3
+ 178 00fe 1B78     		ldrb	r3, [r3]
+ 179 0100 5BB2     		sxtb	r3, r3
+ 135:bma2x2_support.c **** }
+ 180              		.loc 1 135 0
+ 181 0102 1800     		movs	r0, r3
+ 182 0104 BD46     		mov	sp, r7
+ 183 0106 05B0     		add	sp, sp, #20
+ 184              		@ sp needed
+ 185 0108 90BD     		pop	{r4, r7, pc}
+ 186              		.cfi_endproc
+ 187              	.LFE35:
+ 188              		.size	bma2x2_shock_setup, .-bma2x2_shock_setup
+ 189 010a C046     		.section	.text.bma2x2_data_readout_template,"ax",%progbits
+ 190              		.align	2
+ 191              		.global	bma2x2_data_readout_template
+ 192              		.code	16
+ 193              		.thumb_func
+ 194              		.type	bma2x2_data_readout_template, %function
+ 195              	bma2x2_data_readout_template:
+ 196              	.LFB36:
+ 136:bma2x2_support.c **** 
+ 137:bma2x2_support.c **** /*----------------------------------------------------------------------------*
+ 138:bma2x2_support.c **** *	The following functions are used for reading and writing of
+ 139:bma2x2_support.c **** *	sensor data using I2C or SPI communication
+ 140:bma2x2_support.c **** *----------------------------------------------------------------------------*/
+ 141:bma2x2_support.c ****  /*	\Brief: The function is used as I2C bus read
+ 142:bma2x2_support.c ****  *	\Return : Status of the I2C read
+ 143:bma2x2_support.c ****  *	\param dev_addr : The device address of the sensor
+ 144:bma2x2_support.c ****  *	\param reg_addr : Address of the first register,
+ 145:bma2x2_support.c ****  *               will data is going to be read
+ 146:bma2x2_support.c ****  *	\param reg_data : This data read from the sensor,
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc9veP4D.s 			page 7
+
+
+ 147:bma2x2_support.c ****  *               which is hold in an array
+ 148:bma2x2_support.c ****  *	\param cnt : The no of byte of data to be read
+ 149:bma2x2_support.c ****  */
+ 150:bma2x2_support.c **** s8 BMA2x2_I2C_bus_read(u8 dev_id, u8 reg_addr, u8 *reg_data, u8 len);
+ 151:bma2x2_support.c ****  /*	\Brief: The function is used as I2C bus write
+ 152:bma2x2_support.c ****  *	\Return : Status of the I2C write
+ 153:bma2x2_support.c ****  *	\param dev_addr : The device address of the sensor
+ 154:bma2x2_support.c ****  *	\param reg_addr : Address of the first register,
+ 155:bma2x2_support.c ****  *              will data is going to be written
+ 156:bma2x2_support.c ****  *	\param reg_data : It is a value hold in the array,
+ 157:bma2x2_support.c ****  *		will be used for write the value into the register
+ 158:bma2x2_support.c ****  *	\param cnt : The no of byte of data to be write
+ 159:bma2x2_support.c ****  */
+ 160:bma2x2_support.c **** s8 BMA2x2_I2C_bus_write(u8 dev_id, u8 reg_addr, u8 *reg_data, u8 len);
+ 161:bma2x2_support.c **** 
+ 162:bma2x2_support.c ****   /*	Based on the user need configure I2C or SPI interface.
+ 163:bma2x2_support.c ****   *	It is example code to explain how to use the bma2x2 API*/
+ 164:bma2x2_support.c **** s8 I2C_routine(struct bma2x2_t *bma2x2);
+ 165:bma2x2_support.c **** 
+ 166:bma2x2_support.c **** 
+ 167:bma2x2_support.c **** /********************End of I2C/SPI function declarations*******************/
+ 168:bma2x2_support.c **** /*	Brief : The delay routine
+ 169:bma2x2_support.c ****  *	\param : delay in ms
+ 170:bma2x2_support.c ****  */
+ 171:bma2x2_support.c **** void BMA2x2_delay_msek(u32 msek);
+ 172:bma2x2_support.c **** /*!
+ 173:bma2x2_support.c ****  *	@brief This function is an example for delay
+ 174:bma2x2_support.c ****  *	@param : None
+ 175:bma2x2_support.c ****  *	@return : communication result
+ 176:bma2x2_support.c ****  */
+ 177:bma2x2_support.c **** s32 bma2x2_data_readout_template(struct bma2x2_t *bma2x2);
+ 178:bma2x2_support.c **** /*----------------------------------------------------------------------------*
+ 179:bma2x2_support.c **** *  struct bma2x2_t parameters can be accessed by using bma2x2
+ 180:bma2x2_support.c ****  *	bma2x2_t having the following parameters
+ 181:bma2x2_support.c ****  *	Bus write function pointer: BMA2x2_WR_FUNC_PTR
+ 182:bma2x2_support.c ****  *	Bus read function pointer: BMA2x2_RD_FUNC_PTR
+ 183:bma2x2_support.c ****  *	Burst read function pointer: BMA2x2_BRD_FUNC_PTR
+ 184:bma2x2_support.c ****  *	Delay function pointer: delay_msec
+ 185:bma2x2_support.c ****  *	I2C address: dev_addr
+ 186:bma2x2_support.c ****  *	Chip id of the sensor: chip_id
+ 187:bma2x2_support.c ****  *---------------------------------------------------------------------------*/
+ 188:bma2x2_support.c **** 
+ 189:bma2x2_support.c **** /*----------------------------------------------------------------------------*
+ 190:bma2x2_support.c **** *  V_BMA2x2RESOLUTION_u8R used for selecting the accelerometer resolution
+ 191:bma2x2_support.c ****  *	12 bit
+ 192:bma2x2_support.c ****  *	14 bit
+ 193:bma2x2_support.c ****  *	10 bit
+ 194:bma2x2_support.c **** *----------------------------------------------------------------------------*/
+ 195:bma2x2_support.c **** extern u8 V_BMA2x2RESOLUTION_u8R;
+ 196:bma2x2_support.c **** /* This function is an example for reading sensor data
+ 197:bma2x2_support.c ****  *	\param: None
+ 198:bma2x2_support.c ****  *	\return: communication result
+ 199:bma2x2_support.c ****  */
+ 200:bma2x2_support.c **** s32 bma2x2_data_readout_template(struct bma2x2_t *bma2x2)
+ 201:bma2x2_support.c **** {
+ 197              		.loc 1 201 0
+ 198              		.cfi_startproc
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc9veP4D.s 			page 8
+
+
+ 199              		@ args = 0, pretend = 0, frame = 40
+ 200              		@ frame_needed = 1, uses_anonymous_args = 0
+ 201 0000 80B5     		push	{r7, lr}
+ 202              		.cfi_def_cfa_offset 8
+ 203              		.cfi_offset 7, -8
+ 204              		.cfi_offset 14, -4
+ 205 0002 8AB0     		sub	sp, sp, #40
+ 206              		.cfi_def_cfa_offset 48
+ 207 0004 00AF     		add	r7, sp, #0
+ 208              		.cfi_def_cfa_register 7
+ 209 0006 7860     		str	r0, [r7, #4]
+ 202:bma2x2_support.c **** 	/*Local variables for reading accel x, y and z data*/
+ 203:bma2x2_support.c **** 	s16	accel_x_s16, accel_y_s16, accel_z_s16 = BMA2x2_INIT_VALUE;
+ 210              		.loc 1 203 0
+ 211 0008 1A23     		movs	r3, #26
+ 212 000a FB18     		adds	r3, r7, r3
+ 213 000c 0022     		movs	r2, #0
+ 214 000e 1A80     		strh	r2, [r3]
+ 204:bma2x2_support.c **** 
+ 205:bma2x2_support.c **** 	/* bma2x2acc_data structure used to read accel xyz data*/
+ 206:bma2x2_support.c **** 	struct bma2x2_accel_data sample_xyz;
+ 207:bma2x2_support.c **** 	/* bma2x2acc_data_temp structure used to read
+ 208:bma2x2_support.c **** 		accel xyz and temperature data*/
+ 209:bma2x2_support.c **** 	struct bma2x2_accel_data_temp sample_xyzt;
+ 210:bma2x2_support.c **** 	/* Local variable used to assign the bandwidth value*/
+ 211:bma2x2_support.c **** 	u8 bw_value_u8 = BMA2x2_INIT_VALUE;
+ 215              		.loc 1 211 0
+ 216 0010 2723     		movs	r3, #39
+ 217 0012 FB18     		adds	r3, r7, r3
+ 218 0014 0022     		movs	r2, #0
+ 219 0016 1A70     		strb	r2, [r3]
+ 212:bma2x2_support.c **** 	/* Local variable used to set the bandwidth value*/
+ 213:bma2x2_support.c **** 	u8 banwid = BMA2x2_INIT_VALUE;
+ 220              		.loc 1 213 0
+ 221 0018 0B23     		movs	r3, #11
+ 222 001a FB18     		adds	r3, r7, r3
+ 223 001c 0022     		movs	r2, #0
+ 224 001e 1A70     		strb	r2, [r3]
+ 214:bma2x2_support.c **** 	/* status of communication*/
+ 215:bma2x2_support.c **** 	s32 com_rslt = ERROR;
+ 225              		.loc 1 215 0
+ 226 0020 0123     		movs	r3, #1
+ 227 0022 5B42     		rsbs	r3, r3, #0
+ 228 0024 3B62     		str	r3, [r7, #32]
+ 216:bma2x2_support.c **** 
+ 217:bma2x2_support.c **** 
+ 218:bma2x2_support.c **** /*********************** START INITIALIZATION ************************
+ 219:bma2x2_support.c ****   *	Based on the user need configure I2C or SPI interface.
+ 220:bma2x2_support.c ****   *	It is example code to explain how to use the bma2x2 API*/
+ 221:bma2x2_support.c **** 	I2C_routine(bma2x2);
+ 229              		.loc 1 221 0
+ 230 0026 7B68     		ldr	r3, [r7, #4]
+ 231 0028 1800     		movs	r0, r3
+ 232 002a FFF7FEFF 		bl	I2C_routine
+ 222:bma2x2_support.c **** 
+ 223:bma2x2_support.c ****  /*--------------------------------------------------------------------------*
+ 224:bma2x2_support.c ****  *  This function used to assign the value/reference of
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc9veP4D.s 			page 9
+
+
+ 225:bma2x2_support.c ****  *	the following parameters
+ 226:bma2x2_support.c ****  *	I2C address
+ 227:bma2x2_support.c ****  *	Bus Write
+ 228:bma2x2_support.c ****  *	Bus read
+ 229:bma2x2_support.c ****  *	Chip id
+ 230:bma2x2_support.c ****  *-------------------------------------------------------------------------*/
+ 231:bma2x2_support.c **** 	com_rslt = bma2x2_init(bma2x2);
+ 233              		.loc 1 231 0
+ 234 002e 7B68     		ldr	r3, [r7, #4]
+ 235 0030 1800     		movs	r0, r3
+ 236 0032 FFF7FEFF 		bl	bma2x2_init
+ 237 0036 0300     		movs	r3, r0
+ 238 0038 3B62     		str	r3, [r7, #32]
+ 232:bma2x2_support.c **** 
+ 233:bma2x2_support.c **** /*	For initialization it is required to set the mode of
+ 234:bma2x2_support.c ****  *	the sensor as "NORMAL"
+ 235:bma2x2_support.c ****  *	NORMAL mode is set from the register 0x11 and 0x12
+ 236:bma2x2_support.c ****  *	0x11 -> bit 5,6,7 -> set value as 0
+ 237:bma2x2_support.c ****  *	0x12 -> bit 5,6 -> set value as 0
+ 238:bma2x2_support.c ****  *	data acquisition/read/write is possible in this mode
+ 239:bma2x2_support.c ****  *	by using the below API able to set the power mode as NORMAL
+ 240:bma2x2_support.c ****  *	For the Normal/standby/Low power 2 mode Idle time
+ 241:bma2x2_support.c **** 		of at least 2us(micro seconds)
+ 242:bma2x2_support.c ****  *	required for read/write operations*/
+ 243:bma2x2_support.c **** 	/* Set the power mode as NORMAL*/
+ 244:bma2x2_support.c **** 	com_rslt += bma2x2_set_power_mode(BMA2x2_MODE_NORMAL);
+ 239              		.loc 1 244 0
+ 240 003a 0020     		movs	r0, #0
+ 241 003c FFF7FEFF 		bl	bma2x2_set_power_mode
+ 242 0040 0300     		movs	r3, r0
+ 243 0042 1A00     		movs	r2, r3
+ 244 0044 3B6A     		ldr	r3, [r7, #32]
+ 245 0046 9B18     		adds	r3, r3, r2
+ 246 0048 3B62     		str	r3, [r7, #32]
+ 245:bma2x2_support.c **** /*	Note:
+ 246:bma2x2_support.c **** 	* For the Suspend/Low power1 mode Idle time of
+ 247:bma2x2_support.c **** 		at least 450us(micro seconds)
+ 248:bma2x2_support.c **** 	* required for read/write operations*/
+ 249:bma2x2_support.c **** 
+ 250:bma2x2_support.c **** /************************* END INITIALIZATION *************************/
+ 251:bma2x2_support.c **** 
+ 252:bma2x2_support.c **** /*------------------------------------------------------------------------*
+ 253:bma2x2_support.c **** ************************* START GET and SET FUNCTIONS DATA ****************
+ 254:bma2x2_support.c **** *---------------------------------------------------------------------------*/
+ 255:bma2x2_support.c **** 	/* This API used to Write the bandwidth of the sensor input
+ 256:bma2x2_support.c **** 	value have to be given
+ 257:bma2x2_support.c **** 	bandwidth is set from the register 0x10 bits from 1 to 4*/
+ 258:bma2x2_support.c **** 	bw_value_u8 = 0x08;/* set bandwidth of 7.81Hz*/
+ 247              		.loc 1 258 0
+ 248 004a 2723     		movs	r3, #39
+ 249 004c FB18     		adds	r3, r7, r3
+ 250 004e 0822     		movs	r2, #8
+ 251 0050 1A70     		strb	r2, [r3]
+ 259:bma2x2_support.c **** 	com_rslt += bma2x2_set_bw(bw_value_u8);
+ 252              		.loc 1 259 0
+ 253 0052 2723     		movs	r3, #39
+ 254 0054 FB18     		adds	r3, r7, r3
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc9veP4D.s 			page 10
+
+
+ 255 0056 1B78     		ldrb	r3, [r3]
+ 256 0058 1800     		movs	r0, r3
+ 257 005a FFF7FEFF 		bl	bma2x2_set_bw
+ 258 005e 0300     		movs	r3, r0
+ 259 0060 1A00     		movs	r2, r3
+ 260 0062 3B6A     		ldr	r3, [r7, #32]
+ 261 0064 9B18     		adds	r3, r3, r2
+ 262 0066 3B62     		str	r3, [r7, #32]
+ 260:bma2x2_support.c **** 
+ 261:bma2x2_support.c **** 	/* This API used to read back the written value of bandwidth*/
+ 262:bma2x2_support.c **** 	com_rslt += bma2x2_get_bw(&banwid);
+ 263              		.loc 1 262 0
+ 264 0068 0B23     		movs	r3, #11
+ 265 006a FB18     		adds	r3, r7, r3
+ 266 006c 1800     		movs	r0, r3
+ 267 006e FFF7FEFF 		bl	bma2x2_get_bw
+ 268 0072 0300     		movs	r3, r0
+ 269 0074 1A00     		movs	r2, r3
+ 270 0076 3B6A     		ldr	r3, [r7, #32]
+ 271 0078 9B18     		adds	r3, r3, r2
+ 272 007a 3B62     		str	r3, [r7, #32]
+ 263:bma2x2_support.c **** /*-----------------------------------------------------------------*
+ 264:bma2x2_support.c **** ************************* END GET and SET FUNCTIONS ****************
+ 265:bma2x2_support.c **** *-------------------------------------------------------------------*/
+ 266:bma2x2_support.c **** /*------------------------------------------------------------------*
+ 267:bma2x2_support.c **** ************************* START READ SENSOR DATA(X,Y and Z axis) ********
+ 268:bma2x2_support.c **** *---------------------------------------------------------------------*/
+ 269:bma2x2_support.c **** 	/* Read the accel X data*/
+ 270:bma2x2_support.c **** 	com_rslt += bma2x2_read_accel_x(&accel_x_s16);
+ 273              		.loc 1 270 0
+ 274 007c 1E23     		movs	r3, #30
+ 275 007e FB18     		adds	r3, r7, r3
+ 276 0080 1800     		movs	r0, r3
+ 277 0082 FFF7FEFF 		bl	bma2x2_read_accel_x
+ 278 0086 0300     		movs	r3, r0
+ 279 0088 1A00     		movs	r2, r3
+ 280 008a 3B6A     		ldr	r3, [r7, #32]
+ 281 008c 9B18     		adds	r3, r3, r2
+ 282 008e 3B62     		str	r3, [r7, #32]
+ 271:bma2x2_support.c **** 	/* Read the accel Y data*/
+ 272:bma2x2_support.c **** 	com_rslt += bma2x2_read_accel_y(&accel_y_s16);
+ 283              		.loc 1 272 0
+ 284 0090 1C23     		movs	r3, #28
+ 285 0092 FB18     		adds	r3, r7, r3
+ 286 0094 1800     		movs	r0, r3
+ 287 0096 FFF7FEFF 		bl	bma2x2_read_accel_y
+ 288 009a 0300     		movs	r3, r0
+ 289 009c 1A00     		movs	r2, r3
+ 290 009e 3B6A     		ldr	r3, [r7, #32]
+ 291 00a0 9B18     		adds	r3, r3, r2
+ 292 00a2 3B62     		str	r3, [r7, #32]
+ 273:bma2x2_support.c **** 	/* Read the accel Z data*/
+ 274:bma2x2_support.c **** 	com_rslt += bma2x2_read_accel_z(&accel_z_s16);
+ 293              		.loc 1 274 0
+ 294 00a4 1A23     		movs	r3, #26
+ 295 00a6 FB18     		adds	r3, r7, r3
+ 296 00a8 1800     		movs	r0, r3
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc9veP4D.s 			page 11
+
+
+ 297 00aa FFF7FEFF 		bl	bma2x2_read_accel_z
+ 298 00ae 0300     		movs	r3, r0
+ 299 00b0 1A00     		movs	r2, r3
+ 300 00b2 3B6A     		ldr	r3, [r7, #32]
+ 301 00b4 9B18     		adds	r3, r3, r2
+ 302 00b6 3B62     		str	r3, [r7, #32]
+ 275:bma2x2_support.c **** 
+ 276:bma2x2_support.c **** 	/* accessing the bma2x2acc_data parameter by using sample_xyz*/
+ 277:bma2x2_support.c **** 	/* Read the accel XYZ data*/
+ 278:bma2x2_support.c **** 	com_rslt += bma2x2_read_accel_xyz(&sample_xyz);
+ 303              		.loc 1 278 0
+ 304 00b8 1423     		movs	r3, #20
+ 305 00ba FB18     		adds	r3, r7, r3
+ 306 00bc 1800     		movs	r0, r3
+ 307 00be FFF7FEFF 		bl	bma2x2_read_accel_xyz
+ 308 00c2 0300     		movs	r3, r0
+ 309 00c4 1A00     		movs	r2, r3
+ 310 00c6 3B6A     		ldr	r3, [r7, #32]
+ 311 00c8 9B18     		adds	r3, r3, r2
+ 312 00ca 3B62     		str	r3, [r7, #32]
+ 279:bma2x2_support.c **** 
+ 280:bma2x2_support.c **** 	/* accessing the bma2x2acc_data_temp parameter by using sample_xyzt*/
+ 281:bma2x2_support.c **** 	/* Read the accel XYZT data*/
+ 282:bma2x2_support.c **** 	com_rslt += bma2x2_read_accel_xyzt(&sample_xyzt);
+ 313              		.loc 1 282 0
+ 314 00cc 0C23     		movs	r3, #12
+ 315 00ce FB18     		adds	r3, r7, r3
+ 316 00d0 1800     		movs	r0, r3
+ 317 00d2 FFF7FEFF 		bl	bma2x2_read_accel_xyzt
+ 318 00d6 0300     		movs	r3, r0
+ 319 00d8 1A00     		movs	r2, r3
+ 320 00da 3B6A     		ldr	r3, [r7, #32]
+ 321 00dc 9B18     		adds	r3, r3, r2
+ 322 00de 3B62     		str	r3, [r7, #32]
+ 283:bma2x2_support.c **** 
+ 284:bma2x2_support.c **** /*--------------------------------------------------------------------*
+ 285:bma2x2_support.c **** ************************* END READ SENSOR DATA(X,Y and Z axis) ************
+ 286:bma2x2_support.c **** *-------------------------------------------------------------------------*/
+ 287:bma2x2_support.c **** /*-----------------------------------------------------------------------*
+ 288:bma2x2_support.c **** ************************* START DE-INITIALIZATION ***********************
+ 289:bma2x2_support.c **** *-------------------------------------------------------------------------*/
+ 290:bma2x2_support.c **** /*	For de-initialization it is required to set the mode of
+ 291:bma2x2_support.c ****  *	the sensor as "DEEP SUSPEND"
+ 292:bma2x2_support.c ****  *	DEEP SUSPEND mode is set from the register 0x11
+ 293:bma2x2_support.c ****  *	0x11 -> bit 5 -> set value as 1
+ 294:bma2x2_support.c ****  *	the device reaches the lowest power consumption only
+ 295:bma2x2_support.c ****  *	interface selection is kept alive
+ 296:bma2x2_support.c ****  *	No data acquisition is performed
+ 297:bma2x2_support.c ****  *	by using the below API able to set the power mode as DEEPSUSPEND*/
+ 298:bma2x2_support.c ****  /* Set the power mode as DEEPSUSPEND*/
+ 299:bma2x2_support.c **** 	com_rslt += bma2x2_set_power_mode(BMA2x2_MODE_DEEP_SUSPEND);
+ 323              		.loc 1 299 0
+ 324 00e0 0320     		movs	r0, #3
+ 325 00e2 FFF7FEFF 		bl	bma2x2_set_power_mode
+ 326 00e6 0300     		movs	r3, r0
+ 327 00e8 1A00     		movs	r2, r3
+ 328 00ea 3B6A     		ldr	r3, [r7, #32]
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc9veP4D.s 			page 12
+
+
+ 329 00ec 9B18     		adds	r3, r3, r2
+ 330 00ee 3B62     		str	r3, [r7, #32]
+ 300:bma2x2_support.c **** /*---------------------------------------------------------------------*
+ 301:bma2x2_support.c **** ************************* END DE-INITIALIZATION **********************
+ 302:bma2x2_support.c **** *---------------------------------------------------------------------*/
+ 303:bma2x2_support.c **** return com_rslt;
+ 331              		.loc 1 303 0
+ 332 00f0 3B6A     		ldr	r3, [r7, #32]
+ 304:bma2x2_support.c **** }
+ 333              		.loc 1 304 0
+ 334 00f2 1800     		movs	r0, r3
+ 335 00f4 BD46     		mov	sp, r7
+ 336 00f6 0AB0     		add	sp, sp, #40
+ 337              		@ sp needed
+ 338 00f8 80BD     		pop	{r7, pc}
+ 339              		.cfi_endproc
+ 340              	.LFE36:
+ 341              		.size	bma2x2_data_readout_template, .-bma2x2_data_readout_template
+ 342 00fa C046     		.section	.text.I2C_routine,"ax",%progbits
+ 343              		.align	2
+ 344              		.global	I2C_routine
+ 345              		.code	16
+ 346              		.thumb_func
+ 347              		.type	I2C_routine, %function
+ 348              	I2C_routine:
+ 349              	.LFB37:
+ 305:bma2x2_support.c **** 
+ 306:bma2x2_support.c **** /*--------------------------------------------------------------------------*
+ 307:bma2x2_support.c **** *	The following function is used to map the I2C bus read, write, delay and
+ 308:bma2x2_support.c **** *	device address with global structure bma2x2_t
+ 309:bma2x2_support.c **** *-------------------------------------------------------------------------*/
+ 310:bma2x2_support.c **** s8 I2C_routine(struct bma2x2_t *bma2x2)
+ 311:bma2x2_support.c **** {
+ 350              		.loc 1 311 0
+ 351              		.cfi_startproc
+ 352              		@ args = 0, pretend = 0, frame = 8
+ 353              		@ frame_needed = 1, uses_anonymous_args = 0
+ 354 0000 80B5     		push	{r7, lr}
+ 355              		.cfi_def_cfa_offset 8
+ 356              		.cfi_offset 7, -8
+ 357              		.cfi_offset 14, -4
+ 358 0002 82B0     		sub	sp, sp, #8
+ 359              		.cfi_def_cfa_offset 16
+ 360 0004 00AF     		add	r7, sp, #0
+ 361              		.cfi_def_cfa_register 7
+ 362 0006 7860     		str	r0, [r7, #4]
+ 312:bma2x2_support.c **** /*--------------------------------------------------------------------------*
+ 313:bma2x2_support.c ****  *  By using bma2x2 the following structure parameter can be accessed
+ 314:bma2x2_support.c ****  *	Bus write function pointer: BMA2x2_WR_FUNC_PTR
+ 315:bma2x2_support.c ****  *	Bus read function pointer: BMA2x2_RD_FUNC_PTR
+ 316:bma2x2_support.c ****  *	Delay function pointer: delay_msec
+ 317:bma2x2_support.c ****  *	I2C address: dev_id
+ 318:bma2x2_support.c ****  *--------------------------------------------------------------------------*/
+ 319:bma2x2_support.c **** 	bma2x2->bus_write = BMA2x2_I2C_bus_write;
+ 363              		.loc 1 319 0
+ 364 0008 7B68     		ldr	r3, [r7, #4]
+ 365 000a 084A     		ldr	r2, .L10
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc9veP4D.s 			page 13
+
+
+ 366 000c 9A60     		str	r2, [r3, #8]
+ 320:bma2x2_support.c **** 	bma2x2->bus_read = BMA2x2_I2C_bus_read;
+ 367              		.loc 1 320 0
+ 368 000e 7B68     		ldr	r3, [r7, #4]
+ 369 0010 074A     		ldr	r2, .L10+4
+ 370 0012 DA60     		str	r2, [r3, #12]
+ 321:bma2x2_support.c **** 	bma2x2->delay_msec = BMA2x2_delay_msek;
+ 371              		.loc 1 321 0
+ 372 0014 7B68     		ldr	r3, [r7, #4]
+ 373 0016 074A     		ldr	r2, .L10+8
+ 374 0018 5A61     		str	r2, [r3, #20]
+ 322:bma2x2_support.c **** 	bma2x2->dev_addr = BMA2x2_I2C_ADDR1;
+ 375              		.loc 1 322 0
+ 376 001a 7B68     		ldr	r3, [r7, #4]
+ 377 001c 1822     		movs	r2, #24
+ 378 001e 1A71     		strb	r2, [r3, #4]
+ 323:bma2x2_support.c **** 
+ 324:bma2x2_support.c **** 	return BMA2x2_INIT_VALUE;
+ 379              		.loc 1 324 0
+ 380 0020 0023     		movs	r3, #0
+ 325:bma2x2_support.c **** }
+ 381              		.loc 1 325 0
+ 382 0022 1800     		movs	r0, r3
+ 383 0024 BD46     		mov	sp, r7
+ 384 0026 02B0     		add	sp, sp, #8
+ 385              		@ sp needed
+ 386 0028 80BD     		pop	{r7, pc}
+ 387              	.L11:
+ 388 002a C046     		.align	2
+ 389              	.L10:
+ 390 002c 00000000 		.word	BMA2x2_I2C_bus_write
+ 391 0030 00000000 		.word	BMA2x2_I2C_bus_read
+ 392 0034 00000000 		.word	BMA2x2_delay_msek
+ 393              		.cfi_endproc
+ 394              	.LFE37:
+ 395              		.size	I2C_routine, .-I2C_routine
+ 396              		.section	.text.BMA2x2_I2C_bus_write,"ax",%progbits
+ 397              		.align	2
+ 398              		.global	BMA2x2_I2C_bus_write
+ 399              		.code	16
+ 400              		.thumb_func
+ 401              		.type	BMA2x2_I2C_bus_write, %function
+ 402              	BMA2x2_I2C_bus_write:
+ 403              	.LFB38:
+ 326:bma2x2_support.c **** 
+ 327:bma2x2_support.c **** 
+ 328:bma2x2_support.c **** 
+ 329:bma2x2_support.c **** /************** I2C/SPI buffer length ******/
+ 330:bma2x2_support.c **** #define	I2C_BUFFER_LEN 8
+ 331:bma2x2_support.c **** #define BMA2x2_BUS_READ_WRITE_ARRAY_INDEX	1
+ 332:bma2x2_support.c **** #define BMA2x2_SPI_BUS_WRITE_CONTROL_BYTE	0x7F
+ 333:bma2x2_support.c **** #define BMA2x2_SPI_BUS_READ_CONTROL_BYTE	0x80
+ 334:bma2x2_support.c **** 
+ 335:bma2x2_support.c **** /*-------------------------------------------------------------------*
+ 336:bma2x2_support.c **** *	This is a sample code for read and write the data by using I2C/SPI
+ 337:bma2x2_support.c **** *	Use either I2C or SPI based on your need
+ 338:bma2x2_support.c **** *
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc9veP4D.s 			page 14
+
+
+ 339:bma2x2_support.c **** *-----------------------------------------------------------------------*/
+ 340:bma2x2_support.c **** /*	For configuring the I2C it is required to switch ON
+ 341:bma2x2_support.c ****  *	SDI, SDO and CLk and also select the device address
+ 342:bma2x2_support.c ****  * The following definition of I2C address is used for the following sensors
+ 343:bma2x2_support.c ****  * BMA255
+ 344:bma2x2_support.c ****  * BMA253
+ 345:bma2x2_support.c ****  * BMA355
+ 346:bma2x2_support.c ****  * BMA280
+ 347:bma2x2_support.c ****  * BMA282
+ 348:bma2x2_support.c ****  * BMA223
+ 349:bma2x2_support.c ****  * BMA254
+ 350:bma2x2_support.c ****  * BMA284
+ 351:bma2x2_support.c ****  * BMA250E
+ 352:bma2x2_support.c ****  * BMA222E
+ 353:bma2x2_support.c **** 
+ 354:bma2x2_support.c ****  #define BMA2x2_I2C_ADDR1         0x18
+ 355:bma2x2_support.c ****  #define BMA2x2_I2C_ADDR2         0x19
+ 356:bma2x2_support.c **** 
+ 357:bma2x2_support.c ****  * The following definition of I2C address is used for the following sensors
+ 358:bma2x2_support.c ****  * BMC150
+ 359:bma2x2_support.c ****  * BMC056
+ 360:bma2x2_support.c ****  * BMC156
+ 361:bma2x2_support.c **** 
+ 362:bma2x2_support.c ****  #define BMA2x2_I2C_ADDR3        0x10
+ 363:bma2x2_support.c ****  #define BMA2x2_I2C_ADDR4        0x11
+ 364:bma2x2_support.c ****  *************************************************************************/
+ 365:bma2x2_support.c ****  /*	\Brief: The function is used as I2C bus write
+ 366:bma2x2_support.c ****  *	\Return : Status of the I2C write
+ 367:bma2x2_support.c ****  *	\param dev_id : The device address of the sensor
+ 368:bma2x2_support.c ****  *	\param reg_addr : Address of the first register,
+ 369:bma2x2_support.c ****  *              will data is going to be written
+ 370:bma2x2_support.c ****  *	\param reg_data : It is a value hold in the array,
+ 371:bma2x2_support.c ****  *		will be used for write the value into the register
+ 372:bma2x2_support.c ****  *	\param len : The no of byte of data to be written
+ 373:bma2x2_support.c ****  */
+ 374:bma2x2_support.c **** s8 BMA2x2_I2C_bus_write(u8 dev_id, u8 reg_addr, u8 *reg_data, u8 len)
+ 375:bma2x2_support.c **** {
+ 404              		.loc 1 375 0
+ 405              		.cfi_startproc
+ 406              		@ args = 0, pretend = 0, frame = 24
+ 407              		@ frame_needed = 1, uses_anonymous_args = 0
+ 408 0000 90B5     		push	{r4, r7, lr}
+ 409              		.cfi_def_cfa_offset 12
+ 410              		.cfi_offset 4, -12
+ 411              		.cfi_offset 7, -8
+ 412              		.cfi_offset 14, -4
+ 413 0002 87B0     		sub	sp, sp, #28
+ 414              		.cfi_def_cfa_offset 40
+ 415 0004 00AF     		add	r7, sp, #0
+ 416              		.cfi_def_cfa_register 7
+ 417 0006 0400     		movs	r4, r0
+ 418 0008 0800     		movs	r0, r1
+ 419 000a 3A60     		str	r2, [r7]
+ 420 000c 1900     		movs	r1, r3
+ 421 000e FB1D     		adds	r3, r7, #7
+ 422 0010 221C     		adds	r2, r4, #0
+ 423 0012 1A70     		strb	r2, [r3]
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc9veP4D.s 			page 15
+
+
+ 424 0014 BB1D     		adds	r3, r7, #6
+ 425 0016 021C     		adds	r2, r0, #0
+ 426 0018 1A70     		strb	r2, [r3]
+ 427 001a 7B1D     		adds	r3, r7, #5
+ 428 001c 0A1C     		adds	r2, r1, #0
+ 429 001e 1A70     		strb	r2, [r3]
+ 376:bma2x2_support.c ****     uint8_t i = 0;          // Index 
+ 430              		.loc 1 376 0
+ 431 0020 1723     		movs	r3, #23
+ 432 0022 FB18     		adds	r3, r7, r3
+ 433 0024 0022     		movs	r2, #0
+ 434 0026 1A70     		strb	r2, [r3]
+ 377:bma2x2_support.c ****     int8_t rslt = 0;        // Return 0 for Success, non-zero for failure 
+ 435              		.loc 1 377 0
+ 436 0028 1623     		movs	r3, #22
+ 437 002a FB18     		adds	r3, r7, r3
+ 438 002c 0022     		movs	r2, #0
+ 439 002e 1A70     		strb	r2, [r3]
+ 378:bma2x2_support.c **** 
+ 379:bma2x2_support.c ****     /*
+ 380:bma2x2_support.c ****      * The parameter dev_id can be used as a variable to store the I2C address of the device
+ 381:bma2x2_support.c ****      */
+ 382:bma2x2_support.c **** 
+ 383:bma2x2_support.c ****     /*
+ 384:bma2x2_support.c ****      * Data on the bus should be like
+ 385:bma2x2_support.c ****      * |------------+---------------------|
+ 386:bma2x2_support.c ****      * | I2C action | Data                |
+ 387:bma2x2_support.c ****      * |------------+---------------------|
+ 388:bma2x2_support.c ****      * | Start      | -                   |
+ 389:bma2x2_support.c ****      * | Write      | (reg_addr)          |
+ 390:bma2x2_support.c ****      * | Write      | (reg_data[0])       |
+ 391:bma2x2_support.c ****      * | Write      | (....)              |
+ 392:bma2x2_support.c ****      * | Write      | (reg_data[len - 1]) |
+ 393:bma2x2_support.c ****      * | Stop       | -                   |
+ 394:bma2x2_support.c ****      * |------------+---------------------|
+ 395:bma2x2_support.c ****      */
+ 396:bma2x2_support.c **** 
+ 397:bma2x2_support.c ****     uint8_t data[10];           // Array to store the data to be written     
+ 398:bma2x2_support.c ****     
+ 399:bma2x2_support.c ****     /* Set start address */
+ 400:bma2x2_support.c ****     data[0]=reg_addr;                   
+ 440              		.loc 1 400 0
+ 441 0030 0C23     		movs	r3, #12
+ 442 0032 FB18     		adds	r3, r7, r3
+ 443 0034 BA1D     		adds	r2, r7, #6
+ 444 0036 1278     		ldrb	r2, [r2]
+ 445 0038 1A70     		strb	r2, [r3]
+ 401:bma2x2_support.c ****     
+ 402:bma2x2_support.c ****     /* Add data to be written */
+ 403:bma2x2_support.c ****     for(i = 1; i <= len; i++)
+ 446              		.loc 1 403 0
+ 447 003a 1723     		movs	r3, #23
+ 448 003c FB18     		adds	r3, r7, r3
+ 449 003e 0122     		movs	r2, #1
+ 450 0040 1A70     		strb	r2, [r3]
+ 451 0042 11E0     		b	.L13
+ 452              	.L14:
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc9veP4D.s 			page 16
+
+
+ 404:bma2x2_support.c ****     {
+ 405:bma2x2_support.c ****         data[i] = *reg_data;
+ 453              		.loc 1 405 0 discriminator 3
+ 454 0044 1723     		movs	r3, #23
+ 455 0046 FB18     		adds	r3, r7, r3
+ 456 0048 1B78     		ldrb	r3, [r3]
+ 457 004a 3A68     		ldr	r2, [r7]
+ 458 004c 1178     		ldrb	r1, [r2]
+ 459 004e 0C22     		movs	r2, #12
+ 460 0050 BA18     		adds	r2, r7, r2
+ 461 0052 D154     		strb	r1, [r2, r3]
+ 406:bma2x2_support.c ****         /* Go to next element */
+ 407:bma2x2_support.c ****         reg_data++;
+ 462              		.loc 1 407 0 discriminator 3
+ 463 0054 3B68     		ldr	r3, [r7]
+ 464 0056 0133     		adds	r3, r3, #1
+ 465 0058 3B60     		str	r3, [r7]
+ 403:bma2x2_support.c ****     {
+ 466              		.loc 1 403 0 discriminator 3
+ 467 005a 1723     		movs	r3, #23
+ 468 005c FB18     		adds	r3, r7, r3
+ 469 005e 1A78     		ldrb	r2, [r3]
+ 470 0060 1723     		movs	r3, #23
+ 471 0062 FB18     		adds	r3, r7, r3
+ 472 0064 0132     		adds	r2, r2, #1
+ 473 0066 1A70     		strb	r2, [r3]
+ 474              	.L13:
+ 403:bma2x2_support.c ****     {
+ 475              		.loc 1 403 0 is_stmt 0 discriminator 1
+ 476 0068 1723     		movs	r3, #23
+ 477 006a FA18     		adds	r2, r7, r3
+ 478 006c 7B1D     		adds	r3, r7, #5
+ 479 006e 1278     		ldrb	r2, [r2]
+ 480 0070 1B78     		ldrb	r3, [r3]
+ 481 0072 9A42     		cmp	r2, r3
+ 482 0074 E6D9     		bls	.L14
+ 408:bma2x2_support.c ****     }
+ 409:bma2x2_support.c ****     
+ 410:bma2x2_support.c ****     /* Send START */
+ 411:bma2x2_support.c ****     rslt = I2C_I2CMasterSendStart(dev_id,I2C_I2C_WRITE_XFER_MODE,I2C_TIMEOUT);
+ 483              		.loc 1 411 0 is_stmt 1
+ 484 0076 FB1D     		adds	r3, r7, #7
+ 485 0078 1B78     		ldrb	r3, [r3]
+ 486 007a 6422     		movs	r2, #100
+ 487 007c 0021     		movs	r1, #0
+ 488 007e 1800     		movs	r0, r3
+ 489 0080 FFF7FEFF 		bl	I2C_I2CMasterSendStart
+ 490 0084 0200     		movs	r2, r0
+ 491 0086 1623     		movs	r3, #22
+ 492 0088 FB18     		adds	r3, r7, r3
+ 493 008a 1A70     		strb	r2, [r3]
+ 412:bma2x2_support.c ****     
+ 413:bma2x2_support.c ****     /* Write data, byte by byte */
+ 414:bma2x2_support.c ****     i=0;
+ 494              		.loc 1 414 0
+ 495 008c 1723     		movs	r3, #23
+ 496 008e FB18     		adds	r3, r7, r3
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc9veP4D.s 			page 17
+
+
+ 497 0090 0022     		movs	r2, #0
+ 498 0092 1A70     		strb	r2, [r3]
+ 415:bma2x2_support.c ****     while ((i<=len)&&(rslt == I2C_I2C_MSTR_NO_ERROR))
+ 499              		.loc 1 415 0
+ 500 0094 14E0     		b	.L15
+ 501              	.L17:
+ 416:bma2x2_support.c ****     {
+ 417:bma2x2_support.c ****             rslt = I2C_I2CMasterWriteByte(data[i],I2C_TIMEOUT);
+ 502              		.loc 1 417 0
+ 503 0096 1723     		movs	r3, #23
+ 504 0098 FB18     		adds	r3, r7, r3
+ 505 009a 1B78     		ldrb	r3, [r3]
+ 506 009c 0C22     		movs	r2, #12
+ 507 009e BA18     		adds	r2, r7, r2
+ 508 00a0 D35C     		ldrb	r3, [r2, r3]
+ 509 00a2 6421     		movs	r1, #100
+ 510 00a4 1800     		movs	r0, r3
+ 511 00a6 FFF7FEFF 		bl	I2C_I2CMasterWriteByte
+ 512 00aa 0200     		movs	r2, r0
+ 513 00ac 1623     		movs	r3, #22
+ 514 00ae FB18     		adds	r3, r7, r3
+ 515 00b0 1A70     		strb	r2, [r3]
+ 418:bma2x2_support.c ****             i++;
+ 516              		.loc 1 418 0
+ 517 00b2 1723     		movs	r3, #23
+ 518 00b4 FB18     		adds	r3, r7, r3
+ 519 00b6 1A78     		ldrb	r2, [r3]
+ 520 00b8 1723     		movs	r3, #23
+ 521 00ba FB18     		adds	r3, r7, r3
+ 522 00bc 0132     		adds	r2, r2, #1
+ 523 00be 1A70     		strb	r2, [r3]
+ 524              	.L15:
+ 415:bma2x2_support.c ****     while ((i<=len)&&(rslt == I2C_I2C_MSTR_NO_ERROR))
+ 525              		.loc 1 415 0
+ 526 00c0 1723     		movs	r3, #23
+ 527 00c2 FA18     		adds	r2, r7, r3
+ 528 00c4 7B1D     		adds	r3, r7, #5
+ 529 00c6 1278     		ldrb	r2, [r2]
+ 530 00c8 1B78     		ldrb	r3, [r3]
+ 531 00ca 9A42     		cmp	r2, r3
+ 532 00cc 05D8     		bhi	.L16
+ 415:bma2x2_support.c ****     while ((i<=len)&&(rslt == I2C_I2C_MSTR_NO_ERROR))
+ 533              		.loc 1 415 0 is_stmt 0 discriminator 1
+ 534 00ce 1623     		movs	r3, #22
+ 535 00d0 FB18     		adds	r3, r7, r3
+ 536 00d2 1B78     		ldrb	r3, [r3]
+ 537 00d4 5BB2     		sxtb	r3, r3
+ 538 00d6 002B     		cmp	r3, #0
+ 539 00d8 DDD0     		beq	.L17
+ 540              	.L16:
+ 419:bma2x2_support.c ****     }
+ 420:bma2x2_support.c ****     
+ 421:bma2x2_support.c ****     /* Send STOP */
+ 422:bma2x2_support.c ****     I2C_I2CMasterSendStop(I2C_TIMEOUT);
+ 541              		.loc 1 422 0 is_stmt 1
+ 542 00da 6420     		movs	r0, #100
+ 543 00dc FFF7FEFF 		bl	I2C_I2CMasterSendStop
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc9veP4D.s 			page 18
+
+
+ 423:bma2x2_support.c ****     
+ 424:bma2x2_support.c ****     return rslt;
+ 544              		.loc 1 424 0
+ 545 00e0 1623     		movs	r3, #22
+ 546 00e2 FB18     		adds	r3, r7, r3
+ 547 00e4 1B78     		ldrb	r3, [r3]
+ 548 00e6 5BB2     		sxtb	r3, r3
+ 425:bma2x2_support.c **** }
+ 549              		.loc 1 425 0
+ 550 00e8 1800     		movs	r0, r3
+ 551 00ea BD46     		mov	sp, r7
+ 552 00ec 07B0     		add	sp, sp, #28
+ 553              		@ sp needed
+ 554 00ee 90BD     		pop	{r4, r7, pc}
+ 555              		.cfi_endproc
+ 556              	.LFE38:
+ 557              		.size	BMA2x2_I2C_bus_write, .-BMA2x2_I2C_bus_write
+ 558              		.section	.text.BMA2x2_I2C_bus_read,"ax",%progbits
+ 559              		.align	2
+ 560              		.global	BMA2x2_I2C_bus_read
+ 561              		.code	16
+ 562              		.thumb_func
+ 563              		.type	BMA2x2_I2C_bus_read, %function
+ 564              	BMA2x2_I2C_bus_read:
+ 565              	.LFB39:
+ 426:bma2x2_support.c **** 
+ 427:bma2x2_support.c ****  /*   \Brief: The function is used as I2C bus read
+ 428:bma2x2_support.c ****  *    \Return : Status of the I2C read
+ 429:bma2x2_support.c ****  *    \param dev_id : The device address of the sensor
+ 430:bma2x2_support.c ****  *    \param reg_addr : Address of the first register,
+ 431:bma2x2_support.c ****  *            will data is going to be read
+ 432:bma2x2_support.c ****  *    \param reg_data : This data read from the sensor,
+ 433:bma2x2_support.c ****  *            which is hold in an array
+ 434:bma2x2_support.c ****  *    \param len : The no of byte of data to be read
+ 435:bma2x2_support.c ****  */
+ 436:bma2x2_support.c **** s8 BMA2x2_I2C_bus_read(u8 dev_id, u8 reg_addr, u8 *reg_data, u8 len)
+ 437:bma2x2_support.c **** {
+ 566              		.loc 1 437 0
+ 567              		.cfi_startproc
+ 568              		@ args = 0, pretend = 0, frame = 16
+ 569              		@ frame_needed = 1, uses_anonymous_args = 0
+ 570 0000 90B5     		push	{r4, r7, lr}
+ 571              		.cfi_def_cfa_offset 12
+ 572              		.cfi_offset 4, -12
+ 573              		.cfi_offset 7, -8
+ 574              		.cfi_offset 14, -4
+ 575 0002 85B0     		sub	sp, sp, #20
+ 576              		.cfi_def_cfa_offset 32
+ 577 0004 00AF     		add	r7, sp, #0
+ 578              		.cfi_def_cfa_register 7
+ 579 0006 0400     		movs	r4, r0
+ 580 0008 0800     		movs	r0, r1
+ 581 000a 3A60     		str	r2, [r7]
+ 582 000c 1900     		movs	r1, r3
+ 583 000e FB1D     		adds	r3, r7, #7
+ 584 0010 221C     		adds	r2, r4, #0
+ 585 0012 1A70     		strb	r2, [r3]
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc9veP4D.s 			page 19
+
+
+ 586 0014 BB1D     		adds	r3, r7, #6
+ 587 0016 021C     		adds	r2, r0, #0
+ 588 0018 1A70     		strb	r2, [r3]
+ 589 001a 7B1D     		adds	r3, r7, #5
+ 590 001c 0A1C     		adds	r2, r1, #0
+ 591 001e 1A70     		strb	r2, [r3]
+ 438:bma2x2_support.c ****     int8_t rslt = 0;            // Return 0 for Success, non-zero for failure 
+ 592              		.loc 1 438 0
+ 593 0020 0F23     		movs	r3, #15
+ 594 0022 FB18     		adds	r3, r7, r3
+ 595 0024 0022     		movs	r2, #0
+ 596 0026 1A70     		strb	r2, [r3]
+ 439:bma2x2_support.c **** 
+ 440:bma2x2_support.c ****     /*
+ 441:bma2x2_support.c ****      * The parameter dev_id can be used as a variable to store the I2C address of the device
+ 442:bma2x2_support.c ****      */
+ 443:bma2x2_support.c **** 
+ 444:bma2x2_support.c ****     /*
+ 445:bma2x2_support.c ****      * Data on the bus should be like
+ 446:bma2x2_support.c ****      * |------------+---------------------|
+ 447:bma2x2_support.c ****      * | I2C action | Data                |
+ 448:bma2x2_support.c ****      * |------------+---------------------|
+ 449:bma2x2_support.c ****      * | Start      | -                   |
+ 450:bma2x2_support.c ****      * | Write      | (reg_addr)          |
+ 451:bma2x2_support.c ****      * | Stop       | -                   |
+ 452:bma2x2_support.c ****      * | Start      | -                   |
+ 453:bma2x2_support.c ****      * | Read       | (reg_data[0])       |
+ 454:bma2x2_support.c ****      * | Read       | (....)              |
+ 455:bma2x2_support.c ****      * | Read       | (reg_data[len - 1]) |
+ 456:bma2x2_support.c ****      * | Stop       | -                   |
+ 457:bma2x2_support.c ****      * |------------+---------------------|
+ 458:bma2x2_support.c ****      */
+ 459:bma2x2_support.c **** 
+ 460:bma2x2_support.c ****     uint8_t *ptr = reg_data;        // Pointer to the register address from where the data will be 
+ 597              		.loc 1 460 0
+ 598 0028 3B68     		ldr	r3, [r7]
+ 599 002a BB60     		str	r3, [r7, #8]
+ 461:bma2x2_support.c ****     
+ 462:bma2x2_support.c ****     /* Send START */
+ 463:bma2x2_support.c ****     rslt = I2C_I2CMasterSendStart(dev_id,I2C_I2C_WRITE_XFER_MODE,I2C_TIMEOUT);
+ 600              		.loc 1 463 0
+ 601 002c FB1D     		adds	r3, r7, #7
+ 602 002e 1B78     		ldrb	r3, [r3]
+ 603 0030 6422     		movs	r2, #100
+ 604 0032 0021     		movs	r1, #0
+ 605 0034 1800     		movs	r0, r3
+ 606 0036 FFF7FEFF 		bl	I2C_I2CMasterSendStart
+ 607 003a 0200     		movs	r2, r0
+ 608 003c 0F23     		movs	r3, #15
+ 609 003e FB18     		adds	r3, r7, r3
+ 610 0040 1A70     		strb	r2, [r3]
+ 464:bma2x2_support.c ****     
+ 465:bma2x2_support.c ****     /* Write address to read from */
+ 466:bma2x2_support.c ****     if (rslt == I2C_I2C_MSTR_NO_ERROR)
+ 611              		.loc 1 466 0
+ 612 0042 0F23     		movs	r3, #15
+ 613 0044 FB18     		adds	r3, r7, r3
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc9veP4D.s 			page 20
+
+
+ 614 0046 1B78     		ldrb	r3, [r3]
+ 615 0048 5BB2     		sxtb	r3, r3
+ 616 004a 002B     		cmp	r3, #0
+ 617 004c 09D1     		bne	.L20
+ 467:bma2x2_support.c ****     {
+ 468:bma2x2_support.c ****         rslt = I2C_I2CMasterWriteByte(reg_addr,I2C_TIMEOUT);
+ 618              		.loc 1 468 0
+ 619 004e BB1D     		adds	r3, r7, #6
+ 620 0050 1B78     		ldrb	r3, [r3]
+ 621 0052 6421     		movs	r1, #100
+ 622 0054 1800     		movs	r0, r3
+ 623 0056 FFF7FEFF 		bl	I2C_I2CMasterWriteByte
+ 624 005a 0200     		movs	r2, r0
+ 625 005c 0F23     		movs	r3, #15
+ 626 005e FB18     		adds	r3, r7, r3
+ 627 0060 1A70     		strb	r2, [r3]
+ 628              	.L20:
+ 469:bma2x2_support.c ****     }
+ 470:bma2x2_support.c ****     
+ 471:bma2x2_support.c ****     /* Send STOP */
+ 472:bma2x2_support.c ****     if (rslt == I2C_I2C_MSTR_NO_ERROR)
+ 629              		.loc 1 472 0
+ 630 0062 0F23     		movs	r3, #15
+ 631 0064 FB18     		adds	r3, r7, r3
+ 632 0066 1B78     		ldrb	r3, [r3]
+ 633 0068 5BB2     		sxtb	r3, r3
+ 634 006a 002B     		cmp	r3, #0
+ 635 006c 06D1     		bne	.L21
+ 473:bma2x2_support.c ****     {
+ 474:bma2x2_support.c ****         rslt = I2C_I2CMasterSendStop(I2C_TIMEOUT);
+ 636              		.loc 1 474 0
+ 637 006e 6420     		movs	r0, #100
+ 638 0070 FFF7FEFF 		bl	I2C_I2CMasterSendStop
+ 639 0074 0200     		movs	r2, r0
+ 640 0076 0F23     		movs	r3, #15
+ 641 0078 FB18     		adds	r3, r7, r3
+ 642 007a 1A70     		strb	r2, [r3]
+ 643              	.L21:
+ 475:bma2x2_support.c ****     }
+ 476:bma2x2_support.c ****     
+ 477:bma2x2_support.c ****     /* Send START */
+ 478:bma2x2_support.c ****     if (rslt == I2C_I2C_MSTR_NO_ERROR)
+ 644              		.loc 1 478 0
+ 645 007c 0F23     		movs	r3, #15
+ 646 007e FB18     		adds	r3, r7, r3
+ 647 0080 1B78     		ldrb	r3, [r3]
+ 648 0082 5BB2     		sxtb	r3, r3
+ 649 0084 002B     		cmp	r3, #0
+ 650 0086 23D1     		bne	.L23
+ 479:bma2x2_support.c ****     {
+ 480:bma2x2_support.c ****         rslt = I2C_I2CMasterSendStart(dev_id,I2C_I2C_READ_XFER_MODE,I2C_TIMEOUT);
+ 651              		.loc 1 480 0
+ 652 0088 FB1D     		adds	r3, r7, #7
+ 653 008a 1B78     		ldrb	r3, [r3]
+ 654 008c 6422     		movs	r2, #100
+ 655 008e 0121     		movs	r1, #1
+ 656 0090 1800     		movs	r0, r3
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc9veP4D.s 			page 21
+
+
+ 657 0092 FFF7FEFF 		bl	I2C_I2CMasterSendStart
+ 658 0096 0200     		movs	r2, r0
+ 659 0098 0F23     		movs	r3, #15
+ 660 009a FB18     		adds	r3, r7, r3
+ 661 009c 1A70     		strb	r2, [r3]
+ 481:bma2x2_support.c ****     }
+ 482:bma2x2_support.c ****     
+ 483:bma2x2_support.c ****     /* Read data, byte by byte */
+ 484:bma2x2_support.c ****     while( len-- > 1 )
+ 662              		.loc 1 484 0
+ 663 009e 17E0     		b	.L23
+ 664              	.L24:
+ 665 00a0 0F23     		movs	r3, #15
+ 666 00a2 FB18     		adds	r3, r7, r3
+ 667 00a4 0F22     		movs	r2, #15
+ 668 00a6 BA18     		adds	r2, r7, r2
+ 669 00a8 1278     		ldrb	r2, [r2]
+ 670 00aa 1A70     		strb	r2, [r3]
+ 485:bma2x2_support.c ****     {
+ 486:bma2x2_support.c ****         /* Check for errors at master reading */
+ 487:bma2x2_support.c ****         if (rslt == I2C_I2C_MSTR_NO_ERROR)
+ 671              		.loc 1 487 0
+ 672 00ac 0F23     		movs	r3, #15
+ 673 00ae FB18     		adds	r3, r7, r3
+ 674 00b0 1B78     		ldrb	r3, [r3]
+ 675 00b2 5BB2     		sxtb	r3, r3
+ 676 00b4 002B     		cmp	r3, #0
+ 677 00b6 0BD1     		bne	.L23
+ 488:bma2x2_support.c ****         {
+ 489:bma2x2_support.c ****             /* Send an AK to notify that the reading operation continues */
+ 490:bma2x2_support.c ****             rslt = I2C_I2CMasterReadByte(I2C_I2C_ACK_DATA,ptr++,I2C_TIMEOUT);
+ 678              		.loc 1 490 0
+ 679 00b8 BB68     		ldr	r3, [r7, #8]
+ 680 00ba 5A1C     		adds	r2, r3, #1
+ 681 00bc BA60     		str	r2, [r7, #8]
+ 682 00be 6422     		movs	r2, #100
+ 683 00c0 1900     		movs	r1, r3
+ 684 00c2 0020     		movs	r0, #0
+ 685 00c4 FFF7FEFF 		bl	I2C_I2CMasterReadByte
+ 686 00c8 0200     		movs	r2, r0
+ 687 00ca 0F23     		movs	r3, #15
+ 688 00cc FB18     		adds	r3, r7, r3
+ 689 00ce 1A70     		strb	r2, [r3]
+ 690              	.L23:
+ 484:bma2x2_support.c ****     {
+ 691              		.loc 1 484 0
+ 692 00d0 7B1D     		adds	r3, r7, #5
+ 693 00d2 1B78     		ldrb	r3, [r3]
+ 694 00d4 7A1D     		adds	r2, r7, #5
+ 695 00d6 591E     		subs	r1, r3, #1
+ 696 00d8 1170     		strb	r1, [r2]
+ 697 00da 012B     		cmp	r3, #1
+ 698 00dc E0D8     		bhi	.L24
+ 491:bma2x2_support.c ****         }
+ 492:bma2x2_support.c ****     }
+ 493:bma2x2_support.c ****     
+ 494:bma2x2_support.c ****     /* Read last BYTE */
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc9veP4D.s 			page 22
+
+
+ 495:bma2x2_support.c ****     if (rslt == I2C_I2C_MSTR_NO_ERROR)
+ 699              		.loc 1 495 0
+ 700 00de 0F23     		movs	r3, #15
+ 701 00e0 FB18     		adds	r3, r7, r3
+ 702 00e2 1B78     		ldrb	r3, [r3]
+ 703 00e4 5BB2     		sxtb	r3, r3
+ 704 00e6 002B     		cmp	r3, #0
+ 705 00e8 09D1     		bne	.L25
+ 496:bma2x2_support.c ****     {
+ 497:bma2x2_support.c ****         /* Send a NAK to notify that the reading operation is complete */
+ 498:bma2x2_support.c ****         rslt = I2C_I2CMasterReadByte(I2C_I2C_NAK_DATA,ptr,I2C_TIMEOUT);
+ 706              		.loc 1 498 0
+ 707 00ea BB68     		ldr	r3, [r7, #8]
+ 708 00ec 6422     		movs	r2, #100
+ 709 00ee 1900     		movs	r1, r3
+ 710 00f0 0120     		movs	r0, #1
+ 711 00f2 FFF7FEFF 		bl	I2C_I2CMasterReadByte
+ 712 00f6 0200     		movs	r2, r0
+ 713 00f8 0F23     		movs	r3, #15
+ 714 00fa FB18     		adds	r3, r7, r3
+ 715 00fc 1A70     		strb	r2, [r3]
+ 716              	.L25:
+ 499:bma2x2_support.c ****     }
+ 500:bma2x2_support.c ****     
+ 501:bma2x2_support.c ****     /* Send STOP */
+ 502:bma2x2_support.c ****     I2C_I2CMasterSendStop(I2C_TIMEOUT);
+ 717              		.loc 1 502 0
+ 718 00fe 6420     		movs	r0, #100
+ 719 0100 FFF7FEFF 		bl	I2C_I2CMasterSendStop
+ 503:bma2x2_support.c ****     
+ 504:bma2x2_support.c ****     return rslt;
+ 720              		.loc 1 504 0
+ 721 0104 0F23     		movs	r3, #15
+ 722 0106 FB18     		adds	r3, r7, r3
+ 723 0108 1B78     		ldrb	r3, [r3]
+ 724 010a 5BB2     		sxtb	r3, r3
+ 505:bma2x2_support.c **** }
+ 725              		.loc 1 505 0
+ 726 010c 1800     		movs	r0, r3
+ 727 010e BD46     		mov	sp, r7
+ 728 0110 05B0     		add	sp, sp, #20
+ 729              		@ sp needed
+ 730 0112 90BD     		pop	{r4, r7, pc}
+ 731              		.cfi_endproc
+ 732              	.LFE39:
+ 733              		.size	BMA2x2_I2C_bus_read, .-BMA2x2_I2C_bus_read
+ 734              		.section	.text.BMA2x2_delay_msek,"ax",%progbits
+ 735              		.align	2
+ 736              		.global	BMA2x2_delay_msek
+ 737              		.code	16
+ 738              		.thumb_func
+ 739              		.type	BMA2x2_delay_msek, %function
+ 740              	BMA2x2_delay_msek:
+ 741              	.LFB40:
+ 506:bma2x2_support.c **** 
+ 507:bma2x2_support.c **** 
+ 508:bma2x2_support.c **** 
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc9veP4D.s 			page 23
+
+
+ 509:bma2x2_support.c **** /*	Brief : The delay routine
+ 510:bma2x2_support.c ****  *	\param : delay in ms
+ 511:bma2x2_support.c **** */
+ 512:bma2x2_support.c **** void BMA2x2_delay_msek(u32 msek)
+ 513:bma2x2_support.c **** {
+ 742              		.loc 1 513 0
+ 743              		.cfi_startproc
+ 744              		@ args = 0, pretend = 0, frame = 8
+ 745              		@ frame_needed = 1, uses_anonymous_args = 0
+ 746 0000 80B5     		push	{r7, lr}
+ 747              		.cfi_def_cfa_offset 8
+ 748              		.cfi_offset 7, -8
+ 749              		.cfi_offset 14, -4
+ 750 0002 82B0     		sub	sp, sp, #8
+ 751              		.cfi_def_cfa_offset 16
+ 752 0004 00AF     		add	r7, sp, #0
+ 753              		.cfi_def_cfa_register 7
+ 754 0006 7860     		str	r0, [r7, #4]
+ 514:bma2x2_support.c **** 	/*Here you can write your own delay routine*/
+ 515:bma2x2_support.c ****     CyDelay(msek);
+ 755              		.loc 1 515 0
+ 756 0008 7B68     		ldr	r3, [r7, #4]
+ 757 000a 1800     		movs	r0, r3
+ 758 000c FFF7FEFF 		bl	CyDelay
+ 516:bma2x2_support.c **** }
+ 759              		.loc 1 516 0
+ 760 0010 C046     		nop
+ 761 0012 BD46     		mov	sp, r7
+ 762 0014 02B0     		add	sp, sp, #8
+ 763              		@ sp needed
+ 764 0016 80BD     		pop	{r7, pc}
+ 765              		.cfi_endproc
+ 766              	.LFE40:
+ 767              		.size	BMA2x2_delay_msek, .-BMA2x2_delay_msek
+ 768              		.text
+ 769              	.Letext0:
+ 770              		.file 2 "bma2x2.h"
+ 771              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 772              		.file 4 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 773              		.section	.debug_info,"",%progbits
+ 774              	.Ldebug_info0:
+ 775 0000 BD040000 		.4byte	0x4bd
+ 776 0004 0400     		.2byte	0x4
+ 777 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 778 000a 04       		.byte	0x4
+ 779 000b 01       		.uleb128 0x1
+ 780 000c 2A010000 		.4byte	.LASF55
+ 781 0010 0C       		.byte	0xc
+ 782 0011 33030000 		.4byte	.LASF56
+ 783 0015 BF020000 		.4byte	.LASF57
+ 784 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 785 001d 00000000 		.4byte	0
+ 786 0021 00000000 		.4byte	.Ldebug_line0
+ 787 0025 02       		.uleb128 0x2
+ 788 0026 733800   		.ascii	"s8\000"
+ 789 0029 02       		.byte	0x2
+ 790 002a 2001     		.2byte	0x120
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc9veP4D.s 			page 24
+
+
+ 791 002c 30000000 		.4byte	0x30
+ 792 0030 03       		.uleb128 0x3
+ 793 0031 01       		.byte	0x1
+ 794 0032 06       		.byte	0x6
+ 795 0033 04020000 		.4byte	.LASF0
+ 796 0037 02       		.uleb128 0x2
+ 797 0038 73313600 		.ascii	"s16\000"
+ 798 003c 02       		.byte	0x2
+ 799 003d 2101     		.2byte	0x121
+ 800 003f 43000000 		.4byte	0x43
+ 801 0043 03       		.uleb128 0x3
+ 802 0044 02       		.byte	0x2
+ 803 0045 05       		.byte	0x5
+ 804 0046 45000000 		.4byte	.LASF1
+ 805 004a 02       		.uleb128 0x2
+ 806 004b 73333200 		.ascii	"s32\000"
+ 807 004f 02       		.byte	0x2
+ 808 0050 2201     		.2byte	0x122
+ 809 0052 56000000 		.4byte	0x56
+ 810 0056 04       		.uleb128 0x4
+ 811 0057 04       		.byte	0x4
+ 812 0058 05       		.byte	0x5
+ 813 0059 696E7400 		.ascii	"int\000"
+ 814 005d 03       		.uleb128 0x3
+ 815 005e 08       		.byte	0x8
+ 816 005f 05       		.byte	0x5
+ 817 0060 09010000 		.4byte	.LASF2
+ 818 0064 02       		.uleb128 0x2
+ 819 0065 753800   		.ascii	"u8\000"
+ 820 0068 02       		.byte	0x2
+ 821 0069 2601     		.2byte	0x126
+ 822 006b 6F000000 		.4byte	0x6f
+ 823 006f 03       		.uleb128 0x3
+ 824 0070 01       		.byte	0x1
+ 825 0071 08       		.byte	0x8
+ 826 0072 DF010000 		.4byte	.LASF3
+ 827 0076 03       		.uleb128 0x3
+ 828 0077 02       		.byte	0x2
+ 829 0078 07       		.byte	0x7
+ 830 0079 49020000 		.4byte	.LASF4
+ 831 007d 02       		.uleb128 0x2
+ 832 007e 75333200 		.ascii	"u32\000"
+ 833 0082 02       		.byte	0x2
+ 834 0083 2801     		.2byte	0x128
+ 835 0085 89000000 		.4byte	0x89
+ 836 0089 03       		.uleb128 0x3
+ 837 008a 04       		.byte	0x4
+ 838 008b 07       		.byte	0x7
+ 839 008c 33020000 		.4byte	.LASF5
+ 840 0090 03       		.uleb128 0x3
+ 841 0091 08       		.byte	0x8
+ 842 0092 07       		.byte	0x7
+ 843 0093 10020000 		.4byte	.LASF6
+ 844 0097 05       		.uleb128 0x5
+ 845 0098 C0000000 		.4byte	.LASF7
+ 846 009c 06       		.byte	0x6
+ 847 009d 02       		.byte	0x2
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc9veP4D.s 			page 25
+
+
+ 848 009e 5102     		.2byte	0x251
+ 849 00a0 C6000000 		.4byte	0xc6
+ 850 00a4 06       		.uleb128 0x6
+ 851 00a5 7800     		.ascii	"x\000"
+ 852 00a7 02       		.byte	0x2
+ 853 00a8 5202     		.2byte	0x252
+ 854 00aa 37000000 		.4byte	0x37
+ 855 00ae 00       		.byte	0
+ 856 00af 06       		.uleb128 0x6
+ 857 00b0 7900     		.ascii	"y\000"
+ 858 00b2 02       		.byte	0x2
+ 859 00b3 5302     		.2byte	0x253
+ 860 00b5 37000000 		.4byte	0x37
+ 861 00b9 02       		.byte	0x2
+ 862 00ba 06       		.uleb128 0x6
+ 863 00bb 7A00     		.ascii	"z\000"
+ 864 00bd 02       		.byte	0x2
+ 865 00be 5402     		.2byte	0x254
+ 866 00c0 37000000 		.4byte	0x37
+ 867 00c4 04       		.byte	0x4
+ 868 00c5 00       		.byte	0
+ 869 00c6 05       		.uleb128 0x5
+ 870 00c7 88000000 		.4byte	.LASF8
+ 871 00cb 08       		.byte	0x8
+ 872 00cc 02       		.byte	0x2
+ 873 00cd 5A02     		.2byte	0x25a
+ 874 00cf 02010000 		.4byte	0x102
+ 875 00d3 06       		.uleb128 0x6
+ 876 00d4 7800     		.ascii	"x\000"
+ 877 00d6 02       		.byte	0x2
+ 878 00d7 5B02     		.2byte	0x25b
+ 879 00d9 37000000 		.4byte	0x37
+ 880 00dd 00       		.byte	0
+ 881 00de 06       		.uleb128 0x6
+ 882 00df 7900     		.ascii	"y\000"
+ 883 00e1 02       		.byte	0x2
+ 884 00e2 5C02     		.2byte	0x25c
+ 885 00e4 37000000 		.4byte	0x37
+ 886 00e8 02       		.byte	0x2
+ 887 00e9 06       		.uleb128 0x6
+ 888 00ea 7A00     		.ascii	"z\000"
+ 889 00ec 02       		.byte	0x2
+ 890 00ed 5D02     		.2byte	0x25d
+ 891 00ef 37000000 		.4byte	0x37
+ 892 00f3 04       		.byte	0x4
+ 893 00f4 07       		.uleb128 0x7
+ 894 00f5 40000000 		.4byte	.LASF9
+ 895 00f9 02       		.byte	0x2
+ 896 00fa 5E02     		.2byte	0x25e
+ 897 00fc 25000000 		.4byte	0x25
+ 898 0100 06       		.byte	0x6
+ 899 0101 00       		.byte	0
+ 900 0102 05       		.uleb128 0x5
+ 901 0103 50030000 		.4byte	.LASF10
+ 902 0107 18       		.byte	0x18
+ 903 0108 02       		.byte	0x2
+ 904 0109 9B02     		.2byte	0x29b
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc9veP4D.s 			page 26
+
+
+ 905 010b 92010000 		.4byte	0x192
+ 906 010f 07       		.uleb128 0x7
+ 907 0110 76020000 		.4byte	.LASF11
+ 908 0114 02       		.byte	0x2
+ 909 0115 9D02     		.2byte	0x29d
+ 910 0117 64000000 		.4byte	0x64
+ 911 011b 00       		.byte	0
+ 912 011c 07       		.uleb128 0x7
+ 913 011d A7020000 		.4byte	.LASF12
+ 914 0121 02       		.byte	0x2
+ 915 0122 9F02     		.2byte	0x29f
+ 916 0124 64000000 		.4byte	0x64
+ 917 0128 01       		.byte	0x1
+ 918 0129 07       		.uleb128 0x7
+ 919 012a F6010000 		.4byte	.LASF13
+ 920 012e 02       		.byte	0x2
+ 921 012f A102     		.2byte	0x2a1
+ 922 0131 64000000 		.4byte	0x64
+ 923 0135 02       		.byte	0x2
+ 924 0136 07       		.uleb128 0x7
+ 925 0137 9F000000 		.4byte	.LASF14
+ 926 013b 02       		.byte	0x2
+ 927 013c A302     		.2byte	0x2a3
+ 928 013e 64000000 		.4byte	0x64
+ 929 0142 03       		.byte	0x3
+ 930 0143 07       		.uleb128 0x7
+ 931 0144 40020000 		.4byte	.LASF15
+ 932 0148 02       		.byte	0x2
+ 933 0149 A502     		.2byte	0x2a5
+ 934 014b 64000000 		.4byte	0x64
+ 935 014f 04       		.byte	0x4
+ 936 0150 07       		.uleb128 0x7
+ 937 0151 B4000000 		.4byte	.LASF16
+ 938 0155 02       		.byte	0x2
+ 939 0156 A702     		.2byte	0x2a7
+ 940 0158 64000000 		.4byte	0x64
+ 941 015c 05       		.byte	0x5
+ 942 015d 07       		.uleb128 0x7
+ 943 015e 22000000 		.4byte	.LASF17
+ 944 0162 02       		.byte	0x2
+ 945 0163 A902     		.2byte	0x2a9
+ 946 0165 B6010000 		.4byte	0x1b6
+ 947 0169 08       		.byte	0x8
+ 948 016a 07       		.uleb128 0x7
+ 949 016b 00000000 		.4byte	.LASF18
+ 950 016f 02       		.byte	0x2
+ 951 0170 AB02     		.2byte	0x2ab
+ 952 0172 B6010000 		.4byte	0x1b6
+ 953 0176 0C       		.byte	0xc
+ 954 0177 07       		.uleb128 0x7
+ 955 0178 7D000000 		.4byte	.LASF19
+ 956 017c 02       		.byte	0x2
+ 957 017d AD02     		.2byte	0x2ad
+ 958 017f DA010000 		.4byte	0x1da
+ 959 0183 10       		.byte	0x10
+ 960 0184 07       		.uleb128 0x7
+ 961 0185 00030000 		.4byte	.LASF20
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc9veP4D.s 			page 27
+
+
+ 962 0189 02       		.byte	0x2
+ 963 018a AF02     		.2byte	0x2af
+ 964 018c EB010000 		.4byte	0x1eb
+ 965 0190 14       		.byte	0x14
+ 966 0191 00       		.byte	0
+ 967 0192 08       		.uleb128 0x8
+ 968 0193 25000000 		.4byte	0x25
+ 969 0197 B0010000 		.4byte	0x1b0
+ 970 019b 09       		.uleb128 0x9
+ 971 019c 64000000 		.4byte	0x64
+ 972 01a0 09       		.uleb128 0x9
+ 973 01a1 64000000 		.4byte	0x64
+ 974 01a5 09       		.uleb128 0x9
+ 975 01a6 B0010000 		.4byte	0x1b0
+ 976 01aa 09       		.uleb128 0x9
+ 977 01ab 64000000 		.4byte	0x64
+ 978 01af 00       		.byte	0
+ 979 01b0 0A       		.uleb128 0xa
+ 980 01b1 04       		.byte	0x4
+ 981 01b2 64000000 		.4byte	0x64
+ 982 01b6 0A       		.uleb128 0xa
+ 983 01b7 04       		.byte	0x4
+ 984 01b8 92010000 		.4byte	0x192
+ 985 01bc 08       		.uleb128 0x8
+ 986 01bd 25000000 		.4byte	0x25
+ 987 01c1 DA010000 		.4byte	0x1da
+ 988 01c5 09       		.uleb128 0x9
+ 989 01c6 64000000 		.4byte	0x64
+ 990 01ca 09       		.uleb128 0x9
+ 991 01cb 64000000 		.4byte	0x64
+ 992 01cf 09       		.uleb128 0x9
+ 993 01d0 B0010000 		.4byte	0x1b0
+ 994 01d4 09       		.uleb128 0x9
+ 995 01d5 7D000000 		.4byte	0x7d
+ 996 01d9 00       		.byte	0
+ 997 01da 0A       		.uleb128 0xa
+ 998 01db 04       		.byte	0x4
+ 999 01dc BC010000 		.4byte	0x1bc
+ 1000 01e0 0B       		.uleb128 0xb
+ 1001 01e1 EB010000 		.4byte	0x1eb
+ 1002 01e5 09       		.uleb128 0x9
+ 1003 01e6 7D000000 		.4byte	0x7d
+ 1004 01ea 00       		.byte	0
+ 1005 01eb 0A       		.uleb128 0xa
+ 1006 01ec 04       		.byte	0x4
+ 1007 01ed E0010000 		.4byte	0x1e0
+ 1008 01f1 0C       		.uleb128 0xc
+ 1009 01f2 5C020000 		.4byte	.LASF21
+ 1010 01f6 03       		.byte	0x3
+ 1011 01f7 1B       		.byte	0x1b
+ 1012 01f8 30000000 		.4byte	0x30
+ 1013 01fc 0C       		.uleb128 0xc
+ 1014 01fd 20010000 		.4byte	.LASF22
+ 1015 0201 03       		.byte	0x3
+ 1016 0202 1D       		.byte	0x1d
+ 1017 0203 6F000000 		.4byte	0x6f
+ 1018 0207 03       		.uleb128 0x3
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc9veP4D.s 			page 28
+
+
+ 1019 0208 04       		.byte	0x4
+ 1020 0209 05       		.byte	0x5
+ 1021 020a 17010000 		.4byte	.LASF23
+ 1022 020e 03       		.uleb128 0x3
+ 1023 020f 04       		.byte	0x4
+ 1024 0210 07       		.byte	0x7
+ 1025 0211 95020000 		.4byte	.LASF24
+ 1026 0215 0C       		.uleb128 0xc
+ 1027 0216 1B000000 		.4byte	.LASF25
+ 1028 021a 04       		.byte	0x4
+ 1029 021b 14       		.byte	0x14
+ 1030 021c F1010000 		.4byte	0x1f1
+ 1031 0220 0C       		.uleb128 0xc
+ 1032 0221 D2000000 		.4byte	.LASF26
+ 1033 0225 04       		.byte	0x4
+ 1034 0226 18       		.byte	0x18
+ 1035 0227 FC010000 		.4byte	0x1fc
+ 1036 022b 03       		.uleb128 0x3
+ 1037 022c 04       		.byte	0x4
+ 1038 022d 04       		.byte	0x4
+ 1039 022e E6000000 		.4byte	.LASF27
+ 1040 0232 03       		.uleb128 0x3
+ 1041 0233 08       		.byte	0x8
+ 1042 0234 04       		.byte	0x4
+ 1043 0235 27030000 		.4byte	.LASF28
+ 1044 0239 03       		.uleb128 0x3
+ 1045 023a 01       		.byte	0x1
+ 1046 023b 08       		.byte	0x8
+ 1047 023c 65020000 		.4byte	.LASF29
+ 1048 0240 03       		.uleb128 0x3
+ 1049 0241 08       		.byte	0x8
+ 1050 0242 04       		.byte	0x4
+ 1051 0243 CA010000 		.4byte	.LASF30
+ 1052 0247 03       		.uleb128 0x3
+ 1053 0248 04       		.byte	0x4
+ 1054 0249 07       		.byte	0x7
+ 1055 024a 4F000000 		.4byte	.LASF31
+ 1056 024e 0D       		.uleb128 0xd
+ 1057 024f 58000000 		.4byte	.LASF37
+ 1058 0253 01       		.byte	0x1
+ 1059 0254 58       		.byte	0x58
+ 1060 0255 4A000000 		.4byte	0x4a
+ 1061 0259 00000000 		.4byte	.LFB35
+ 1062 025d 0A010000 		.4byte	.LFE35-.LFB35
+ 1063 0261 01       		.uleb128 0x1
+ 1064 0262 9C       		.byte	0x9c
+ 1065 0263 C9020000 		.4byte	0x2c9
+ 1066 0267 0E       		.uleb128 0xe
+ 1067 0268 C3010000 		.4byte	.LASF39
+ 1068 026c 01       		.byte	0x1
+ 1069 026d 58       		.byte	0x58
+ 1070 026e C9020000 		.4byte	0x2c9
+ 1071 0272 02       		.uleb128 0x2
+ 1072 0273 91       		.byte	0x91
+ 1073 0274 64       		.sleb128 -28
+ 1074 0275 0F       		.uleb128 0xf
+ 1075 0276 59030000 		.4byte	.LASF32
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc9veP4D.s 			page 29
+
+
+ 1076 027a 01       		.byte	0x1
+ 1077 027b 5B       		.byte	0x5b
+ 1078 027c 64000000 		.4byte	0x64
+ 1079 0280 02       		.uleb128 0x2
+ 1080 0281 91       		.byte	0x91
+ 1081 0282 6E       		.sleb128 -18
+ 1082 0283 0F       		.uleb128 0xf
+ 1083 0284 ED010000 		.4byte	.LASF33
+ 1084 0288 01       		.byte	0x1
+ 1085 0289 62       		.byte	0x62
+ 1086 028a 25000000 		.4byte	0x25
+ 1087 028e 02       		.uleb128 0x2
+ 1088 028f 91       		.byte	0x91
+ 1089 0290 6F       		.sleb128 -17
+ 1090 0291 0F       		.uleb128 0xf
+ 1091 0292 09000000 		.4byte	.LASF34
+ 1092 0296 01       		.byte	0x1
+ 1093 0297 68       		.byte	0x68
+ 1094 0298 64000000 		.4byte	0x64
+ 1095 029c 02       		.uleb128 0x2
+ 1096 029d 91       		.byte	0x91
+ 1097 029e 6D       		.sleb128 -19
+ 1098 029f 0F       		.uleb128 0xf
+ 1099 02a0 0B030000 		.4byte	.LASF35
+ 1100 02a4 01       		.byte	0x1
+ 1101 02a5 6F       		.byte	0x6f
+ 1102 02a6 64000000 		.4byte	0x64
+ 1103 02aa 02       		.uleb128 0x2
+ 1104 02ab 91       		.byte	0x91
+ 1105 02ac 6C       		.sleb128 -20
+ 1106 02ad 0F       		.uleb128 0xf
+ 1107 02ae AC000000 		.4byte	.LASF36
+ 1108 02b2 01       		.byte	0x1
+ 1109 02b3 70       		.byte	0x70
+ 1110 02b4 64000000 		.4byte	0x64
+ 1111 02b8 02       		.uleb128 0x2
+ 1112 02b9 91       		.byte	0x91
+ 1113 02ba 6B       		.sleb128 -21
+ 1114 02bb 10       		.uleb128 0x10
+ 1115 02bc 746800   		.ascii	"th\000"
+ 1116 02bf 01       		.byte	0x1
+ 1117 02c0 71       		.byte	0x71
+ 1118 02c1 64000000 		.4byte	0x64
+ 1119 02c5 02       		.uleb128 0x2
+ 1120 02c6 91       		.byte	0x91
+ 1121 02c7 6A       		.sleb128 -22
+ 1122 02c8 00       		.byte	0
+ 1123 02c9 0A       		.uleb128 0xa
+ 1124 02ca 04       		.byte	0x4
+ 1125 02cb 02010000 		.4byte	0x102
+ 1126 02cf 0D       		.uleb128 0xd
+ 1127 02d0 EC000000 		.4byte	.LASF38
+ 1128 02d4 01       		.byte	0x1
+ 1129 02d5 C8       		.byte	0xc8
+ 1130 02d6 4A000000 		.4byte	0x4a
+ 1131 02da 00000000 		.4byte	.LFB36
+ 1132 02de FA000000 		.4byte	.LFE36-.LFB36
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc9veP4D.s 			page 30
+
+
+ 1133 02e2 01       		.uleb128 0x1
+ 1134 02e3 9C       		.byte	0x9c
+ 1135 02e4 67030000 		.4byte	0x367
+ 1136 02e8 0E       		.uleb128 0xe
+ 1137 02e9 C3010000 		.4byte	.LASF39
+ 1138 02ed 01       		.byte	0x1
+ 1139 02ee C8       		.byte	0xc8
+ 1140 02ef C9020000 		.4byte	0x2c9
+ 1141 02f3 02       		.uleb128 0x2
+ 1142 02f4 91       		.byte	0x91
+ 1143 02f5 54       		.sleb128 -44
+ 1144 02f6 0F       		.uleb128 0xf
+ 1145 02f7 44030000 		.4byte	.LASF40
+ 1146 02fb 01       		.byte	0x1
+ 1147 02fc CB       		.byte	0xcb
+ 1148 02fd 37000000 		.4byte	0x37
+ 1149 0301 02       		.uleb128 0x2
+ 1150 0302 91       		.byte	0x91
+ 1151 0303 6E       		.sleb128 -18
+ 1152 0304 0F       		.uleb128 0xf
+ 1153 0305 DA000000 		.4byte	.LASF41
+ 1154 0309 01       		.byte	0x1
+ 1155 030a CB       		.byte	0xcb
+ 1156 030b 37000000 		.4byte	0x37
+ 1157 030f 02       		.uleb128 0x2
+ 1158 0310 91       		.byte	0x91
+ 1159 0311 6C       		.sleb128 -20
+ 1160 0312 0F       		.uleb128 0xf
+ 1161 0313 6A020000 		.4byte	.LASF42
+ 1162 0317 01       		.byte	0x1
+ 1163 0318 CB       		.byte	0xcb
+ 1164 0319 37000000 		.4byte	0x37
+ 1165 031d 02       		.uleb128 0x2
+ 1166 031e 91       		.byte	0x91
+ 1167 031f 6A       		.sleb128 -22
+ 1168 0320 0F       		.uleb128 0xf
+ 1169 0321 B8010000 		.4byte	.LASF43
+ 1170 0325 01       		.byte	0x1
+ 1171 0326 CE       		.byte	0xce
+ 1172 0327 97000000 		.4byte	0x97
+ 1173 032b 02       		.uleb128 0x2
+ 1174 032c 91       		.byte	0x91
+ 1175 032d 64       		.sleb128 -28
+ 1176 032e 0F       		.uleb128 0xf
+ 1177 032f 89020000 		.4byte	.LASF44
+ 1178 0333 01       		.byte	0x1
+ 1179 0334 D1       		.byte	0xd1
+ 1180 0335 C6000000 		.4byte	0xc6
+ 1181 0339 02       		.uleb128 0x2
+ 1182 033a 91       		.byte	0x91
+ 1183 033b 5C       		.sleb128 -36
+ 1184 033c 0F       		.uleb128 0xf
+ 1185 033d 59030000 		.4byte	.LASF32
+ 1186 0341 01       		.byte	0x1
+ 1187 0342 D3       		.byte	0xd3
+ 1188 0343 64000000 		.4byte	0x64
+ 1189 0347 02       		.uleb128 0x2
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc9veP4D.s 			page 31
+
+
+ 1190 0348 91       		.byte	0x91
+ 1191 0349 77       		.sleb128 -9
+ 1192 034a 0F       		.uleb128 0xf
+ 1193 034b B8020000 		.4byte	.LASF45
+ 1194 034f 01       		.byte	0x1
+ 1195 0350 D5       		.byte	0xd5
+ 1196 0351 64000000 		.4byte	0x64
+ 1197 0355 02       		.uleb128 0x2
+ 1198 0356 91       		.byte	0x91
+ 1199 0357 5B       		.sleb128 -37
+ 1200 0358 0F       		.uleb128 0xf
+ 1201 0359 ED010000 		.4byte	.LASF33
+ 1202 035d 01       		.byte	0x1
+ 1203 035e D7       		.byte	0xd7
+ 1204 035f 4A000000 		.4byte	0x4a
+ 1205 0363 02       		.uleb128 0x2
+ 1206 0364 91       		.byte	0x91
+ 1207 0365 70       		.sleb128 -16
+ 1208 0366 00       		.byte	0
+ 1209 0367 11       		.uleb128 0x11
+ 1210 0368 27020000 		.4byte	.LASF46
+ 1211 036c 01       		.byte	0x1
+ 1212 036d 3601     		.2byte	0x136
+ 1213 036f 25000000 		.4byte	0x25
+ 1214 0373 00000000 		.4byte	.LFB37
+ 1215 0377 38000000 		.4byte	.LFE37-.LFB37
+ 1216 037b 01       		.uleb128 0x1
+ 1217 037c 9C       		.byte	0x9c
+ 1218 037d 91030000 		.4byte	0x391
+ 1219 0381 12       		.uleb128 0x12
+ 1220 0382 C3010000 		.4byte	.LASF39
+ 1221 0386 01       		.byte	0x1
+ 1222 0387 3601     		.2byte	0x136
+ 1223 0389 C9020000 		.4byte	0x2c9
+ 1224 038d 02       		.uleb128 0x2
+ 1225 038e 91       		.byte	0x91
+ 1226 038f 74       		.sleb128 -12
+ 1227 0390 00       		.byte	0
+ 1228 0391 13       		.uleb128 0x13
+ 1229 0392 12030000 		.4byte	.LASF47
+ 1230 0396 01       		.byte	0x1
+ 1231 0397 7601     		.2byte	0x176
+ 1232 0399 25000000 		.4byte	0x25
+ 1233 039d 00000000 		.4byte	.LFB38
+ 1234 03a1 F0000000 		.4byte	.LFE38-.LFB38
+ 1235 03a5 01       		.uleb128 0x1
+ 1236 03a6 9C       		.byte	0x9c
+ 1237 03a7 13040000 		.4byte	0x413
+ 1238 03ab 12       		.uleb128 0x12
+ 1239 03ac 14000000 		.4byte	.LASF48
+ 1240 03b0 01       		.byte	0x1
+ 1241 03b1 7601     		.2byte	0x176
+ 1242 03b3 64000000 		.4byte	0x64
+ 1243 03b7 02       		.uleb128 0x2
+ 1244 03b8 91       		.byte	0x91
+ 1245 03b9 5F       		.sleb128 -33
+ 1246 03ba 12       		.uleb128 0x12
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc9veP4D.s 			page 32
+
+
+ 1247 03bb D6010000 		.4byte	.LASF49
+ 1248 03bf 01       		.byte	0x1
+ 1249 03c0 7601     		.2byte	0x176
+ 1250 03c2 64000000 		.4byte	0x64
+ 1251 03c6 02       		.uleb128 0x2
+ 1252 03c7 91       		.byte	0x91
+ 1253 03c8 5E       		.sleb128 -34
+ 1254 03c9 12       		.uleb128 0x12
+ 1255 03ca AF020000 		.4byte	.LASF50
+ 1256 03ce 01       		.byte	0x1
+ 1257 03cf 7601     		.2byte	0x176
+ 1258 03d1 B0010000 		.4byte	0x1b0
+ 1259 03d5 02       		.uleb128 0x2
+ 1260 03d6 91       		.byte	0x91
+ 1261 03d7 58       		.sleb128 -40
+ 1262 03d8 14       		.uleb128 0x14
+ 1263 03d9 6C656E00 		.ascii	"len\000"
+ 1264 03dd 01       		.byte	0x1
+ 1265 03de 7601     		.2byte	0x176
+ 1266 03e0 64000000 		.4byte	0x64
+ 1267 03e4 02       		.uleb128 0x2
+ 1268 03e5 91       		.byte	0x91
+ 1269 03e6 5D       		.sleb128 -35
+ 1270 03e7 15       		.uleb128 0x15
+ 1271 03e8 6900     		.ascii	"i\000"
+ 1272 03ea 01       		.byte	0x1
+ 1273 03eb 7801     		.2byte	0x178
+ 1274 03ed 20020000 		.4byte	0x220
+ 1275 03f1 02       		.uleb128 0x2
+ 1276 03f2 91       		.byte	0x91
+ 1277 03f3 6F       		.sleb128 -17
+ 1278 03f4 16       		.uleb128 0x16
+ 1279 03f5 2E030000 		.4byte	.LASF51
+ 1280 03f9 01       		.byte	0x1
+ 1281 03fa 7901     		.2byte	0x179
+ 1282 03fc 15020000 		.4byte	0x215
+ 1283 0400 02       		.uleb128 0x2
+ 1284 0401 91       		.byte	0x91
+ 1285 0402 6E       		.sleb128 -18
+ 1286 0403 16       		.uleb128 0x16
+ 1287 0404 84020000 		.4byte	.LASF52
+ 1288 0408 01       		.byte	0x1
+ 1289 0409 8D01     		.2byte	0x18d
+ 1290 040b 13040000 		.4byte	0x413
+ 1291 040f 02       		.uleb128 0x2
+ 1292 0410 91       		.byte	0x91
+ 1293 0411 64       		.sleb128 -28
+ 1294 0412 00       		.byte	0
+ 1295 0413 17       		.uleb128 0x17
+ 1296 0414 20020000 		.4byte	0x220
+ 1297 0418 23040000 		.4byte	0x423
+ 1298 041c 18       		.uleb128 0x18
+ 1299 041d 47020000 		.4byte	0x247
+ 1300 0421 09       		.byte	0x9
+ 1301 0422 00       		.byte	0
+ 1302 0423 13       		.uleb128 0x13
+ 1303 0424 2C000000 		.4byte	.LASF53
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc9veP4D.s 			page 33
+
+
+ 1304 0428 01       		.byte	0x1
+ 1305 0429 B401     		.2byte	0x1b4
+ 1306 042b 25000000 		.4byte	0x25
+ 1307 042f 00000000 		.4byte	.LFB39
+ 1308 0433 14010000 		.4byte	.LFE39-.LFB39
+ 1309 0437 01       		.uleb128 0x1
+ 1310 0438 9C       		.byte	0x9c
+ 1311 0439 98040000 		.4byte	0x498
+ 1312 043d 12       		.uleb128 0x12
+ 1313 043e 14000000 		.4byte	.LASF48
+ 1314 0442 01       		.byte	0x1
+ 1315 0443 B401     		.2byte	0x1b4
+ 1316 0445 64000000 		.4byte	0x64
+ 1317 0449 02       		.uleb128 0x2
+ 1318 044a 91       		.byte	0x91
+ 1319 044b 67       		.sleb128 -25
+ 1320 044c 12       		.uleb128 0x12
+ 1321 044d D6010000 		.4byte	.LASF49
+ 1322 0451 01       		.byte	0x1
+ 1323 0452 B401     		.2byte	0x1b4
+ 1324 0454 64000000 		.4byte	0x64
+ 1325 0458 02       		.uleb128 0x2
+ 1326 0459 91       		.byte	0x91
+ 1327 045a 66       		.sleb128 -26
+ 1328 045b 12       		.uleb128 0x12
+ 1329 045c AF020000 		.4byte	.LASF50
+ 1330 0460 01       		.byte	0x1
+ 1331 0461 B401     		.2byte	0x1b4
+ 1332 0463 B0010000 		.4byte	0x1b0
+ 1333 0467 02       		.uleb128 0x2
+ 1334 0468 91       		.byte	0x91
+ 1335 0469 60       		.sleb128 -32
+ 1336 046a 14       		.uleb128 0x14
+ 1337 046b 6C656E00 		.ascii	"len\000"
+ 1338 046f 01       		.byte	0x1
+ 1339 0470 B401     		.2byte	0x1b4
+ 1340 0472 64000000 		.4byte	0x64
+ 1341 0476 02       		.uleb128 0x2
+ 1342 0477 91       		.byte	0x91
+ 1343 0478 65       		.sleb128 -27
+ 1344 0479 16       		.uleb128 0x16
+ 1345 047a 2E030000 		.4byte	.LASF51
+ 1346 047e 01       		.byte	0x1
+ 1347 047f B601     		.2byte	0x1b6
+ 1348 0481 15020000 		.4byte	0x215
+ 1349 0485 02       		.uleb128 0x2
+ 1350 0486 91       		.byte	0x91
+ 1351 0487 6F       		.sleb128 -17
+ 1352 0488 15       		.uleb128 0x15
+ 1353 0489 70747200 		.ascii	"ptr\000"
+ 1354 048d 01       		.byte	0x1
+ 1355 048e CC01     		.2byte	0x1cc
+ 1356 0490 98040000 		.4byte	0x498
+ 1357 0494 02       		.uleb128 0x2
+ 1358 0495 91       		.byte	0x91
+ 1359 0496 68       		.sleb128 -24
+ 1360 0497 00       		.byte	0
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc9veP4D.s 			page 34
+
+
+ 1361 0498 0A       		.uleb128 0xa
+ 1362 0499 04       		.byte	0x4
+ 1363 049a 20020000 		.4byte	0x220
+ 1364 049e 19       		.uleb128 0x19
+ 1365 049f 6B000000 		.4byte	.LASF58
+ 1366 04a3 01       		.byte	0x1
+ 1367 04a4 0002     		.2byte	0x200
+ 1368 04a6 00000000 		.4byte	.LFB40
+ 1369 04aa 18000000 		.4byte	.LFE40-.LFB40
+ 1370 04ae 01       		.uleb128 0x1
+ 1371 04af 9C       		.byte	0x9c
+ 1372 04b0 12       		.uleb128 0x12
+ 1373 04b1 65030000 		.4byte	.LASF54
+ 1374 04b5 01       		.byte	0x1
+ 1375 04b6 0002     		.2byte	0x200
+ 1376 04b8 7D000000 		.4byte	0x7d
+ 1377 04bc 02       		.uleb128 0x2
+ 1378 04bd 91       		.byte	0x91
+ 1379 04be 74       		.sleb128 -12
+ 1380 04bf 00       		.byte	0
+ 1381 04c0 00       		.byte	0
+ 1382              		.section	.debug_abbrev,"",%progbits
+ 1383              	.Ldebug_abbrev0:
+ 1384 0000 01       		.uleb128 0x1
+ 1385 0001 11       		.uleb128 0x11
+ 1386 0002 01       		.byte	0x1
+ 1387 0003 25       		.uleb128 0x25
+ 1388 0004 0E       		.uleb128 0xe
+ 1389 0005 13       		.uleb128 0x13
+ 1390 0006 0B       		.uleb128 0xb
+ 1391 0007 03       		.uleb128 0x3
+ 1392 0008 0E       		.uleb128 0xe
+ 1393 0009 1B       		.uleb128 0x1b
+ 1394 000a 0E       		.uleb128 0xe
+ 1395 000b 55       		.uleb128 0x55
+ 1396 000c 17       		.uleb128 0x17
+ 1397 000d 11       		.uleb128 0x11
+ 1398 000e 01       		.uleb128 0x1
+ 1399 000f 10       		.uleb128 0x10
+ 1400 0010 17       		.uleb128 0x17
+ 1401 0011 00       		.byte	0
+ 1402 0012 00       		.byte	0
+ 1403 0013 02       		.uleb128 0x2
+ 1404 0014 16       		.uleb128 0x16
+ 1405 0015 00       		.byte	0
+ 1406 0016 03       		.uleb128 0x3
+ 1407 0017 08       		.uleb128 0x8
+ 1408 0018 3A       		.uleb128 0x3a
+ 1409 0019 0B       		.uleb128 0xb
+ 1410 001a 3B       		.uleb128 0x3b
+ 1411 001b 05       		.uleb128 0x5
+ 1412 001c 49       		.uleb128 0x49
+ 1413 001d 13       		.uleb128 0x13
+ 1414 001e 00       		.byte	0
+ 1415 001f 00       		.byte	0
+ 1416 0020 03       		.uleb128 0x3
+ 1417 0021 24       		.uleb128 0x24
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc9veP4D.s 			page 35
+
+
+ 1418 0022 00       		.byte	0
+ 1419 0023 0B       		.uleb128 0xb
+ 1420 0024 0B       		.uleb128 0xb
+ 1421 0025 3E       		.uleb128 0x3e
+ 1422 0026 0B       		.uleb128 0xb
+ 1423 0027 03       		.uleb128 0x3
+ 1424 0028 0E       		.uleb128 0xe
+ 1425 0029 00       		.byte	0
+ 1426 002a 00       		.byte	0
+ 1427 002b 04       		.uleb128 0x4
+ 1428 002c 24       		.uleb128 0x24
+ 1429 002d 00       		.byte	0
+ 1430 002e 0B       		.uleb128 0xb
+ 1431 002f 0B       		.uleb128 0xb
+ 1432 0030 3E       		.uleb128 0x3e
+ 1433 0031 0B       		.uleb128 0xb
+ 1434 0032 03       		.uleb128 0x3
+ 1435 0033 08       		.uleb128 0x8
+ 1436 0034 00       		.byte	0
+ 1437 0035 00       		.byte	0
+ 1438 0036 05       		.uleb128 0x5
+ 1439 0037 13       		.uleb128 0x13
+ 1440 0038 01       		.byte	0x1
+ 1441 0039 03       		.uleb128 0x3
+ 1442 003a 0E       		.uleb128 0xe
+ 1443 003b 0B       		.uleb128 0xb
+ 1444 003c 0B       		.uleb128 0xb
+ 1445 003d 3A       		.uleb128 0x3a
+ 1446 003e 0B       		.uleb128 0xb
+ 1447 003f 3B       		.uleb128 0x3b
+ 1448 0040 05       		.uleb128 0x5
+ 1449 0041 01       		.uleb128 0x1
+ 1450 0042 13       		.uleb128 0x13
+ 1451 0043 00       		.byte	0
+ 1452 0044 00       		.byte	0
+ 1453 0045 06       		.uleb128 0x6
+ 1454 0046 0D       		.uleb128 0xd
+ 1455 0047 00       		.byte	0
+ 1456 0048 03       		.uleb128 0x3
+ 1457 0049 08       		.uleb128 0x8
+ 1458 004a 3A       		.uleb128 0x3a
+ 1459 004b 0B       		.uleb128 0xb
+ 1460 004c 3B       		.uleb128 0x3b
+ 1461 004d 05       		.uleb128 0x5
+ 1462 004e 49       		.uleb128 0x49
+ 1463 004f 13       		.uleb128 0x13
+ 1464 0050 38       		.uleb128 0x38
+ 1465 0051 0B       		.uleb128 0xb
+ 1466 0052 00       		.byte	0
+ 1467 0053 00       		.byte	0
+ 1468 0054 07       		.uleb128 0x7
+ 1469 0055 0D       		.uleb128 0xd
+ 1470 0056 00       		.byte	0
+ 1471 0057 03       		.uleb128 0x3
+ 1472 0058 0E       		.uleb128 0xe
+ 1473 0059 3A       		.uleb128 0x3a
+ 1474 005a 0B       		.uleb128 0xb
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc9veP4D.s 			page 36
+
+
+ 1475 005b 3B       		.uleb128 0x3b
+ 1476 005c 05       		.uleb128 0x5
+ 1477 005d 49       		.uleb128 0x49
+ 1478 005e 13       		.uleb128 0x13
+ 1479 005f 38       		.uleb128 0x38
+ 1480 0060 0B       		.uleb128 0xb
+ 1481 0061 00       		.byte	0
+ 1482 0062 00       		.byte	0
+ 1483 0063 08       		.uleb128 0x8
+ 1484 0064 15       		.uleb128 0x15
+ 1485 0065 01       		.byte	0x1
+ 1486 0066 27       		.uleb128 0x27
+ 1487 0067 19       		.uleb128 0x19
+ 1488 0068 49       		.uleb128 0x49
+ 1489 0069 13       		.uleb128 0x13
+ 1490 006a 01       		.uleb128 0x1
+ 1491 006b 13       		.uleb128 0x13
+ 1492 006c 00       		.byte	0
+ 1493 006d 00       		.byte	0
+ 1494 006e 09       		.uleb128 0x9
+ 1495 006f 05       		.uleb128 0x5
+ 1496 0070 00       		.byte	0
+ 1497 0071 49       		.uleb128 0x49
+ 1498 0072 13       		.uleb128 0x13
+ 1499 0073 00       		.byte	0
+ 1500 0074 00       		.byte	0
+ 1501 0075 0A       		.uleb128 0xa
+ 1502 0076 0F       		.uleb128 0xf
+ 1503 0077 00       		.byte	0
+ 1504 0078 0B       		.uleb128 0xb
+ 1505 0079 0B       		.uleb128 0xb
+ 1506 007a 49       		.uleb128 0x49
+ 1507 007b 13       		.uleb128 0x13
+ 1508 007c 00       		.byte	0
+ 1509 007d 00       		.byte	0
+ 1510 007e 0B       		.uleb128 0xb
+ 1511 007f 15       		.uleb128 0x15
+ 1512 0080 01       		.byte	0x1
+ 1513 0081 27       		.uleb128 0x27
+ 1514 0082 19       		.uleb128 0x19
+ 1515 0083 01       		.uleb128 0x1
+ 1516 0084 13       		.uleb128 0x13
+ 1517 0085 00       		.byte	0
+ 1518 0086 00       		.byte	0
+ 1519 0087 0C       		.uleb128 0xc
+ 1520 0088 16       		.uleb128 0x16
+ 1521 0089 00       		.byte	0
+ 1522 008a 03       		.uleb128 0x3
+ 1523 008b 0E       		.uleb128 0xe
+ 1524 008c 3A       		.uleb128 0x3a
+ 1525 008d 0B       		.uleb128 0xb
+ 1526 008e 3B       		.uleb128 0x3b
+ 1527 008f 0B       		.uleb128 0xb
+ 1528 0090 49       		.uleb128 0x49
+ 1529 0091 13       		.uleb128 0x13
+ 1530 0092 00       		.byte	0
+ 1531 0093 00       		.byte	0
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc9veP4D.s 			page 37
+
+
+ 1532 0094 0D       		.uleb128 0xd
+ 1533 0095 2E       		.uleb128 0x2e
+ 1534 0096 01       		.byte	0x1
+ 1535 0097 3F       		.uleb128 0x3f
+ 1536 0098 19       		.uleb128 0x19
+ 1537 0099 03       		.uleb128 0x3
+ 1538 009a 0E       		.uleb128 0xe
+ 1539 009b 3A       		.uleb128 0x3a
+ 1540 009c 0B       		.uleb128 0xb
+ 1541 009d 3B       		.uleb128 0x3b
+ 1542 009e 0B       		.uleb128 0xb
+ 1543 009f 27       		.uleb128 0x27
+ 1544 00a0 19       		.uleb128 0x19
+ 1545 00a1 49       		.uleb128 0x49
+ 1546 00a2 13       		.uleb128 0x13
+ 1547 00a3 11       		.uleb128 0x11
+ 1548 00a4 01       		.uleb128 0x1
+ 1549 00a5 12       		.uleb128 0x12
+ 1550 00a6 06       		.uleb128 0x6
+ 1551 00a7 40       		.uleb128 0x40
+ 1552 00a8 18       		.uleb128 0x18
+ 1553 00a9 9642     		.uleb128 0x2116
+ 1554 00ab 19       		.uleb128 0x19
+ 1555 00ac 01       		.uleb128 0x1
+ 1556 00ad 13       		.uleb128 0x13
+ 1557 00ae 00       		.byte	0
+ 1558 00af 00       		.byte	0
+ 1559 00b0 0E       		.uleb128 0xe
+ 1560 00b1 05       		.uleb128 0x5
+ 1561 00b2 00       		.byte	0
+ 1562 00b3 03       		.uleb128 0x3
+ 1563 00b4 0E       		.uleb128 0xe
+ 1564 00b5 3A       		.uleb128 0x3a
+ 1565 00b6 0B       		.uleb128 0xb
+ 1566 00b7 3B       		.uleb128 0x3b
+ 1567 00b8 0B       		.uleb128 0xb
+ 1568 00b9 49       		.uleb128 0x49
+ 1569 00ba 13       		.uleb128 0x13
+ 1570 00bb 02       		.uleb128 0x2
+ 1571 00bc 18       		.uleb128 0x18
+ 1572 00bd 00       		.byte	0
+ 1573 00be 00       		.byte	0
+ 1574 00bf 0F       		.uleb128 0xf
+ 1575 00c0 34       		.uleb128 0x34
+ 1576 00c1 00       		.byte	0
+ 1577 00c2 03       		.uleb128 0x3
+ 1578 00c3 0E       		.uleb128 0xe
+ 1579 00c4 3A       		.uleb128 0x3a
+ 1580 00c5 0B       		.uleb128 0xb
+ 1581 00c6 3B       		.uleb128 0x3b
+ 1582 00c7 0B       		.uleb128 0xb
+ 1583 00c8 49       		.uleb128 0x49
+ 1584 00c9 13       		.uleb128 0x13
+ 1585 00ca 02       		.uleb128 0x2
+ 1586 00cb 18       		.uleb128 0x18
+ 1587 00cc 00       		.byte	0
+ 1588 00cd 00       		.byte	0
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc9veP4D.s 			page 38
+
+
+ 1589 00ce 10       		.uleb128 0x10
+ 1590 00cf 34       		.uleb128 0x34
+ 1591 00d0 00       		.byte	0
+ 1592 00d1 03       		.uleb128 0x3
+ 1593 00d2 08       		.uleb128 0x8
+ 1594 00d3 3A       		.uleb128 0x3a
+ 1595 00d4 0B       		.uleb128 0xb
+ 1596 00d5 3B       		.uleb128 0x3b
+ 1597 00d6 0B       		.uleb128 0xb
+ 1598 00d7 49       		.uleb128 0x49
+ 1599 00d8 13       		.uleb128 0x13
+ 1600 00d9 02       		.uleb128 0x2
+ 1601 00da 18       		.uleb128 0x18
+ 1602 00db 00       		.byte	0
+ 1603 00dc 00       		.byte	0
+ 1604 00dd 11       		.uleb128 0x11
+ 1605 00de 2E       		.uleb128 0x2e
+ 1606 00df 01       		.byte	0x1
+ 1607 00e0 3F       		.uleb128 0x3f
+ 1608 00e1 19       		.uleb128 0x19
+ 1609 00e2 03       		.uleb128 0x3
+ 1610 00e3 0E       		.uleb128 0xe
+ 1611 00e4 3A       		.uleb128 0x3a
+ 1612 00e5 0B       		.uleb128 0xb
+ 1613 00e6 3B       		.uleb128 0x3b
+ 1614 00e7 05       		.uleb128 0x5
+ 1615 00e8 27       		.uleb128 0x27
+ 1616 00e9 19       		.uleb128 0x19
+ 1617 00ea 49       		.uleb128 0x49
+ 1618 00eb 13       		.uleb128 0x13
+ 1619 00ec 11       		.uleb128 0x11
+ 1620 00ed 01       		.uleb128 0x1
+ 1621 00ee 12       		.uleb128 0x12
+ 1622 00ef 06       		.uleb128 0x6
+ 1623 00f0 40       		.uleb128 0x40
+ 1624 00f1 18       		.uleb128 0x18
+ 1625 00f2 9742     		.uleb128 0x2117
+ 1626 00f4 19       		.uleb128 0x19
+ 1627 00f5 01       		.uleb128 0x1
+ 1628 00f6 13       		.uleb128 0x13
+ 1629 00f7 00       		.byte	0
+ 1630 00f8 00       		.byte	0
+ 1631 00f9 12       		.uleb128 0x12
+ 1632 00fa 05       		.uleb128 0x5
+ 1633 00fb 00       		.byte	0
+ 1634 00fc 03       		.uleb128 0x3
+ 1635 00fd 0E       		.uleb128 0xe
+ 1636 00fe 3A       		.uleb128 0x3a
+ 1637 00ff 0B       		.uleb128 0xb
+ 1638 0100 3B       		.uleb128 0x3b
+ 1639 0101 05       		.uleb128 0x5
+ 1640 0102 49       		.uleb128 0x49
+ 1641 0103 13       		.uleb128 0x13
+ 1642 0104 02       		.uleb128 0x2
+ 1643 0105 18       		.uleb128 0x18
+ 1644 0106 00       		.byte	0
+ 1645 0107 00       		.byte	0
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc9veP4D.s 			page 39
+
+
+ 1646 0108 13       		.uleb128 0x13
+ 1647 0109 2E       		.uleb128 0x2e
+ 1648 010a 01       		.byte	0x1
+ 1649 010b 3F       		.uleb128 0x3f
+ 1650 010c 19       		.uleb128 0x19
+ 1651 010d 03       		.uleb128 0x3
+ 1652 010e 0E       		.uleb128 0xe
+ 1653 010f 3A       		.uleb128 0x3a
+ 1654 0110 0B       		.uleb128 0xb
+ 1655 0111 3B       		.uleb128 0x3b
+ 1656 0112 05       		.uleb128 0x5
+ 1657 0113 27       		.uleb128 0x27
+ 1658 0114 19       		.uleb128 0x19
+ 1659 0115 49       		.uleb128 0x49
+ 1660 0116 13       		.uleb128 0x13
+ 1661 0117 11       		.uleb128 0x11
+ 1662 0118 01       		.uleb128 0x1
+ 1663 0119 12       		.uleb128 0x12
+ 1664 011a 06       		.uleb128 0x6
+ 1665 011b 40       		.uleb128 0x40
+ 1666 011c 18       		.uleb128 0x18
+ 1667 011d 9642     		.uleb128 0x2116
+ 1668 011f 19       		.uleb128 0x19
+ 1669 0120 01       		.uleb128 0x1
+ 1670 0121 13       		.uleb128 0x13
+ 1671 0122 00       		.byte	0
+ 1672 0123 00       		.byte	0
+ 1673 0124 14       		.uleb128 0x14
+ 1674 0125 05       		.uleb128 0x5
+ 1675 0126 00       		.byte	0
+ 1676 0127 03       		.uleb128 0x3
+ 1677 0128 08       		.uleb128 0x8
+ 1678 0129 3A       		.uleb128 0x3a
+ 1679 012a 0B       		.uleb128 0xb
+ 1680 012b 3B       		.uleb128 0x3b
+ 1681 012c 05       		.uleb128 0x5
+ 1682 012d 49       		.uleb128 0x49
+ 1683 012e 13       		.uleb128 0x13
+ 1684 012f 02       		.uleb128 0x2
+ 1685 0130 18       		.uleb128 0x18
+ 1686 0131 00       		.byte	0
+ 1687 0132 00       		.byte	0
+ 1688 0133 15       		.uleb128 0x15
+ 1689 0134 34       		.uleb128 0x34
+ 1690 0135 00       		.byte	0
+ 1691 0136 03       		.uleb128 0x3
+ 1692 0137 08       		.uleb128 0x8
+ 1693 0138 3A       		.uleb128 0x3a
+ 1694 0139 0B       		.uleb128 0xb
+ 1695 013a 3B       		.uleb128 0x3b
+ 1696 013b 05       		.uleb128 0x5
+ 1697 013c 49       		.uleb128 0x49
+ 1698 013d 13       		.uleb128 0x13
+ 1699 013e 02       		.uleb128 0x2
+ 1700 013f 18       		.uleb128 0x18
+ 1701 0140 00       		.byte	0
+ 1702 0141 00       		.byte	0
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc9veP4D.s 			page 40
+
+
+ 1703 0142 16       		.uleb128 0x16
+ 1704 0143 34       		.uleb128 0x34
+ 1705 0144 00       		.byte	0
+ 1706 0145 03       		.uleb128 0x3
+ 1707 0146 0E       		.uleb128 0xe
+ 1708 0147 3A       		.uleb128 0x3a
+ 1709 0148 0B       		.uleb128 0xb
+ 1710 0149 3B       		.uleb128 0x3b
+ 1711 014a 05       		.uleb128 0x5
+ 1712 014b 49       		.uleb128 0x49
+ 1713 014c 13       		.uleb128 0x13
+ 1714 014d 02       		.uleb128 0x2
+ 1715 014e 18       		.uleb128 0x18
+ 1716 014f 00       		.byte	0
+ 1717 0150 00       		.byte	0
+ 1718 0151 17       		.uleb128 0x17
+ 1719 0152 01       		.uleb128 0x1
+ 1720 0153 01       		.byte	0x1
+ 1721 0154 49       		.uleb128 0x49
+ 1722 0155 13       		.uleb128 0x13
+ 1723 0156 01       		.uleb128 0x1
+ 1724 0157 13       		.uleb128 0x13
+ 1725 0158 00       		.byte	0
+ 1726 0159 00       		.byte	0
+ 1727 015a 18       		.uleb128 0x18
+ 1728 015b 21       		.uleb128 0x21
+ 1729 015c 00       		.byte	0
+ 1730 015d 49       		.uleb128 0x49
+ 1731 015e 13       		.uleb128 0x13
+ 1732 015f 2F       		.uleb128 0x2f
+ 1733 0160 0B       		.uleb128 0xb
+ 1734 0161 00       		.byte	0
+ 1735 0162 00       		.byte	0
+ 1736 0163 19       		.uleb128 0x19
+ 1737 0164 2E       		.uleb128 0x2e
+ 1738 0165 01       		.byte	0x1
+ 1739 0166 3F       		.uleb128 0x3f
+ 1740 0167 19       		.uleb128 0x19
+ 1741 0168 03       		.uleb128 0x3
+ 1742 0169 0E       		.uleb128 0xe
+ 1743 016a 3A       		.uleb128 0x3a
+ 1744 016b 0B       		.uleb128 0xb
+ 1745 016c 3B       		.uleb128 0x3b
+ 1746 016d 05       		.uleb128 0x5
+ 1747 016e 27       		.uleb128 0x27
+ 1748 016f 19       		.uleb128 0x19
+ 1749 0170 11       		.uleb128 0x11
+ 1750 0171 01       		.uleb128 0x1
+ 1751 0172 12       		.uleb128 0x12
+ 1752 0173 06       		.uleb128 0x6
+ 1753 0174 40       		.uleb128 0x40
+ 1754 0175 18       		.uleb128 0x18
+ 1755 0176 9642     		.uleb128 0x2116
+ 1756 0178 19       		.uleb128 0x19
+ 1757 0179 00       		.byte	0
+ 1758 017a 00       		.byte	0
+ 1759 017b 00       		.byte	0
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc9veP4D.s 			page 41
+
+
+ 1760              		.section	.debug_aranges,"",%progbits
+ 1761 0000 44000000 		.4byte	0x44
+ 1762 0004 0200     		.2byte	0x2
+ 1763 0006 00000000 		.4byte	.Ldebug_info0
+ 1764 000a 04       		.byte	0x4
+ 1765 000b 00       		.byte	0
+ 1766 000c 0000     		.2byte	0
+ 1767 000e 0000     		.2byte	0
+ 1768 0010 00000000 		.4byte	.LFB35
+ 1769 0014 0A010000 		.4byte	.LFE35-.LFB35
+ 1770 0018 00000000 		.4byte	.LFB36
+ 1771 001c FA000000 		.4byte	.LFE36-.LFB36
+ 1772 0020 00000000 		.4byte	.LFB37
+ 1773 0024 38000000 		.4byte	.LFE37-.LFB37
+ 1774 0028 00000000 		.4byte	.LFB38
+ 1775 002c F0000000 		.4byte	.LFE38-.LFB38
+ 1776 0030 00000000 		.4byte	.LFB39
+ 1777 0034 14010000 		.4byte	.LFE39-.LFB39
+ 1778 0038 00000000 		.4byte	.LFB40
+ 1779 003c 18000000 		.4byte	.LFE40-.LFB40
+ 1780 0040 00000000 		.4byte	0
+ 1781 0044 00000000 		.4byte	0
+ 1782              		.section	.debug_ranges,"",%progbits
+ 1783              	.Ldebug_ranges0:
+ 1784 0000 00000000 		.4byte	.LFB35
+ 1785 0004 0A010000 		.4byte	.LFE35
+ 1786 0008 00000000 		.4byte	.LFB36
+ 1787 000c FA000000 		.4byte	.LFE36
+ 1788 0010 00000000 		.4byte	.LFB37
+ 1789 0014 38000000 		.4byte	.LFE37
+ 1790 0018 00000000 		.4byte	.LFB38
+ 1791 001c F0000000 		.4byte	.LFE38
+ 1792 0020 00000000 		.4byte	.LFB39
+ 1793 0024 14010000 		.4byte	.LFE39
+ 1794 0028 00000000 		.4byte	.LFB40
+ 1795 002c 18000000 		.4byte	.LFE40
+ 1796 0030 00000000 		.4byte	0
+ 1797 0034 00000000 		.4byte	0
+ 1798              		.section	.debug_line,"",%progbits
+ 1799              	.Ldebug_line0:
+ 1800 0000 11020000 		.section	.debug_str,"MS",%progbits,1
+ 1800      02003001 
+ 1800      00000201 
+ 1800      FB0E0D00 
+ 1800      01010101 
+ 1801              	.LASF18:
+ 1802 0000 6275735F 		.ascii	"bus_read\000"
+ 1802      72656164 
+ 1802      00
+ 1803              	.LASF34:
+ 1804 0009 736F6674 		.ascii	"soft_reset\000"
+ 1804      5F726573 
+ 1804      657400
+ 1805              	.LASF48:
+ 1806 0014 6465765F 		.ascii	"dev_id\000"
+ 1806      696400
+ 1807              	.LASF25:
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc9veP4D.s 			page 42
+
+
+ 1808 001b 696E7438 		.ascii	"int8_t\000"
+ 1808      5F7400
+ 1809              	.LASF17:
+ 1810 0022 6275735F 		.ascii	"bus_write\000"
+ 1810      77726974 
+ 1810      6500
+ 1811              	.LASF53:
+ 1812 002c 424D4132 		.ascii	"BMA2x2_I2C_bus_read\000"
+ 1812      78325F49 
+ 1812      32435F62 
+ 1812      75735F72 
+ 1812      65616400 
+ 1813              	.LASF9:
+ 1814 0040 74656D70 		.ascii	"temp\000"
+ 1814      00
+ 1815              	.LASF1:
+ 1816 0045 73686F72 		.ascii	"short int\000"
+ 1816      7420696E 
+ 1816      7400
+ 1817              	.LASF31:
+ 1818 004f 73697A65 		.ascii	"sizetype\000"
+ 1818      74797065 
+ 1818      00
+ 1819              	.LASF37:
+ 1820 0058 626D6132 		.ascii	"bma2x2_shock_setup\000"
+ 1820      78325F73 
+ 1820      686F636B 
+ 1820      5F736574 
+ 1820      757000
+ 1821              	.LASF58:
+ 1822 006b 424D4132 		.ascii	"BMA2x2_delay_msek\000"
+ 1822      78325F64 
+ 1822      656C6179 
+ 1822      5F6D7365 
+ 1822      6B00
+ 1823              	.LASF19:
+ 1824 007d 62757273 		.ascii	"burst_read\000"
+ 1824      745F7265 
+ 1824      616400
+ 1825              	.LASF8:
+ 1826 0088 626D6132 		.ascii	"bma2x2_accel_data_temp\000"
+ 1826      78325F61 
+ 1826      6363656C 
+ 1826      5F646174 
+ 1826      615F7465 
+ 1827              	.LASF14:
+ 1828 009f 6C6F775F 		.ascii	"low_mode_reg\000"
+ 1828      6D6F6465 
+ 1828      5F726567 
+ 1828      00
+ 1829              	.LASF36:
+ 1830 00ac 6163635F 		.ascii	"acc_xyz\000"
+ 1830      78797A00 
+ 1831              	.LASF16:
+ 1832 00b4 6669666F 		.ascii	"fifo_config\000"
+ 1832      5F636F6E 
+ 1832      66696700 
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc9veP4D.s 			page 43
+
+
+ 1833              	.LASF7:
+ 1834 00c0 626D6132 		.ascii	"bma2x2_accel_data\000"
+ 1834      78325F61 
+ 1834      6363656C 
+ 1834      5F646174 
+ 1834      6100
+ 1835              	.LASF26:
+ 1836 00d2 75696E74 		.ascii	"uint8_t\000"
+ 1836      385F7400 
+ 1837              	.LASF41:
+ 1838 00da 61636365 		.ascii	"accel_y_s16\000"
+ 1838      6C5F795F 
+ 1838      73313600 
+ 1839              	.LASF27:
+ 1840 00e6 666C6F61 		.ascii	"float\000"
+ 1840      7400
+ 1841              	.LASF38:
+ 1842 00ec 626D6132 		.ascii	"bma2x2_data_readout_template\000"
+ 1842      78325F64 
+ 1842      6174615F 
+ 1842      72656164 
+ 1842      6F75745F 
+ 1843              	.LASF2:
+ 1844 0109 6C6F6E67 		.ascii	"long long int\000"
+ 1844      206C6F6E 
+ 1844      6720696E 
+ 1844      7400
+ 1845              	.LASF23:
+ 1846 0117 6C6F6E67 		.ascii	"long int\000"
+ 1846      20696E74 
+ 1846      00
+ 1847              	.LASF22:
+ 1848 0120 5F5F7569 		.ascii	"__uint8_t\000"
+ 1848      6E74385F 
+ 1848      7400
+ 1849              	.LASF55:
+ 1850 012a 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1850      43313120 
+ 1850      352E342E 
+ 1850      31203230 
+ 1850      31363036 
+ 1851 015d 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m0 -mthumb -g -O"
+ 1851      20726576 
+ 1851      6973696F 
+ 1851      6E203233 
+ 1851      37373135 
+ 1852 0190 30202D66 		.ascii	"0 -ffunction-sections -ffat-lto-objects\000"
+ 1852      66756E63 
+ 1852      74696F6E 
+ 1852      2D736563 
+ 1852      74696F6E 
+ 1853              	.LASF43:
+ 1854 01b8 73616D70 		.ascii	"sample_xyz\000"
+ 1854      6C655F78 
+ 1854      797A00
+ 1855              	.LASF39:
+ 1856 01c3 626D6132 		.ascii	"bma2x2\000"
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc9veP4D.s 			page 44
+
+
+ 1856      783200
+ 1857              	.LASF30:
+ 1858 01ca 6C6F6E67 		.ascii	"long double\000"
+ 1858      20646F75 
+ 1858      626C6500 
+ 1859              	.LASF49:
+ 1860 01d6 7265675F 		.ascii	"reg_addr\000"
+ 1860      61646472 
+ 1860      00
+ 1861              	.LASF3:
+ 1862 01df 756E7369 		.ascii	"unsigned char\000"
+ 1862      676E6564 
+ 1862      20636861 
+ 1862      7200
+ 1863              	.LASF33:
+ 1864 01ed 636F6D5F 		.ascii	"com_rslt\000"
+ 1864      72736C74 
+ 1864      00
+ 1865              	.LASF13:
+ 1866 01f6 6374726C 		.ascii	"ctrl_mode_reg\000"
+ 1866      5F6D6F64 
+ 1866      655F7265 
+ 1866      6700
+ 1867              	.LASF0:
+ 1868 0204 7369676E 		.ascii	"signed char\000"
+ 1868      65642063 
+ 1868      68617200 
+ 1869              	.LASF6:
+ 1870 0210 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1870      206C6F6E 
+ 1870      6720756E 
+ 1870      7369676E 
+ 1870      65642069 
+ 1871              	.LASF46:
+ 1872 0227 4932435F 		.ascii	"I2C_routine\000"
+ 1872      726F7574 
+ 1872      696E6500 
+ 1873              	.LASF5:
+ 1874 0233 756E7369 		.ascii	"unsigned int\000"
+ 1874      676E6564 
+ 1874      20696E74 
+ 1874      00
+ 1875              	.LASF15:
+ 1876 0240 6465765F 		.ascii	"dev_addr\000"
+ 1876      61646472 
+ 1876      00
+ 1877              	.LASF4:
+ 1878 0249 73686F72 		.ascii	"short unsigned int\000"
+ 1878      7420756E 
+ 1878      7369676E 
+ 1878      65642069 
+ 1878      6E7400
+ 1879              	.LASF21:
+ 1880 025c 5F5F696E 		.ascii	"__int8_t\000"
+ 1880      74385F74 
+ 1880      00
+ 1881              	.LASF29:
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc9veP4D.s 			page 45
+
+
+ 1882 0265 63686172 		.ascii	"char\000"
+ 1882      00
+ 1883              	.LASF42:
+ 1884 026a 61636365 		.ascii	"accel_z_s16\000"
+ 1884      6C5F7A5F 
+ 1884      73313600 
+ 1885              	.LASF11:
+ 1886 0276 706F7765 		.ascii	"power_mode_u8\000"
+ 1886      725F6D6F 
+ 1886      64655F75 
+ 1886      3800
+ 1887              	.LASF52:
+ 1888 0284 64617461 		.ascii	"data\000"
+ 1888      00
+ 1889              	.LASF44:
+ 1890 0289 73616D70 		.ascii	"sample_xyzt\000"
+ 1890      6C655F78 
+ 1890      797A7400 
+ 1891              	.LASF24:
+ 1892 0295 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1892      20756E73 
+ 1892      69676E65 
+ 1892      6420696E 
+ 1892      7400
+ 1893              	.LASF12:
+ 1894 02a7 63686970 		.ascii	"chip_id\000"
+ 1894      5F696400 
+ 1895              	.LASF50:
+ 1896 02af 7265675F 		.ascii	"reg_data\000"
+ 1896      64617461 
+ 1896      00
+ 1897              	.LASF45:
+ 1898 02b8 62616E77 		.ascii	"banwid\000"
+ 1898      696400
+ 1899              	.LASF57:
+ 1900 02bf 433A5C55 		.ascii	"C:\\Users\\Tudor\\Documents\\PSoC Creator\\Workspac"
+ 1900      73657273 
+ 1900      5C547564 
+ 1900      6F725C44 
+ 1900      6F63756D 
+ 1901 02ed 6530335C 		.ascii	"e03\\Design01.cydsn\000"
+ 1901      44657369 
+ 1901      676E3031 
+ 1901      2E637964 
+ 1901      736E00
+ 1902              	.LASF20:
+ 1903 0300 64656C61 		.ascii	"delay_msec\000"
+ 1903      795F6D73 
+ 1903      656300
+ 1904              	.LASF35:
+ 1905 030b 68696768 		.ascii	"high_g\000"
+ 1905      5F6700
+ 1906              	.LASF47:
+ 1907 0312 424D4132 		.ascii	"BMA2x2_I2C_bus_write\000"
+ 1907      78325F49 
+ 1907      32435F62 
+ 1907      75735F77 
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc9veP4D.s 			page 46
+
+
+ 1907      72697465 
+ 1908              	.LASF28:
+ 1909 0327 646F7562 		.ascii	"double\000"
+ 1909      6C6500
+ 1910              	.LASF51:
+ 1911 032e 72736C74 		.ascii	"rslt\000"
+ 1911      00
+ 1912              	.LASF56:
+ 1913 0333 626D6132 		.ascii	"bma2x2_support.c\000"
+ 1913      78325F73 
+ 1913      7570706F 
+ 1913      72742E63 
+ 1913      00
+ 1914              	.LASF40:
+ 1915 0344 61636365 		.ascii	"accel_x_s16\000"
+ 1915      6C5F785F 
+ 1915      73313600 
+ 1916              	.LASF10:
+ 1917 0350 626D6132 		.ascii	"bma2x2_t\000"
+ 1917      78325F74 
+ 1917      00
+ 1918              	.LASF32:
+ 1919 0359 62775F76 		.ascii	"bw_value_u8\000"
+ 1919      616C7565 
+ 1919      5F753800 
+ 1920              	.LASF54:
+ 1921 0365 6D73656B 		.ascii	"msek\000"
+ 1921      00
+ 1922              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

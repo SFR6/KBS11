@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CyXmlSerializer>
+<!--This file is machine generated and read. It is not intended to be edited by hand.-->
+<!--Due to this, there is no schema for this file.-->
+<CyGuid_843a90a4-0c4b-4e44-991d-05e7fb117a21 type_name="CyDesigner.Common.ProjMgmt.Model.CyPrjMgmtWrkspcCustomData" version="4">
+<CyGuid_fdba8dfd-b15b-4469-9bbb-9e40c3e70997 type_name="CyDesigner.Common.Base.CyCustomData" version="2">
+<userData>
+<dataGuid v="1b906a0f-a7b6-4e4d-a428-82f98b53cb35">
+<CyGuid_1b906a0f-a7b6-4e4d-a428-82f98b53cb35 type_name="CyDesigner.Common.ProjMgmt.GUI.CyExplorerWindow+CyExplorerWindowState" version="3" SelectedTab="Source">
+<TreeKeys>
+<v>Source</v>
+<v>Components</v>
+<v>Output</v>
+</TreeKeys>
+<TreeStates>
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="Workspace03">
+<ExpandedNodeIds>
+<v>Workspace03</v>
+<v>Workspace03\Design01</v>
+<v>Workspace03\Design01\TopDesign</v>
+<v>Workspace03\Design01\Design01.cydwr</v>
+<v>Workspace03\Design01\Design01.cydwr\Pins</v>
+<v>Workspace03\Design01\Design01.cydwr\Analog</v>
+<v>Workspace03\Design01\Design01.cydwr\Clocks</v>
+<v>Workspace03\Design01\Design01.cydwr\Interrupts</v>
+<v>Workspace03\Design01\Design01.cydwr\System</v>
+<v>Workspace03\Design01\Design01.cydwr\Directives</v>
+<v>Workspace03\Design01\Design01.cydwr\Flash Security</v>
+<v>Workspace03\Design01\Header Files</v>
+<v>Workspace03\Design01\Header Files\BLE_functions.h</v>
+<v>Workspace03\Design01\Header Files\bma2x2.h</v>
+<v>Workspace03\Design01\Header Files\bma2x2_support.h</v>
+<v>Workspace03\Design01\Header Files\cyapicallbacks.h</v>
+<v>Workspace03\Design01\Source Files</v>
+<v>Workspace03\Design01\Source Files\BLE_functions.c</v>
+<v>Workspace03\Design01\Source Files\bma2x2.c</v>
+<v>Workspace03\Design01\Source Files\bma2x2_support.c</v>
+<v>Workspace03\Design01\Source Files\main.c</v>
+<v>Workspace03\Design01\Generated_Source</v>
+<v>Workspace03\Design01\Generated_Source\PSoC4</v>
+</ExpandedNodeIds>
+<VisibleNodeIds>
+<v>Workspace03</v>
+<v>Workspace03\Design01</v>
+<v>Workspace03\Design01\TopDesign</v>
+<v>Workspace03\Design01\Design01.cydwr</v>
+<v>Workspace03\Design01\Design01.cydwr\Pins</v>
+<v>Workspace03\Design01\Design01.cydwr\Analog</v>
+<v>Workspace03\Design01\Design01.cydwr\Clocks</v>
+<v>Workspace03\Design01\Design01.cydwr\Interrupts</v>
+<v>Workspace03\Design01\Design01.cydwr\System</v>
+<v>Workspace03\Design01\Design01.cydwr\Directives</v>
+<v>Workspace03\Design01\Design01.cydwr\Flash Security</v>
+<v>Workspace03\Design01\Header Files</v>
+<v>Workspace03\Design01\Header Files\BLE_functions.h</v>
+<v>Workspace03\Design01\Header Files\bma2x2.h</v>
+<v>Workspace03\Design01\Header Files\bma2x2_support.h</v>
+<v>Workspace03\Design01\Header Files\cyapicallbacks.h</v>
+<v>Workspace03\Design01\Source Files</v>
+<v>Workspace03\Design01\Source Files\BLE_functions.c</v>
+<v>Workspace03\Design01\Source Files\bma2x2.c</v>
+<v>Workspace03\Design01\Source Files\bma2x2_support.c</v>
+<v>Workspace03\Design01\Source Files\main.c</v>
+<v>Workspace03\Design01\Generated_Source</v>
+<v>Workspace03\Design01\Generated_Source\PSoC4</v>
+<v>Workspace03\Design01\Generated_Source\PSoC4\BLE</v>
+<v>Workspace03\Design01\Generated_Source\PSoC4\BLE_bless_isr</v>
+<v>Workspace03\Design01\Generated_Source\PSoC4\cy_boot</v>
+<v>Workspace03\Design01\Generated_Source\PSoC4\cy_lfclk</v>
+<v>Workspace03\Design01\Generated_Source\PSoC4\Em_EEPROM_Dynamic</v>
+<v>Workspace03\Design01\Generated_Source\PSoC4\I2C</v>
+<v>Workspace03\Design01\Generated_Source\PSoC4\I2C_SCB_IRQ</v>
+<v>Workspace03\Design01\Generated_Source\PSoC4\I2C_SCBCLK</v>
+<v>Workspace03\Design01\Generated_Source\PSoC4\I2C_scl</v>
+<v>Workspace03\Design01\Generated_Source\PSoC4\I2C_sda</v>
+<v>Workspace03\Design01\Generated_Source\PSoC4\LED1</v>
+<v>Workspace03\Design01\Generated_Source\PSoC4\PIN1</v>
+</VisibleNodeIds>
+</CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
+<ExpandedNodeIds>
+<v>Workspace03</v>
+</ExpandedNodeIds>
+<VisibleNodeIds>
+<v>Workspace03</v>
+</VisibleNodeIds>
+</CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
+<ExpandedNodeIds>
+<v>Workspace03</v>
+<v>Workspace03\Design01</v>
+<v>Workspace03\Design01\CortexM0</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\BLE.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\BLE_bless_isr.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\BLE_eventHandler.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\BLE_functions.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\BLE_gatt.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\BLE_HAL_INT.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\BLE_HAL_PVT.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\bma2x2.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\bma2x2_support.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\Cm0Start.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\cy_em_eeprom.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\CyBootAsmGnu.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\cyfitter_cfg.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\CyFlash.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\CyLFClk.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\CyLib.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\cymetadata.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\cyPm.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\cyutils.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_BOOT.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_I2C.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_I2C_BOOT.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_I2C_INT.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_I2C_MASTER.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_PM.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_SCB_IRQ.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_SCBCLK.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_scl.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_scl_PM.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_sda.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_sda_PM.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\LED1.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\LED1_PM.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\main.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\PIN1.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\PIN1_ISR.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\PIN1_PM.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Design01.elf</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Design01.hex</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Design01.map</v>
+<v>Workspace03\Design01\Design01.gpdsc</v>
+<v>Workspace03\Design01\Design01.rpt</v>
+<v>Workspace03\Design01\Design01_timing.html</v>
+</ExpandedNodeIds>
+<VisibleNodeIds>
+<v>Workspace03</v>
+<v>Workspace03\Design01</v>
+<v>Workspace03\Design01\CortexM0</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\BLE.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\BLE_bless_isr.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\BLE_eventHandler.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\BLE_functions.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\BLE_gatt.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\BLE_HAL_INT.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\BLE_HAL_PVT.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\bma2x2.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\bma2x2_support.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\Cm0Start.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\cy_em_eeprom.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\CyBootAsmGnu.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\cyfitter_cfg.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\CyFlash.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\CyLFClk.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\CyLib.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\cymetadata.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\cyPm.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\cyutils.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_BOOT.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_I2C.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_I2C_BOOT.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_I2C_INT.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_I2C_MASTER.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_PM.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_SCB_IRQ.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_SCBCLK.lst</v>
+<v>Workspace03\Design01\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_scl.lst</v>
+</VisibleNodeIds>
+</CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
+</TreeStates>
+<TreeKeysV2>
+<v>Datasheet</v>
+</TreeKeysV2>
+<TreeStatesV2>
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
+<ExpandedNodeIds>
+<v>Workspace03</v>
+<v>Workspace03\Design01</v>
+<v>Workspace03\Design01\PSoC 4 Architecture TRM</v>
+<v>Workspace03\Design01\PRoC BLE Family Datasheet</v>
+<v>Workspace03\Design01\System Reference Guides</v>
+</ExpandedNodeIds>
+<VisibleNodeIds>
+<v>Workspace03</v>
+<v>Workspace03\Design01</v>
+<v>Workspace03\Design01\PSoC 4 Architecture TRM</v>
+<v>Workspace03\Design01\PRoC BLE Family Datasheet</v>
+<v>Workspace03\Design01\System Reference Guides</v>
+</VisibleNodeIds>
+</CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
+</TreeStatesV2>
+</CyGuid_1b906a0f-a7b6-4e4d-a428-82f98b53cb35>
+</dataGuid>
+<dataGuid v="5f2be1a5-0687-4501-bb8c-cf21cb8211bf">
+<CyGuid_5f2be1a5-0687-4501-bb8c-cf21cb8211bf type_name="CyDesigner.Common.ProjMgmt.GUI.CyBookmarkData" version="1">
+<indicators />
+</CyGuid_5f2be1a5-0687-4501-bb8c-cf21cb8211bf>
+</dataGuid>
+</userData>
+</CyGuid_fdba8dfd-b15b-4469-9bbb-9e40c3e70997>
+<Unloaded />
+<OpenDocs>
+<name v=".\Design01.cydsn\bma2x2.c" />
+<name v=".\Design01.cydsn\bma2x2_support.c" />
+<name v=".\Design01.cydsn\bma2x2_support.h" />
+<name v=".\Design01.cydsn\TopDesign\TopDesign.cysch" />
+<name v=".\Design01.cydsn\Design01.cydwr" />
+<name v=".\Design01.cydsn\main.c" />
+<name v=".\Design01.cydsn\BLE_functions.c" />
+<name v=".\Design01.cydsn\BLE_functions.h" />
+</OpenDocs>
+<OpenDocsLayout><![CDATA[<?xml version="1.0"?><!--
+
+  Actipro Docking/MDI for WinForms
+  Copyright (c) 2001-2016 Actipro Software LLC.  All rights reserved.
+  http://www.actiprosoftware.com
+
+--><DocumentLayout Version="1.0"><LayoutData><TabbedMdiRootContainer Orientation="Horizontal"><TabbedMdiContainer Size="1109, 514" SelectedTabbedMdiWindow="1bb8f123-e011-472f-8231-ed65118c020c"><DocumentWindow Key="C:\Users\Tudor\Documents\PSoC Creator\Workspace03\Design01.cydsn\bma2x2.c" Guid="1bb8f123-e011-472f-8231-ed65118c020c" /><DocumentWindow Key="C:\Users\Tudor\Documents\PSoC Creator\Workspace03\Design01.cydsn\bma2x2_support.c" Guid="ab697c28-e87e-4b50-9b71-e12228520715" /><DocumentWindow Key="C:\Users\Tudor\Documents\PSoC Creator\Workspace03\Design01.cydsn\bma2x2_support.h" Guid="b56c666b-71ac-472b-9a1e-752e5dee62d9" /><DocumentWindow Key="C:\Users\Tudor\Documents\PSoC Creator\Workspace03\Design01.cydsn\TopDesign\TopDesign.cysch" Guid="0ecc1d71-bcf5-409e-9c06-a3c63e4fb398" /><DocumentWindow Key="C:\Users\Tudor\Documents\PSoC Creator\Workspace03\Design01.cydsn\Design01.cydwr" Guid="093488d0-b315-4a78-bf77-32bb7dfa700b" /><DocumentWindow Key="C:\Users\Tudor\Documents\PSoC Creator\Workspace03\Design01.cydsn\main.c" Guid="52d941d5-9355-4879-bdbf-61a68a253064" /><DocumentWindow Key="C:\Users\Tudor\Documents\PSoC Creator\Workspace03\Design01.cydsn\BLE_functions.c" Guid="eee01d08-9674-44a7-b591-f7997c11490a" /><DocumentWindow Key="C:\Users\Tudor\Documents\PSoC Creator\Workspace03\Design01.cydsn\BLE_functions.h" Guid="b0850f5d-1be7-4315-9f28-da06b931b140" /><ToolWindow Key="Start Page:bd4649ab-da6b-4d04-a663-c722b8bf99db:Start Page" Guid="c041b4b4-26b4-400a-b162-3ce8cdbc11d4" /></TabbedMdiContainer></TabbedMdiRootContainer><FloatingContainers /></LayoutData></DocumentLayout>]]></OpenDocsLayout>
+<config v="" />
+<AutoUpdate v="true" />
+</CyGuid_843a90a4-0c4b-4e44-991d-05e7fb117a21>
+</CyXmlSerializer>

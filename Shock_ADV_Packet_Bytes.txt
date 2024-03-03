@@ -1,0 +1,20 @@
+/**************************************************************************************************************************
+Advertisement Packet Bytes
+***************************************************************************************************************************
+AD Data 1:<<Flags>> - 3 bytes				 	// no interest in these bytes
+	->[0] - Length, [1] - <<Flags>>, [2] - Flag Data
+***************************************************************************************************************************
+AD Data 2:<<Local Name>> - 7 bytes				// device name
+	->[3] - Length, [4] - <<Local Name>>, [5] - 'S', [6] - 'H', [7] - 'O', [8] - 'C', [9] - 'K'
+***************************************************************************************************************************
+AD Data 3:<<Manufacturer Specific Data>> - 14 bytes, byte [14] stores the actual flag
+	->[10] - Length, [11] - <<Manufacturer Specific Data>>, [12] + [13] - Company: Robert Bosch GmbH
+	//Data: 
+	->[14] - Accident flag	- default, no-accident value - '0', takes '1' when event occurs
+
+
+Note: 	1. The interest is in the 14'th byte of the ADV packet, the flag. Bytes [5] - [9] describe device name.
+	2. Device Address:
+		- Public address (Company ID - Company assigned): 00A050-XXXXXX
+		(Silicon generated "Company assigned" part of device address)
+***************************************************************************************************************************/

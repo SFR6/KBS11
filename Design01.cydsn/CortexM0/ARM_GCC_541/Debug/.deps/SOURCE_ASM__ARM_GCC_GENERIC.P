@@ -1,0 +1,8 @@
+C:/Users/Tudor/Documents/PSoC\ Creator/Workspace03/Design01.cydsn/CortexM0/ARM_GCC_541/Debug/CyBootAsmGnu.o : C:/Users/Tudor/Documents/PSoC\ Creator/Workspace03/Design01.cydsn/Generated_Source/PSoC4/CyBootAsmGnu.s C:/Users/Tudor/Documents/PSoC\ Creator/Workspace03/Design01.cydsn/Generated_Source/PSoC4/cydevicegnu_trm.inc C:/Users/Tudor/Documents/PSoC\ Creator/Workspace03/Design01.cydsn/Generated_Source/PSoC4/cyfittergnu.inc 
+
+C:/Users/Tudor/Documents/PSoC\ Creator/Workspace03/Design01.cydsn/Generated_Source/PSoC4/CyBootAsmGnu.s : 
+
+C:/Users/Tudor/Documents/PSoC\ Creator/Workspace03/Design01.cydsn/Generated_Source/PSoC4/cydevicegnu_trm.inc : 
+
+C:/Users/Tudor/Documents/PSoC\ Creator/Workspace03/Design01.cydsn/Generated_Source/PSoC4/cyfittergnu.inc : 
+

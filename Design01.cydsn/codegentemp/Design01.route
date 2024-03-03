@@ -1,0 +1,42 @@
+net ClockBlock_HFClk
+	term   ":m0s8clockblockcell.hfclk"
+	switch ":m0s8clockblockcell.hfclk==>:interrupt_9.clock"
+	term   ":interrupt_9.clock"
+	switch ":m0s8clockblockcell.hfclk==>:interrupt_12.clock"
+	term   ":interrupt_12.clock"
+	switch ":m0s8clockblockcell.hfclk==>:interrupt_4.clock"
+	term   ":interrupt_4.clock"
+end ClockBlock_HFClk
+net Net_794
+	term   ":m0s8scbcell_0.interrupt"
+	switch ":m0s8scbcell_0.interrupt==>:interrupt_idmux_9.in_0"
+	switch ":interrupt_idmux_9.interrupt_idmux_9__out==>:interrupt_9.interrupt"
+	term   ":interrupt_9.interrupt"
+end Net_794
+net Net_811
+	term   ":ioport1:pin5.fb"
+	switch ":ioport1:pin5.fb==>:ioport1:hsiom_in5.hsiom5_in"
+	switch ":ioport1:hsiom_in5.fixed_DPSLP_2==>:m0s8scbcell_0__i2c_scl__hsiom_permute.ioport1__fixed_out_p5_DPSLP_2"
+	switch ":m0s8scbcell_0__i2c_scl__hsiom_permute.m0s8scbcell_0__i2c_scl==>:m0s8scbcell_0.i2c_scl"
+	term   ":m0s8scbcell_0.i2c_scl"
+end Net_811
+net Net_812
+	term   ":ioport1:pin4.fb"
+	switch ":ioport1:pin4.fb==>:ioport1:hsiom_in4.hsiom4_in"
+	switch ":ioport1:hsiom_in4.fixed_DPSLP_2==>:m0s8scbcell_0__i2c_sda__hsiom_permute.ioport1__fixed_out_p4_DPSLP_2"
+	switch ":m0s8scbcell_0__i2c_sda__hsiom_permute.m0s8scbcell_0__i2c_sda==>:m0s8scbcell_0.i2c_sda"
+	term   ":m0s8scbcell_0.i2c_sda"
+end Net_812
+net Net_832
+	term   ":logicalport_4.interrupt"
+	switch ":logicalport_4.interrupt==>Stub-:dsiswitch_bottom@[DSI=(1,0)][side=bottom]:dsihc_bottom:v24+:dsiswitch_bottom@[DSI=(1,0)][side=bottom]:dsihc_bottom:v26"
+	switch "Stub-:dsiswitch_bottom@[DSI=(1,0)][side=bottom]:dsihc_bottom:v24+:dsiswitch_bottom@[DSI=(1,0)][side=bottom]:dsihc_bottom:v26==>:interrupt_idmux_4.in_0"
+	switch ":interrupt_idmux_4.interrupt_idmux_4__out==>:interrupt_4.interrupt"
+	term   ":interrupt_4.interrupt"
+end Net_832
+net \BLE:Net_15\
+	term   ":p4blecell.interrupt"
+	switch ":p4blecell.interrupt==>:interrupt_idmux_12.in_0"
+	switch ":interrupt_idmux_12.interrupt_idmux_12__out==>:interrupt_12.interrupt"
+	term   ":interrupt_12.interrupt"
+end \BLE:Net_15\

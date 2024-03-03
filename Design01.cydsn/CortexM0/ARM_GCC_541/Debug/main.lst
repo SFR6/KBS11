@@ -1,0 +1,1758 @@
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc3oK69c.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m0
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 0
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"main.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.global	acc_flag
+  20              		.bss
+  21              		.type	acc_flag, %object
+  22              		.size	acc_flag, 1
+  23              	acc_flag:
+  24 0000 00       		.space	1
+  25              		.section	.text.PIN1_Handler,"ax",%progbits
+  26              		.align	2
+  27              		.global	PIN1_Handler
+  28              		.code	16
+  29              		.thumb_func
+  30              		.type	PIN1_Handler, %function
+  31              	PIN1_Handler:
+  32              	.LFB35:
+  33              		.file 1 "main.c"
+   1:main.c        **** 
+   2:main.c        **** #include "project.h"
+   3:main.c        **** #include "bma2x2.h"
+   4:main.c        **** #include "bma2x2_support.h"
+   5:main.c        **** #include "BLE_functions.h"
+   6:main.c        **** 
+   7:main.c        **** 
+   8:main.c        **** /**
+   9:main.c        **** Defines for states of the LED 
+  10:main.c        **** And the accident
+  11:main.c        **** */
+  12:main.c        **** #define LED_ON                                (0u)
+  13:main.c        **** #define LED_OFF                               (1u)
+  14:main.c        **** #define NO_ACC_STATE                          (0u)
+  15:main.c        **** #define ACC_STATE                             (1u)
+  16:main.c        **** 
+  17:main.c        **** /*Global variable used to know if an accident took place or not*/
+  18:main.c        **** volatile uint8 acc_flag = NO_ACC_STATE; 
+  19:main.c        **** 
+  20:main.c        **** /*Interrupt function for PIN1 which is linked to the accelerometer*/
+  21:main.c        **** CY_ISR (PIN1_Handler)
+  22:main.c        **** {
+  34              		.loc 1 22 0
+  35              		.cfi_startproc
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc3oK69c.s 			page 2
+
+
+  36              		@ args = 0, pretend = 0, frame = 8
+  37              		@ frame_needed = 1, uses_anonymous_args = 0
+  38 0000 80B5     		push	{r7, lr}
+  39              		.cfi_def_cfa_offset 8
+  40              		.cfi_offset 7, -8
+  41              		.cfi_offset 14, -4
+  42 0002 82B0     		sub	sp, sp, #8
+  43              		.cfi_def_cfa_offset 16
+  44 0004 00AF     		add	r7, sp, #0
+  45              		.cfi_def_cfa_register 7
+  23:main.c        ****     /*Setting the drive mode for the LED1 to Strong Drive in order to wake it up from High Impedanc
+  24:main.c        ****     LED1_SetDriveMode(LED1_DM_STRONG);
+  46              		.loc 1 24 0
+  47 0006 0620     		movs	r0, #6
+  48 0008 FFF7FEFF 		bl	LED1_SetDriveMode
+  25:main.c        ****     
+  26:main.c        ****     /*Turning the LED on and changing the flag to 1 because an accident occurred*/
+  27:main.c        ****     LED1_Write(LED_ON);
+  49              		.loc 1 27 0
+  50 000c 0020     		movs	r0, #0
+  51 000e FFF7FEFF 		bl	LED1_Write
+  28:main.c        ****     acc_flag = ACC_STATE;
+  52              		.loc 1 28 0
+  53 0012 094B     		ldr	r3, .L2
+  54 0014 0122     		movs	r2, #1
+  55 0016 1A70     		strb	r2, [r3]
+  29:main.c        ****     
+  30:main.c        ****     /*Making a soft reset to the accelerometer after the accident occurred*/
+  31:main.c        ****     u8 soft_reset = 0xB6;
+  56              		.loc 1 31 0
+  57 0018 FB1D     		adds	r3, r7, #7
+  58 001a B622     		movs	r2, #182
+  59 001c 1A70     		strb	r2, [r3]
+  32:main.c        ****     bma2x2_write_reg(0x14,&soft_reset,1);
+  60              		.loc 1 32 0
+  61 001e FB1D     		adds	r3, r7, #7
+  62 0020 0122     		movs	r2, #1
+  63 0022 1900     		movs	r1, r3
+  64 0024 1420     		movs	r0, #20
+  65 0026 FFF7FEFF 		bl	bma2x2_write_reg
+  33:main.c        ****     
+  34:main.c        ****     /*Clearing the dedicated interrupt on PIN1 which is linked to the accelerometer*/
+  35:main.c        ****     PIN1_ClearInterrupt();
+  66              		.loc 1 35 0
+  67 002a FFF7FEFF 		bl	PIN1_ClearInterrupt
+  36:main.c        **** }
+  68              		.loc 1 36 0
+  69 002e C046     		nop
+  70 0030 BD46     		mov	sp, r7
+  71 0032 02B0     		add	sp, sp, #8
+  72              		@ sp needed
+  73 0034 80BD     		pop	{r7, pc}
+  74              	.L3:
+  75 0036 C046     		.align	2
+  76              	.L2:
+  77 0038 00000000 		.word	acc_flag
+  78              		.cfi_endproc
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc3oK69c.s 			page 3
+
+
+  79              	.LFE35:
+  80              		.size	PIN1_Handler, .-PIN1_Handler
+  81              		.section	.text.main,"ax",%progbits
+  82              		.align	2
+  83              		.global	main
+  84              		.code	16
+  85              		.thumb_func
+  86              		.type	main, %function
+  87              	main:
+  88              	.LFB36:
+  37:main.c        **** 
+  38:main.c        **** int main (void)
+  39:main.c        **** {
+  89              		.loc 1 39 0
+  90              		.cfi_startproc
+  91              		@ args = 0, pretend = 0, frame = 32
+  92              		@ frame_needed = 1, uses_anonymous_args = 0
+  93 0000 80B5     		push	{r7, lr}
+  94              		.cfi_def_cfa_offset 8
+  95              		.cfi_offset 7, -8
+  96              		.cfi_offset 14, -4
+  97 0002 88B0     		sub	sp, sp, #32
+  98              		.cfi_def_cfa_offset 40
+  99 0004 00AF     		add	r7, sp, #0
+ 100              		.cfi_def_cfa_register 7
+  40:main.c        ****     /*Initializing the BLE system, starting the I2C and PIN1 dedicated interrupt*/
+  41:main.c        ****     InitializeSystem();
+ 101              		.loc 1 41 0
+ 102 0006 FFF7FEFF 		bl	InitializeSystem
+  42:main.c        ****     I2C_Start();
+ 103              		.loc 1 42 0
+ 104 000a FFF7FEFF 		bl	I2C_Start
+  43:main.c        ****     PIN1_ISR_StartEx(PIN1_Handler);
+ 105              		.loc 1 43 0
+ 106 000e 264B     		ldr	r3, .L10
+ 107 0010 1800     		movs	r0, r3
+ 108 0012 FFF7FEFF 		bl	PIN1_ISR_StartEx
+  44:main.c        ****     
+  45:main.c        ****     /*Declaring the bma2x2_t struct which will be used throughout the program*/
+  46:main.c        ****     struct bma2x2_t bma2x2;
+  47:main.c        ****     
+  48:main.c        ****     /**
+  49:main.c        ****     Declaring and initializing a variable which will be used to demonstrate
+  50:main.c        ****     How the accelerometer reads a certain register and what is the output
+  51:main.c        ****     */
+  52:main.c        ****     u8 reg_data = 0;
+ 109              		.loc 1 52 0
+ 110 0016 FB1C     		adds	r3, r7, #3
+ 111 0018 0022     		movs	r2, #0
+ 112 001a 1A70     		strb	r2, [r3]
+  53:main.c        ****     
+  54:main.c        ****     /*Using the com_rslt variable to test the state of the accelerometer and see if everything is w
+  55:main.c        ****     BMA2x2_RETURN_FUNCTION_TYPE com_rslt = ERROR;
+ 113              		.loc 1 55 0
+ 114 001c 1F23     		movs	r3, #31
+ 115 001e FB18     		adds	r3, r7, r3
+ 116 0020 FF22     		movs	r2, #255
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc3oK69c.s 			page 4
+
+
+ 117 0022 1A70     		strb	r2, [r3]
+  56:main.c        ****     com_rslt = bma2x2_shock_setup(&bma2x2);
+ 118              		.loc 1 56 0
+ 119 0024 3B1D     		adds	r3, r7, #4
+ 120 0026 1800     		movs	r0, r3
+ 121 0028 FFF7FEFF 		bl	bma2x2_shock_setup
+ 122 002c 0200     		movs	r2, r0
+ 123 002e 1F23     		movs	r3, #31
+ 124 0030 FB18     		adds	r3, r7, r3
+ 125 0032 1A70     		strb	r2, [r3]
+  57:main.c        ****     
+  58:main.c        ****     /*If an error occurrs in the initial setup the LED will start to flash every quarter of a secon
+  59:main.c        ****     if (com_rslt!=0)
+ 126              		.loc 1 59 0
+ 127 0034 1F23     		movs	r3, #31
+ 128 0036 FB18     		adds	r3, r7, r3
+ 129 0038 1B78     		ldrb	r3, [r3]
+ 130 003a 5BB2     		sxtb	r3, r3
+ 131 003c 002B     		cmp	r3, #0
+ 132 003e 0CD0     		beq	.L5
+ 133              	.L6:
+  60:main.c        ****     {
+  61:main.c        ****         for(;;)
+  62:main.c        ****         {
+  63:main.c        ****             LED1_Write(!LED1_Read());
+ 134              		.loc 1 63 0 discriminator 1
+ 135 0040 FFF7FEFF 		bl	LED1_Read
+ 136 0044 0300     		movs	r3, r0
+ 137 0046 5A42     		rsbs	r2, r3, #0
+ 138 0048 5341     		adcs	r3, r3, r2
+ 139 004a DBB2     		uxtb	r3, r3
+ 140 004c 1800     		movs	r0, r3
+ 141 004e FFF7FEFF 		bl	LED1_Write
+  64:main.c        ****             CyDelay(250);
+ 142              		.loc 1 64 0 discriminator 1
+ 143 0052 FA20     		movs	r0, #250
+ 144 0054 FFF7FEFF 		bl	CyDelay
+  65:main.c        ****         }
+ 145              		.loc 1 65 0 discriminator 1
+ 146 0058 F2E7     		b	.L6
+ 147              	.L5:
+  66:main.c        ****     }
+  67:main.c        ****     
+  68:main.c        ****     /*Function used to demonstrate how the accelerometer reads a certain register and what is the o
+  69:main.c        ****     bma2x2_read_reg(0x00,&reg_data,1);
+ 148              		.loc 1 69 0
+ 149 005a FB1C     		adds	r3, r7, #3
+ 150 005c 0122     		movs	r2, #1
+ 151 005e 1900     		movs	r1, r3
+ 152 0060 0020     		movs	r0, #0
+ 153 0062 FFF7FEFF 		bl	bma2x2_read_reg
+ 154              	.L9:
+  70:main.c        ****     
+  71:main.c        ****     /*Stoping the I2C component after we don't need it anymore*/
+  72:main.c        ****     //I2C_Stop();
+  73:main.c        ****     
+  74:main.c        ****     for(;;)
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc3oK69c.s 			page 5
+
+
+  75:main.c        ****     {
+  76:main.c        ****         /*If no accident has occurred yet the LED will flash rapidly while in Strong Drive mode*/
+  77:main.c        ****         if (!acc_flag)
+ 155              		.loc 1 77 0
+ 156 0066 114B     		ldr	r3, .L10+4
+ 157 0068 1B78     		ldrb	r3, [r3]
+ 158 006a DBB2     		uxtb	r3, r3
+ 159 006c 002B     		cmp	r3, #0
+ 160 006e 0BD1     		bne	.L7
+  78:main.c        ****         {
+  79:main.c        ****             LED1_SetDriveMode(LED1_DM_STRONG);
+ 161              		.loc 1 79 0
+ 162 0070 0620     		movs	r0, #6
+ 163 0072 FFF7FEFF 		bl	LED1_SetDriveMode
+  80:main.c        ****             LED1_Write(!LED1_Read());
+ 164              		.loc 1 80 0
+ 165 0076 FFF7FEFF 		bl	LED1_Read
+ 166 007a 0300     		movs	r3, r0
+ 167 007c 5A42     		rsbs	r2, r3, #0
+ 168 007e 5341     		adcs	r3, r3, r2
+ 169 0080 DBB2     		uxtb	r3, r3
+ 170 0082 1800     		movs	r0, r3
+ 171 0084 FFF7FEFF 		bl	LED1_Write
+ 172              	.L7:
+  81:main.c        ****         }
+  82:main.c        ****         
+  83:main.c        ****         /*The BLE will process the events and Payload will be updated depending on the state of the
+  84:main.c        ****         CyBle_ProcessEvents();
+ 173              		.loc 1 84 0
+ 174 0088 FFF7FEFF 		bl	CyBle_ProcessEvents
+  85:main.c        ****         DynamicADVPayloadUpdate();
+ 175              		.loc 1 85 0
+ 176 008c FFF7FEFF 		bl	DynamicADVPayloadUpdate
+  86:main.c        ****         
+  87:main.c        ****         /*For Low-Power purposes, if no accident has occurred yet, the LED used will enter in High 
+  88:main.c        ****         if (!acc_flag)
+ 177              		.loc 1 88 0
+ 178 0090 064B     		ldr	r3, .L10+4
+ 179 0092 1B78     		ldrb	r3, [r3]
+ 180 0094 DBB2     		uxtb	r3, r3
+ 181 0096 002B     		cmp	r3, #0
+ 182 0098 02D1     		bne	.L8
+  89:main.c        ****         {
+  90:main.c        ****             LED1_SetDriveMode(LED1_DM_ALG_HIZ);
+ 183              		.loc 1 90 0
+ 184 009a 0020     		movs	r0, #0
+ 185 009c FFF7FEFF 		bl	LED1_SetDriveMode
+ 186              	.L8:
+  91:main.c        ****         }
+  92:main.c        ****         
+  93:main.c        ****         /*The BLE component will also enter Low-Power mode the conserve energy as much as possible*
+  94:main.c        ****         EnterLowPowerMode();
+ 187              		.loc 1 94 0
+ 188 00a0 FFF7FEFF 		bl	EnterLowPowerMode
+  95:main.c        ****     }
+ 189              		.loc 1 95 0
+ 190 00a4 DFE7     		b	.L9
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc3oK69c.s 			page 6
+
+
+ 191              	.L11:
+ 192 00a6 C046     		.align	2
+ 193              	.L10:
+ 194 00a8 00000000 		.word	PIN1_Handler
+ 195 00ac 00000000 		.word	acc_flag
+ 196              		.cfi_endproc
+ 197              	.LFE36:
+ 198              		.size	main, .-main
+ 199              		.text
+ 200              	.Letext0:
+ 201              		.file 2 "bma2x2.h"
+ 202              		.file 3 "Generated_Source\\PSoC4/cytypes.h"
+ 203              		.file 4 "Generated_Source\\PSoC4/BLE_Stack.h"
+ 204              		.section	.debug_info,"",%progbits
+ 205              	.Ldebug_info0:
+ 206 0000 E4030000 		.4byte	0x3e4
+ 207 0004 0400     		.2byte	0x4
+ 208 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 209 000a 04       		.byte	0x4
+ 210 000b 01       		.uleb128 0x1
+ 211 000c 1C040000 		.4byte	.LASF101
+ 212 0010 0C       		.byte	0xc
+ 213 0011 09080000 		.4byte	.LASF102
+ 214 0015 00090000 		.4byte	.LASF103
+ 215 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 216 001d 00000000 		.4byte	0
+ 217 0021 00000000 		.4byte	.Ldebug_line0
+ 218 0025 02       		.uleb128 0x2
+ 219 0026 01       		.byte	0x1
+ 220 0027 06       		.byte	0x6
+ 221 0028 88050000 		.4byte	.LASF0
+ 222 002c 02       		.uleb128 0x2
+ 223 002d 01       		.byte	0x1
+ 224 002e 08       		.byte	0x8
+ 225 002f 25050000 		.4byte	.LASF1
+ 226 0033 02       		.uleb128 0x2
+ 227 0034 02       		.byte	0x2
+ 228 0035 05       		.byte	0x5
+ 229 0036 BE000000 		.4byte	.LASF2
+ 230 003a 02       		.uleb128 0x2
+ 231 003b 02       		.byte	0x2
+ 232 003c 07       		.byte	0x7
+ 233 003d BB060000 		.4byte	.LASF3
+ 234 0041 02       		.uleb128 0x2
+ 235 0042 04       		.byte	0x4
+ 236 0043 05       		.byte	0x5
+ 237 0044 3F030000 		.4byte	.LASF4
+ 238 0048 02       		.uleb128 0x2
+ 239 0049 04       		.byte	0x4
+ 240 004a 07       		.byte	0x7
+ 241 004b 19060000 		.4byte	.LASF5
+ 242 004f 02       		.uleb128 0x2
+ 243 0050 08       		.byte	0x8
+ 244 0051 05       		.byte	0x5
+ 245 0052 82080000 		.4byte	.LASF6
+ 246 0056 02       		.uleb128 0x2
+ 247 0057 08       		.byte	0x8
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc3oK69c.s 			page 7
+
+
+ 248 0058 07       		.byte	0x7
+ 249 0059 07030000 		.4byte	.LASF7
+ 250 005d 03       		.uleb128 0x3
+ 251 005e 04       		.byte	0x4
+ 252 005f 05       		.byte	0x5
+ 253 0060 696E7400 		.ascii	"int\000"
+ 254 0064 02       		.uleb128 0x2
+ 255 0065 04       		.byte	0x4
+ 256 0066 07       		.byte	0x7
+ 257 0067 F1050000 		.4byte	.LASF8
+ 258 006b 04       		.uleb128 0x4
+ 259 006c 75070000 		.4byte	.LASF86
+ 260 0070 03       		.byte	0x3
+ 261 0071 E401     		.2byte	0x1e4
+ 262 0073 2C000000 		.4byte	0x2c
+ 263 0077 02       		.uleb128 0x2
+ 264 0078 04       		.byte	0x4
+ 265 0079 04       		.byte	0x4
+ 266 007a 9E020000 		.4byte	.LASF9
+ 267 007e 02       		.uleb128 0x2
+ 268 007f 08       		.byte	0x8
+ 269 0080 04       		.byte	0x4
+ 270 0081 33080000 		.4byte	.LASF10
+ 271 0085 02       		.uleb128 0x2
+ 272 0086 01       		.byte	0x1
+ 273 0087 08       		.byte	0x8
+ 274 0088 54070000 		.4byte	.LASF11
+ 275 008c 05       		.uleb128 0x5
+ 276 008d 6B000000 		.4byte	0x6b
+ 277 0091 02       		.uleb128 0x2
+ 278 0092 08       		.byte	0x8
+ 279 0093 04       		.byte	0x4
+ 280 0094 F3040000 		.4byte	.LASF12
+ 281 0098 02       		.uleb128 0x2
+ 282 0099 04       		.byte	0x4
+ 283 009a 07       		.byte	0x7
+ 284 009b 00010000 		.4byte	.LASF13
+ 285 009f 06       		.uleb128 0x6
+ 286 00a0 01       		.byte	0x1
+ 287 00a1 2C000000 		.4byte	0x2c
+ 288 00a5 04       		.byte	0x4
+ 289 00a6 3201     		.2byte	0x132
+ 290 00a8 5D020000 		.4byte	0x25d
+ 291 00ac 07       		.uleb128 0x7
+ 292 00ad 48020000 		.4byte	.LASF14
+ 293 00b1 00       		.byte	0
+ 294 00b2 07       		.uleb128 0x7
+ 295 00b3 72010000 		.4byte	.LASF15
+ 296 00b7 01       		.byte	0x1
+ 297 00b8 07       		.uleb128 0x7
+ 298 00b9 DC090000 		.4byte	.LASF16
+ 299 00bd 02       		.byte	0x2
+ 300 00be 07       		.uleb128 0x7
+ 301 00bf 99080000 		.4byte	.LASF17
+ 302 00c3 03       		.byte	0x3
+ 303 00c4 07       		.uleb128 0x7
+ 304 00c5 2F010000 		.4byte	.LASF18
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc3oK69c.s 			page 8
+
+
+ 305 00c9 04       		.byte	0x4
+ 306 00ca 07       		.uleb128 0x7
+ 307 00cb D1030000 		.4byte	.LASF19
+ 308 00cf 05       		.byte	0x5
+ 309 00d0 07       		.uleb128 0x7
+ 310 00d1 5D000000 		.4byte	.LASF20
+ 311 00d5 06       		.byte	0x6
+ 312 00d6 07       		.uleb128 0x7
+ 313 00d7 89070000 		.4byte	.LASF21
+ 314 00db 20       		.byte	0x20
+ 315 00dc 07       		.uleb128 0x7
+ 316 00dd 2B060000 		.4byte	.LASF22
+ 317 00e1 21       		.byte	0x21
+ 318 00e2 07       		.uleb128 0x7
+ 319 00e3 09000000 		.4byte	.LASF23
+ 320 00e7 22       		.byte	0x22
+ 321 00e8 07       		.uleb128 0x7
+ 322 00e9 F6030000 		.4byte	.LASF24
+ 323 00ed 23       		.byte	0x23
+ 324 00ee 07       		.uleb128 0x7
+ 325 00ef D5050000 		.4byte	.LASF25
+ 326 00f3 24       		.byte	0x24
+ 327 00f4 07       		.uleb128 0x7
+ 328 00f5 C8000000 		.4byte	.LASF26
+ 329 00f9 25       		.byte	0x25
+ 330 00fa 07       		.uleb128 0x7
+ 331 00fb 88030000 		.4byte	.LASF27
+ 332 00ff 26       		.byte	0x26
+ 333 0100 07       		.uleb128 0x7
+ 334 0101 69030000 		.4byte	.LASF28
+ 335 0105 27       		.byte	0x27
+ 336 0106 07       		.uleb128 0x7
+ 337 0107 910A0000 		.4byte	.LASF29
+ 338 010b 28       		.byte	0x28
+ 339 010c 07       		.uleb128 0x7
+ 340 010d 63060000 		.4byte	.LASF30
+ 341 0111 29       		.byte	0x29
+ 342 0112 07       		.uleb128 0x7
+ 343 0113 E6060000 		.4byte	.LASF31
+ 344 0117 2A       		.byte	0x2a
+ 345 0118 07       		.uleb128 0x7
+ 346 0119 EA070000 		.4byte	.LASF32
+ 347 011d 2B       		.byte	0x2b
+ 348 011e 07       		.uleb128 0x7
+ 349 011f E4010000 		.4byte	.LASF33
+ 350 0123 2C       		.byte	0x2c
+ 351 0124 07       		.uleb128 0x7
+ 352 0125 BD020000 		.4byte	.LASF34
+ 353 0129 2D       		.byte	0x2d
+ 354 012a 07       		.uleb128 0x7
+ 355 012b 9A000000 		.4byte	.LASF35
+ 356 012f 2E       		.byte	0x2e
+ 357 0130 07       		.uleb128 0x7
+ 358 0131 E90A0000 		.4byte	.LASF36
+ 359 0135 2F       		.byte	0x2f
+ 360 0136 07       		.uleb128 0x7
+ 361 0137 09010000 		.4byte	.LASF37
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc3oK69c.s 			page 9
+
+
+ 362 013b 30       		.byte	0x30
+ 363 013c 07       		.uleb128 0x7
+ 364 013d CF040000 		.4byte	.LASF38
+ 365 0141 31       		.byte	0x31
+ 366 0142 07       		.uleb128 0x7
+ 367 0143 E6020000 		.4byte	.LASF39
+ 368 0147 32       		.byte	0x32
+ 369 0148 07       		.uleb128 0x7
+ 370 0149 0F070000 		.4byte	.LASF40
+ 371 014d 33       		.byte	0x33
+ 372 014e 07       		.uleb128 0x7
+ 373 014f 80060000 		.4byte	.LASF41
+ 374 0153 34       		.byte	0x34
+ 375 0154 07       		.uleb128 0x7
+ 376 0155 65080000 		.4byte	.LASF42
+ 377 0159 35       		.byte	0x35
+ 378 015a 07       		.uleb128 0x7
+ 379 015b 1E030000 		.4byte	.LASF43
+ 380 015f 36       		.byte	0x36
+ 381 0160 07       		.uleb128 0x7
+ 382 0161 85010000 		.4byte	.LASF44
+ 383 0165 37       		.byte	0x37
+ 384 0166 07       		.uleb128 0x7
+ 385 0167 76000000 		.4byte	.LASF45
+ 386 016b 40       		.byte	0x40
+ 387 016c 07       		.uleb128 0x7
+ 388 016d FE050000 		.4byte	.LASF46
+ 389 0171 41       		.byte	0x41
+ 390 0172 07       		.uleb128 0x7
+ 391 0173 E2000000 		.4byte	.LASF47
+ 392 0177 42       		.byte	0x42
+ 393 0178 07       		.uleb128 0x7
+ 394 0179 BA010000 		.4byte	.LASF48
+ 395 017d 43       		.byte	0x43
+ 396 017e 07       		.uleb128 0x7
+ 397 017f 9A090000 		.4byte	.LASF49
+ 398 0183 44       		.byte	0x44
+ 399 0184 07       		.uleb128 0x7
+ 400 0185 4C090000 		.4byte	.LASF50
+ 401 0189 45       		.byte	0x45
+ 402 018a 07       		.uleb128 0x7
+ 403 018b 44010000 		.4byte	.LASF51
+ 404 018f 46       		.byte	0x46
+ 405 0190 07       		.uleb128 0x7
+ 406 0191 320A0000 		.4byte	.LASF52
+ 407 0195 47       		.byte	0x47
+ 408 0196 07       		.uleb128 0x7
+ 409 0197 AE050000 		.4byte	.LASF53
+ 410 019b 48       		.byte	0x48
+ 411 019c 07       		.uleb128 0x7
+ 412 019d A4020000 		.4byte	.LASF54
+ 413 01a1 49       		.byte	0x49
+ 414 01a2 07       		.uleb128 0x7
+ 415 01a3 AD070000 		.4byte	.LASF55
+ 416 01a7 4A       		.byte	0x4a
+ 417 01a8 07       		.uleb128 0x7
+ 418 01a9 08020000 		.4byte	.LASF56
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc3oK69c.s 			page 10
+
+
+ 419 01ad 4B       		.byte	0x4b
+ 420 01ae 07       		.uleb128 0x7
+ 421 01af 94050000 		.4byte	.LASF57
+ 422 01b3 4C       		.byte	0x4c
+ 423 01b4 07       		.uleb128 0x7
+ 424 01b5 43000000 		.4byte	.LASF58
+ 425 01b9 4D       		.byte	0x4d
+ 426 01ba 07       		.uleb128 0x7
+ 427 01bb 73090000 		.4byte	.LASF59
+ 428 01bf 4E       		.byte	0x4e
+ 429 01c0 07       		.uleb128 0x7
+ 430 01c1 33050000 		.4byte	.LASF60
+ 431 01c5 4F       		.byte	0x4f
+ 432 01c6 07       		.uleb128 0x7
+ 433 01c7 720A0000 		.4byte	.LASF61
+ 434 01cb 50       		.byte	0x50
+ 435 01cc 07       		.uleb128 0x7
+ 436 01cd CB070000 		.4byte	.LASF62
+ 437 01d1 51       		.byte	0x51
+ 438 01d2 07       		.uleb128 0x7
+ 439 01d3 B0030000 		.4byte	.LASF63
+ 440 01d7 52       		.byte	0x52
+ 441 01d8 07       		.uleb128 0x7
+ 442 01d9 48030000 		.4byte	.LASF64
+ 443 01dd 53       		.byte	0x53
+ 444 01de 07       		.uleb128 0x7
+ 445 01df 27020000 		.4byte	.LASF65
+ 446 01e3 54       		.byte	0x54
+ 447 01e4 07       		.uleb128 0x7
+ 448 01e5 B30A0000 		.4byte	.LASF66
+ 449 01e9 55       		.byte	0x55
+ 450 01ea 07       		.uleb128 0x7
+ 451 01eb 500A0000 		.4byte	.LASF67
+ 452 01ef 56       		.byte	0x56
+ 453 01f0 07       		.uleb128 0x7
+ 454 01f1 090A0000 		.4byte	.LASF68
+ 455 01f5 57       		.byte	0x57
+ 456 01f6 07       		.uleb128 0x7
+ 457 01f7 98060000 		.4byte	.LASF69
+ 458 01fb 58       		.byte	0x58
+ 459 01fc 07       		.uleb128 0x7
+ 460 01fd FF040000 		.4byte	.LASF70
+ 461 0201 70       		.byte	0x70
+ 462 0202 07       		.uleb128 0x7
+ 463 0203 D1080000 		.4byte	.LASF71
+ 464 0207 71       		.byte	0x71
+ 465 0208 07       		.uleb128 0x7
+ 466 0209 59070000 		.4byte	.LASF72
+ 467 020d 72       		.byte	0x72
+ 468 020e 07       		.uleb128 0x7
+ 469 020f 5F020000 		.4byte	.LASF73
+ 470 0213 73       		.byte	0x73
+ 471 0214 07       		.uleb128 0x7
+ 472 0215 B1040000 		.4byte	.LASF74
+ 473 0219 74       		.byte	0x74
+ 474 021a 07       		.uleb128 0x7
+ 475 021b 42060000 		.4byte	.LASF75
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc3oK69c.s 			page 11
+
+
+ 476 021f 75       		.byte	0x75
+ 477 0220 07       		.uleb128 0x7
+ 478 0221 7D020000 		.4byte	.LASF76
+ 479 0225 76       		.byte	0x76
+ 480 0226 07       		.uleb128 0x7
+ 481 0227 B2080000 		.4byte	.LASF77
+ 482 022b 77       		.byte	0x77
+ 483 022c 07       		.uleb128 0x7
+ 484 022d 10080000 		.4byte	.LASF78
+ 485 0231 78       		.byte	0x78
+ 486 0232 07       		.uleb128 0x7
+ 487 0233 3A080000 		.4byte	.LASF79
+ 488 0237 79       		.byte	0x79
+ 489 0238 07       		.uleb128 0x7
+ 490 0239 B8090000 		.4byte	.LASF80
+ 491 023d 7A       		.byte	0x7a
+ 492 023e 07       		.uleb128 0x7
+ 493 023f 36070000 		.4byte	.LASF81
+ 494 0243 FA       		.byte	0xfa
+ 495 0244 07       		.uleb128 0x7
+ 496 0245 52050000 		.4byte	.LASF82
+ 497 0249 FB       		.byte	0xfb
+ 498 024a 07       		.uleb128 0x7
+ 499 024b D70A0000 		.4byte	.LASF83
+ 500 024f FC       		.byte	0xfc
+ 501 0250 07       		.uleb128 0x7
+ 502 0251 CE060000 		.4byte	.LASF84
+ 503 0255 FD       		.byte	0xfd
+ 504 0256 07       		.uleb128 0x7
+ 505 0257 EE090000 		.4byte	.LASF85
+ 506 025b FF       		.byte	0xff
+ 507 025c 00       		.byte	0
+ 508 025d 08       		.uleb128 0x8
+ 509 025e 733800   		.ascii	"s8\000"
+ 510 0261 02       		.byte	0x2
+ 511 0262 2001     		.2byte	0x120
+ 512 0264 25000000 		.4byte	0x25
+ 513 0268 08       		.uleb128 0x8
+ 514 0269 753800   		.ascii	"u8\000"
+ 515 026c 02       		.byte	0x2
+ 516 026d 2601     		.2byte	0x126
+ 517 026f 2C000000 		.4byte	0x2c
+ 518 0273 08       		.uleb128 0x8
+ 519 0274 75333200 		.ascii	"u32\000"
+ 520 0278 02       		.byte	0x2
+ 521 0279 2801     		.2byte	0x128
+ 522 027b 64000000 		.4byte	0x64
+ 523 027f 09       		.uleb128 0x9
+ 524 0280 ED030000 		.4byte	.LASF104
+ 525 0284 18       		.byte	0x18
+ 526 0285 02       		.byte	0x2
+ 527 0286 9B02     		.2byte	0x29b
+ 528 0288 0F030000 		.4byte	0x30f
+ 529 028c 0A       		.uleb128 0xa
+ 530 028d 7B070000 		.4byte	.LASF87
+ 531 0291 02       		.byte	0x2
+ 532 0292 9D02     		.2byte	0x29d
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc3oK69c.s 			page 12
+
+
+ 533 0294 68020000 		.4byte	0x268
+ 534 0298 00       		.byte	0
+ 535 0299 0A       		.uleb128 0xa
+ 536 029a 5D080000 		.4byte	.LASF88
+ 537 029e 02       		.byte	0x2
+ 538 029f 9F02     		.2byte	0x29f
+ 539 02a1 68020000 		.4byte	0x268
+ 540 02a5 01       		.byte	0x1
+ 541 02a6 0A       		.uleb128 0xa
+ 542 02a7 7A050000 		.4byte	.LASF89
+ 543 02ab 02       		.byte	0x2
+ 544 02ac A102     		.2byte	0x2a1
+ 545 02ae 68020000 		.4byte	0x268
+ 546 02b2 02       		.byte	0x2
+ 547 02b3 0A       		.uleb128 0xa
+ 548 02b4 65010000 		.4byte	.LASF90
+ 549 02b8 02       		.byte	0x2
+ 550 02b9 A302     		.2byte	0x2a3
+ 551 02bb 68020000 		.4byte	0x268
+ 552 02bf 03       		.byte	0x3
+ 553 02c0 0A       		.uleb128 0xa
+ 554 02c1 F7080000 		.4byte	.LASF91
+ 555 02c5 02       		.byte	0x2
+ 556 02c6 A502     		.2byte	0x2a5
+ 557 02c8 68020000 		.4byte	0x268
+ 558 02cc 04       		.byte	0x4
+ 559 02cd 0A       		.uleb128 0xa
+ 560 02ce D8010000 		.4byte	.LASF92
+ 561 02d2 02       		.byte	0x2
+ 562 02d3 A702     		.2byte	0x2a7
+ 563 02d5 68020000 		.4byte	0x268
+ 564 02d9 05       		.byte	0x5
+ 565 02da 0A       		.uleb128 0xa
+ 566 02db 90000000 		.4byte	.LASF93
+ 567 02df 02       		.byte	0x2
+ 568 02e0 A902     		.2byte	0x2a9
+ 569 02e2 33030000 		.4byte	0x333
+ 570 02e6 08       		.byte	0x8
+ 571 02e7 0A       		.uleb128 0xa
+ 572 02e8 00000000 		.4byte	.LASF94
+ 573 02ec 02       		.byte	0x2
+ 574 02ed AB02     		.2byte	0x2ab
+ 575 02ef 33030000 		.4byte	0x333
+ 576 02f3 0C       		.byte	0xc
+ 577 02f4 0A       		.uleb128 0xa
+ 578 02f5 38000000 		.4byte	.LASF95
+ 579 02f9 02       		.byte	0x2
+ 580 02fa AD02     		.2byte	0x2ad
+ 581 02fc 57030000 		.4byte	0x357
+ 582 0300 10       		.byte	0x10
+ 583 0301 0A       		.uleb128 0xa
+ 584 0302 41090000 		.4byte	.LASF96
+ 585 0306 02       		.byte	0x2
+ 586 0307 AF02     		.2byte	0x2af
+ 587 0309 68030000 		.4byte	0x368
+ 588 030d 14       		.byte	0x14
+ 589 030e 00       		.byte	0
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc3oK69c.s 			page 13
+
+
+ 590 030f 0B       		.uleb128 0xb
+ 591 0310 5D020000 		.4byte	0x25d
+ 592 0314 2D030000 		.4byte	0x32d
+ 593 0318 0C       		.uleb128 0xc
+ 594 0319 68020000 		.4byte	0x268
+ 595 031d 0C       		.uleb128 0xc
+ 596 031e 68020000 		.4byte	0x268
+ 597 0322 0C       		.uleb128 0xc
+ 598 0323 2D030000 		.4byte	0x32d
+ 599 0327 0C       		.uleb128 0xc
+ 600 0328 68020000 		.4byte	0x268
+ 601 032c 00       		.byte	0
+ 602 032d 0D       		.uleb128 0xd
+ 603 032e 04       		.byte	0x4
+ 604 032f 68020000 		.4byte	0x268
+ 605 0333 0D       		.uleb128 0xd
+ 606 0334 04       		.byte	0x4
+ 607 0335 0F030000 		.4byte	0x30f
+ 608 0339 0B       		.uleb128 0xb
+ 609 033a 5D020000 		.4byte	0x25d
+ 610 033e 57030000 		.4byte	0x357
+ 611 0342 0C       		.uleb128 0xc
+ 612 0343 68020000 		.4byte	0x268
+ 613 0347 0C       		.uleb128 0xc
+ 614 0348 68020000 		.4byte	0x268
+ 615 034c 0C       		.uleb128 0xc
+ 616 034d 2D030000 		.4byte	0x32d
+ 617 0351 0C       		.uleb128 0xc
+ 618 0352 73020000 		.4byte	0x273
+ 619 0356 00       		.byte	0
+ 620 0357 0D       		.uleb128 0xd
+ 621 0358 04       		.byte	0x4
+ 622 0359 39030000 		.4byte	0x339
+ 623 035d 0E       		.uleb128 0xe
+ 624 035e 68030000 		.4byte	0x368
+ 625 0362 0C       		.uleb128 0xc
+ 626 0363 73020000 		.4byte	0x273
+ 627 0367 00       		.byte	0
+ 628 0368 0D       		.uleb128 0xd
+ 629 0369 04       		.byte	0x4
+ 630 036a 5D030000 		.4byte	0x35d
+ 631 036e 0F       		.uleb128 0xf
+ 632 036f FC090000 		.4byte	.LASF105
+ 633 0373 01       		.byte	0x1
+ 634 0374 15       		.byte	0x15
+ 635 0375 00000000 		.4byte	.LFB35
+ 636 0379 3C000000 		.4byte	.LFE35-.LFB35
+ 637 037d 01       		.uleb128 0x1
+ 638 037e 9C       		.byte	0x9c
+ 639 037f 92030000 		.4byte	0x392
+ 640 0383 10       		.uleb128 0x10
+ 641 0384 2D000000 		.4byte	.LASF97
+ 642 0388 01       		.byte	0x1
+ 643 0389 1F       		.byte	0x1f
+ 644 038a 68020000 		.4byte	0x268
+ 645 038e 02       		.uleb128 0x2
+ 646 038f 91       		.byte	0x91
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc3oK69c.s 			page 14
+
+
+ 647 0390 77       		.sleb128 -9
+ 648 0391 00       		.byte	0
+ 649 0392 11       		.uleb128 0x11
+ 650 0393 2A010000 		.4byte	.LASF106
+ 651 0397 01       		.byte	0x1
+ 652 0398 26       		.byte	0x26
+ 653 0399 5D000000 		.4byte	0x5d
+ 654 039d 00000000 		.4byte	.LFB36
+ 655 03a1 B0000000 		.4byte	.LFE36-.LFB36
+ 656 03a5 01       		.uleb128 0x1
+ 657 03a6 9C       		.byte	0x9c
+ 658 03a7 D6030000 		.4byte	0x3d6
+ 659 03ab 10       		.uleb128 0x10
+ 660 03ac AA040000 		.4byte	.LASF98
+ 661 03b0 01       		.byte	0x1
+ 662 03b1 2E       		.byte	0x2e
+ 663 03b2 7F020000 		.4byte	0x27f
+ 664 03b6 02       		.uleb128 0x2
+ 665 03b7 91       		.byte	0x91
+ 666 03b8 5C       		.sleb128 -36
+ 667 03b9 10       		.uleb128 0x10
+ 668 03ba 90080000 		.4byte	.LASF99
+ 669 03be 01       		.byte	0x1
+ 670 03bf 34       		.byte	0x34
+ 671 03c0 68020000 		.4byte	0x268
+ 672 03c4 02       		.uleb128 0x2
+ 673 03c5 91       		.byte	0x91
+ 674 03c6 5B       		.sleb128 -37
+ 675 03c7 10       		.uleb128 0x10
+ 676 03c8 91090000 		.4byte	.LASF100
+ 677 03cc 01       		.byte	0x1
+ 678 03cd 37       		.byte	0x37
+ 679 03ce 5D020000 		.4byte	0x25d
+ 680 03d2 02       		.uleb128 0x2
+ 681 03d3 91       		.byte	0x91
+ 682 03d4 77       		.sleb128 -9
+ 683 03d5 00       		.byte	0
+ 684 03d6 12       		.uleb128 0x12
+ 685 03d7 71050000 		.4byte	.LASF107
+ 686 03db 01       		.byte	0x1
+ 687 03dc 12       		.byte	0x12
+ 688 03dd 8C000000 		.4byte	0x8c
+ 689 03e1 05       		.uleb128 0x5
+ 690 03e2 03       		.byte	0x3
+ 691 03e3 00000000 		.4byte	acc_flag
+ 692 03e7 00       		.byte	0
+ 693              		.section	.debug_abbrev,"",%progbits
+ 694              	.Ldebug_abbrev0:
+ 695 0000 01       		.uleb128 0x1
+ 696 0001 11       		.uleb128 0x11
+ 697 0002 01       		.byte	0x1
+ 698 0003 25       		.uleb128 0x25
+ 699 0004 0E       		.uleb128 0xe
+ 700 0005 13       		.uleb128 0x13
+ 701 0006 0B       		.uleb128 0xb
+ 702 0007 03       		.uleb128 0x3
+ 703 0008 0E       		.uleb128 0xe
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc3oK69c.s 			page 15
+
+
+ 704 0009 1B       		.uleb128 0x1b
+ 705 000a 0E       		.uleb128 0xe
+ 706 000b 55       		.uleb128 0x55
+ 707 000c 17       		.uleb128 0x17
+ 708 000d 11       		.uleb128 0x11
+ 709 000e 01       		.uleb128 0x1
+ 710 000f 10       		.uleb128 0x10
+ 711 0010 17       		.uleb128 0x17
+ 712 0011 00       		.byte	0
+ 713 0012 00       		.byte	0
+ 714 0013 02       		.uleb128 0x2
+ 715 0014 24       		.uleb128 0x24
+ 716 0015 00       		.byte	0
+ 717 0016 0B       		.uleb128 0xb
+ 718 0017 0B       		.uleb128 0xb
+ 719 0018 3E       		.uleb128 0x3e
+ 720 0019 0B       		.uleb128 0xb
+ 721 001a 03       		.uleb128 0x3
+ 722 001b 0E       		.uleb128 0xe
+ 723 001c 00       		.byte	0
+ 724 001d 00       		.byte	0
+ 725 001e 03       		.uleb128 0x3
+ 726 001f 24       		.uleb128 0x24
+ 727 0020 00       		.byte	0
+ 728 0021 0B       		.uleb128 0xb
+ 729 0022 0B       		.uleb128 0xb
+ 730 0023 3E       		.uleb128 0x3e
+ 731 0024 0B       		.uleb128 0xb
+ 732 0025 03       		.uleb128 0x3
+ 733 0026 08       		.uleb128 0x8
+ 734 0027 00       		.byte	0
+ 735 0028 00       		.byte	0
+ 736 0029 04       		.uleb128 0x4
+ 737 002a 16       		.uleb128 0x16
+ 738 002b 00       		.byte	0
+ 739 002c 03       		.uleb128 0x3
+ 740 002d 0E       		.uleb128 0xe
+ 741 002e 3A       		.uleb128 0x3a
+ 742 002f 0B       		.uleb128 0xb
+ 743 0030 3B       		.uleb128 0x3b
+ 744 0031 05       		.uleb128 0x5
+ 745 0032 49       		.uleb128 0x49
+ 746 0033 13       		.uleb128 0x13
+ 747 0034 00       		.byte	0
+ 748 0035 00       		.byte	0
+ 749 0036 05       		.uleb128 0x5
+ 750 0037 35       		.uleb128 0x35
+ 751 0038 00       		.byte	0
+ 752 0039 49       		.uleb128 0x49
+ 753 003a 13       		.uleb128 0x13
+ 754 003b 00       		.byte	0
+ 755 003c 00       		.byte	0
+ 756 003d 06       		.uleb128 0x6
+ 757 003e 04       		.uleb128 0x4
+ 758 003f 01       		.byte	0x1
+ 759 0040 0B       		.uleb128 0xb
+ 760 0041 0B       		.uleb128 0xb
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc3oK69c.s 			page 16
+
+
+ 761 0042 49       		.uleb128 0x49
+ 762 0043 13       		.uleb128 0x13
+ 763 0044 3A       		.uleb128 0x3a
+ 764 0045 0B       		.uleb128 0xb
+ 765 0046 3B       		.uleb128 0x3b
+ 766 0047 05       		.uleb128 0x5
+ 767 0048 01       		.uleb128 0x1
+ 768 0049 13       		.uleb128 0x13
+ 769 004a 00       		.byte	0
+ 770 004b 00       		.byte	0
+ 771 004c 07       		.uleb128 0x7
+ 772 004d 28       		.uleb128 0x28
+ 773 004e 00       		.byte	0
+ 774 004f 03       		.uleb128 0x3
+ 775 0050 0E       		.uleb128 0xe
+ 776 0051 1C       		.uleb128 0x1c
+ 777 0052 0B       		.uleb128 0xb
+ 778 0053 00       		.byte	0
+ 779 0054 00       		.byte	0
+ 780 0055 08       		.uleb128 0x8
+ 781 0056 16       		.uleb128 0x16
+ 782 0057 00       		.byte	0
+ 783 0058 03       		.uleb128 0x3
+ 784 0059 08       		.uleb128 0x8
+ 785 005a 3A       		.uleb128 0x3a
+ 786 005b 0B       		.uleb128 0xb
+ 787 005c 3B       		.uleb128 0x3b
+ 788 005d 05       		.uleb128 0x5
+ 789 005e 49       		.uleb128 0x49
+ 790 005f 13       		.uleb128 0x13
+ 791 0060 00       		.byte	0
+ 792 0061 00       		.byte	0
+ 793 0062 09       		.uleb128 0x9
+ 794 0063 13       		.uleb128 0x13
+ 795 0064 01       		.byte	0x1
+ 796 0065 03       		.uleb128 0x3
+ 797 0066 0E       		.uleb128 0xe
+ 798 0067 0B       		.uleb128 0xb
+ 799 0068 0B       		.uleb128 0xb
+ 800 0069 3A       		.uleb128 0x3a
+ 801 006a 0B       		.uleb128 0xb
+ 802 006b 3B       		.uleb128 0x3b
+ 803 006c 05       		.uleb128 0x5
+ 804 006d 01       		.uleb128 0x1
+ 805 006e 13       		.uleb128 0x13
+ 806 006f 00       		.byte	0
+ 807 0070 00       		.byte	0
+ 808 0071 0A       		.uleb128 0xa
+ 809 0072 0D       		.uleb128 0xd
+ 810 0073 00       		.byte	0
+ 811 0074 03       		.uleb128 0x3
+ 812 0075 0E       		.uleb128 0xe
+ 813 0076 3A       		.uleb128 0x3a
+ 814 0077 0B       		.uleb128 0xb
+ 815 0078 3B       		.uleb128 0x3b
+ 816 0079 05       		.uleb128 0x5
+ 817 007a 49       		.uleb128 0x49
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc3oK69c.s 			page 17
+
+
+ 818 007b 13       		.uleb128 0x13
+ 819 007c 38       		.uleb128 0x38
+ 820 007d 0B       		.uleb128 0xb
+ 821 007e 00       		.byte	0
+ 822 007f 00       		.byte	0
+ 823 0080 0B       		.uleb128 0xb
+ 824 0081 15       		.uleb128 0x15
+ 825 0082 01       		.byte	0x1
+ 826 0083 27       		.uleb128 0x27
+ 827 0084 19       		.uleb128 0x19
+ 828 0085 49       		.uleb128 0x49
+ 829 0086 13       		.uleb128 0x13
+ 830 0087 01       		.uleb128 0x1
+ 831 0088 13       		.uleb128 0x13
+ 832 0089 00       		.byte	0
+ 833 008a 00       		.byte	0
+ 834 008b 0C       		.uleb128 0xc
+ 835 008c 05       		.uleb128 0x5
+ 836 008d 00       		.byte	0
+ 837 008e 49       		.uleb128 0x49
+ 838 008f 13       		.uleb128 0x13
+ 839 0090 00       		.byte	0
+ 840 0091 00       		.byte	0
+ 841 0092 0D       		.uleb128 0xd
+ 842 0093 0F       		.uleb128 0xf
+ 843 0094 00       		.byte	0
+ 844 0095 0B       		.uleb128 0xb
+ 845 0096 0B       		.uleb128 0xb
+ 846 0097 49       		.uleb128 0x49
+ 847 0098 13       		.uleb128 0x13
+ 848 0099 00       		.byte	0
+ 849 009a 00       		.byte	0
+ 850 009b 0E       		.uleb128 0xe
+ 851 009c 15       		.uleb128 0x15
+ 852 009d 01       		.byte	0x1
+ 853 009e 27       		.uleb128 0x27
+ 854 009f 19       		.uleb128 0x19
+ 855 00a0 01       		.uleb128 0x1
+ 856 00a1 13       		.uleb128 0x13
+ 857 00a2 00       		.byte	0
+ 858 00a3 00       		.byte	0
+ 859 00a4 0F       		.uleb128 0xf
+ 860 00a5 2E       		.uleb128 0x2e
+ 861 00a6 01       		.byte	0x1
+ 862 00a7 3F       		.uleb128 0x3f
+ 863 00a8 19       		.uleb128 0x19
+ 864 00a9 03       		.uleb128 0x3
+ 865 00aa 0E       		.uleb128 0xe
+ 866 00ab 3A       		.uleb128 0x3a
+ 867 00ac 0B       		.uleb128 0xb
+ 868 00ad 3B       		.uleb128 0x3b
+ 869 00ae 0B       		.uleb128 0xb
+ 870 00af 27       		.uleb128 0x27
+ 871 00b0 19       		.uleb128 0x19
+ 872 00b1 11       		.uleb128 0x11
+ 873 00b2 01       		.uleb128 0x1
+ 874 00b3 12       		.uleb128 0x12
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc3oK69c.s 			page 18
+
+
+ 875 00b4 06       		.uleb128 0x6
+ 876 00b5 40       		.uleb128 0x40
+ 877 00b6 18       		.uleb128 0x18
+ 878 00b7 9642     		.uleb128 0x2116
+ 879 00b9 19       		.uleb128 0x19
+ 880 00ba 01       		.uleb128 0x1
+ 881 00bb 13       		.uleb128 0x13
+ 882 00bc 00       		.byte	0
+ 883 00bd 00       		.byte	0
+ 884 00be 10       		.uleb128 0x10
+ 885 00bf 34       		.uleb128 0x34
+ 886 00c0 00       		.byte	0
+ 887 00c1 03       		.uleb128 0x3
+ 888 00c2 0E       		.uleb128 0xe
+ 889 00c3 3A       		.uleb128 0x3a
+ 890 00c4 0B       		.uleb128 0xb
+ 891 00c5 3B       		.uleb128 0x3b
+ 892 00c6 0B       		.uleb128 0xb
+ 893 00c7 49       		.uleb128 0x49
+ 894 00c8 13       		.uleb128 0x13
+ 895 00c9 02       		.uleb128 0x2
+ 896 00ca 18       		.uleb128 0x18
+ 897 00cb 00       		.byte	0
+ 898 00cc 00       		.byte	0
+ 899 00cd 11       		.uleb128 0x11
+ 900 00ce 2E       		.uleb128 0x2e
+ 901 00cf 01       		.byte	0x1
+ 902 00d0 3F       		.uleb128 0x3f
+ 903 00d1 19       		.uleb128 0x19
+ 904 00d2 03       		.uleb128 0x3
+ 905 00d3 0E       		.uleb128 0xe
+ 906 00d4 3A       		.uleb128 0x3a
+ 907 00d5 0B       		.uleb128 0xb
+ 908 00d6 3B       		.uleb128 0x3b
+ 909 00d7 0B       		.uleb128 0xb
+ 910 00d8 27       		.uleb128 0x27
+ 911 00d9 19       		.uleb128 0x19
+ 912 00da 49       		.uleb128 0x49
+ 913 00db 13       		.uleb128 0x13
+ 914 00dc 11       		.uleb128 0x11
+ 915 00dd 01       		.uleb128 0x1
+ 916 00de 12       		.uleb128 0x12
+ 917 00df 06       		.uleb128 0x6
+ 918 00e0 40       		.uleb128 0x40
+ 919 00e1 18       		.uleb128 0x18
+ 920 00e2 9642     		.uleb128 0x2116
+ 921 00e4 19       		.uleb128 0x19
+ 922 00e5 01       		.uleb128 0x1
+ 923 00e6 13       		.uleb128 0x13
+ 924 00e7 00       		.byte	0
+ 925 00e8 00       		.byte	0
+ 926 00e9 12       		.uleb128 0x12
+ 927 00ea 34       		.uleb128 0x34
+ 928 00eb 00       		.byte	0
+ 929 00ec 03       		.uleb128 0x3
+ 930 00ed 0E       		.uleb128 0xe
+ 931 00ee 3A       		.uleb128 0x3a
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc3oK69c.s 			page 19
+
+
+ 932 00ef 0B       		.uleb128 0xb
+ 933 00f0 3B       		.uleb128 0x3b
+ 934 00f1 0B       		.uleb128 0xb
+ 935 00f2 49       		.uleb128 0x49
+ 936 00f3 13       		.uleb128 0x13
+ 937 00f4 3F       		.uleb128 0x3f
+ 938 00f5 19       		.uleb128 0x19
+ 939 00f6 02       		.uleb128 0x2
+ 940 00f7 18       		.uleb128 0x18
+ 941 00f8 00       		.byte	0
+ 942 00f9 00       		.byte	0
+ 943 00fa 00       		.byte	0
+ 944              		.section	.debug_aranges,"",%progbits
+ 945 0000 24000000 		.4byte	0x24
+ 946 0004 0200     		.2byte	0x2
+ 947 0006 00000000 		.4byte	.Ldebug_info0
+ 948 000a 04       		.byte	0x4
+ 949 000b 00       		.byte	0
+ 950 000c 0000     		.2byte	0
+ 951 000e 0000     		.2byte	0
+ 952 0010 00000000 		.4byte	.LFB35
+ 953 0014 3C000000 		.4byte	.LFE35-.LFB35
+ 954 0018 00000000 		.4byte	.LFB36
+ 955 001c B0000000 		.4byte	.LFE36-.LFB36
+ 956 0020 00000000 		.4byte	0
+ 957 0024 00000000 		.4byte	0
+ 958              		.section	.debug_ranges,"",%progbits
+ 959              	.Ldebug_ranges0:
+ 960 0000 00000000 		.4byte	.LFB35
+ 961 0004 3C000000 		.4byte	.LFE35
+ 962 0008 00000000 		.4byte	.LFB36
+ 963 000c B0000000 		.4byte	.LFE36
+ 964 0010 00000000 		.4byte	0
+ 965 0014 00000000 		.4byte	0
+ 966              		.section	.debug_line,"",%progbits
+ 967              	.Ldebug_line0:
+ 968 0000 A9000000 		.section	.debug_str,"MS",%progbits,1
+ 968      02005C00 
+ 968      00000201 
+ 968      FB0E0D00 
+ 968      01010101 
+ 969              	.LASF94:
+ 970 0000 6275735F 		.ascii	"bus_read\000"
+ 970      72656164 
+ 970      00
+ 971              	.LASF23:
+ 972 0009 4359424C 		.ascii	"CYBLE_EVT_GAP_PASSKEY_ENTRY_REQUEST\000"
+ 972      455F4556 
+ 972      545F4741 
+ 972      505F5041 
+ 972      53534B45 
+ 973              	.LASF97:
+ 974 002d 736F6674 		.ascii	"soft_reset\000"
+ 974      5F726573 
+ 974      657400
+ 975              	.LASF95:
+ 976 0038 62757273 		.ascii	"burst_read\000"
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc3oK69c.s 			page 20
+
+
+ 976      745F7265 
+ 976      616400
+ 977              	.LASF58:
+ 978 0043 4359424C 		.ascii	"CYBLE_EVT_GATTC_WRITE_RSP\000"
+ 978      455F4556 
+ 978      545F4741 
+ 978      5454435F 
+ 978      57524954 
+ 979              	.LASF20:
+ 980 005d 4359424C 		.ascii	"CYBLE_EVT_MEMORY_REQUEST\000"
+ 980      455F4556 
+ 980      545F4D45 
+ 980      4D4F5259 
+ 980      5F524551 
+ 981              	.LASF45:
+ 982 0076 4359424C 		.ascii	"CYBLE_EVT_GATTC_ERROR_RSP\000"
+ 982      455F4556 
+ 982      545F4741 
+ 982      5454435F 
+ 982      4552524F 
+ 983              	.LASF93:
+ 984 0090 6275735F 		.ascii	"bus_write\000"
+ 984      77726974 
+ 984      6500
+ 985              	.LASF35:
+ 986 009a 4359424C 		.ascii	"CYBLE_EVT_GAP_KEYPRESS_NOTIFICATION\000"
+ 986      455F4556 
+ 986      545F4741 
+ 986      505F4B45 
+ 986      59505245 
+ 987              	.LASF2:
+ 988 00be 73686F72 		.ascii	"short int\000"
+ 988      7420696E 
+ 988      7400
+ 989              	.LASF26:
+ 990 00c8 4359424C 		.ascii	"CYBLE_EVT_GAP_AUTH_FAILED\000"
+ 990      455F4556 
+ 990      545F4741 
+ 990      505F4155 
+ 990      54485F46 
+ 991              	.LASF47:
+ 992 00e2 4359424C 		.ascii	"CYBLE_EVT_GATT_DISCONNECT_IND\000"
+ 992      455F4556 
+ 992      545F4741 
+ 992      54545F44 
+ 992      4953434F 
+ 993              	.LASF13:
+ 994 0100 73697A65 		.ascii	"sizetype\000"
+ 994      74797065 
+ 994      00
+ 995              	.LASF37:
+ 996 0109 4359424C 		.ascii	"CYBLE_EVT_GAP_DATA_LENGTH_CHANGE\000"
+ 996      455F4556 
+ 996      545F4741 
+ 996      505F4441 
+ 996      54415F4C 
+ 997              	.LASF106:
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc3oK69c.s 			page 21
+
+
+ 998 012a 6D61696E 		.ascii	"main\000"
+ 998      00
+ 999              	.LASF18:
+ 1000 012f 4359424C 		.ascii	"CYBLE_EVT_HCI_STATUS\000"
+ 1000      455F4556 
+ 1000      545F4843 
+ 1000      495F5354 
+ 1000      41545553 
+ 1001              	.LASF51:
+ 1002 0144 4359424C 		.ascii	"CYBLE_EVT_GATTC_READ_BY_TYPE_RSP\000"
+ 1002      455F4556 
+ 1002      545F4741 
+ 1002      5454435F 
+ 1002      52454144 
+ 1003              	.LASF90:
+ 1004 0165 6C6F775F 		.ascii	"low_mode_reg\000"
+ 1004      6D6F6465 
+ 1004      5F726567 
+ 1004      00
+ 1005              	.LASF15:
+ 1006 0172 4359424C 		.ascii	"CYBLE_EVT_STACK_ON\000"
+ 1006      455F4556 
+ 1006      545F5354 
+ 1006      41434B5F 
+ 1006      4F4E00
+ 1007              	.LASF44:
+ 1008 0185 4359424C 		.ascii	"CYBLE_EVT_GAP_SMP_LOC_P256_KEYS_GEN_AND_SET_COMPLET"
+ 1008      455F4556 
+ 1008      545F4741 
+ 1008      505F534D 
+ 1008      505F4C4F 
+ 1009 01b8 4500     		.ascii	"E\000"
+ 1010              	.LASF48:
+ 1011 01ba 4359424C 		.ascii	"CYBLE_EVT_GATTS_XCNHG_MTU_REQ\000"
+ 1011      455F4556 
+ 1011      545F4741 
+ 1011      5454535F 
+ 1011      58434E48 
+ 1012              	.LASF92:
+ 1013 01d8 6669666F 		.ascii	"fifo_config\000"
+ 1013      5F636F6E 
+ 1013      66696700 
+ 1014              	.LASF33:
+ 1015 01e4 4359424C 		.ascii	"CYBLE_EVT_GAP_KEYINFO_EXCHNGE_CMPLT\000"
+ 1015      455F4556 
+ 1015      545F4741 
+ 1015      505F4B45 
+ 1015      59494E46 
+ 1016              	.LASF56:
+ 1017 0208 4359424C 		.ascii	"CYBLE_EVT_GATTC_READ_MULTI_RSP\000"
+ 1017      455F4556 
+ 1017      545F4741 
+ 1017      5454435F 
+ 1017      52454144 
+ 1018              	.LASF65:
+ 1019 0227 4359424C 		.ascii	"CYBLE_EVT_GATTS_HANDLE_VALUE_CNF\000"
+ 1019      455F4556 
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc3oK69c.s 			page 22
+
+
+ 1019      545F4741 
+ 1019      5454535F 
+ 1019      48414E44 
+ 1020              	.LASF14:
+ 1021 0248 4359424C 		.ascii	"CYBLE_EVT_HOST_INVALID\000"
+ 1021      455F4556 
+ 1021      545F484F 
+ 1021      53545F49 
+ 1021      4E56414C 
+ 1022              	.LASF73:
+ 1023 025f 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CBFC_CONN_IND\000"
+ 1023      455F4556 
+ 1023      545F4C32 
+ 1023      4341505F 
+ 1023      43424643 
+ 1024              	.LASF76:
+ 1025 027d 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CBFC_DISCONN_CNF\000"
+ 1025      455F4556 
+ 1025      545F4C32 
+ 1025      4341505F 
+ 1025      43424643 
+ 1026              	.LASF9:
+ 1027 029e 666C6F61 		.ascii	"float\000"
+ 1027      7400
+ 1028              	.LASF54:
+ 1029 02a4 4359424C 		.ascii	"CYBLE_EVT_GATTC_READ_RSP\000"
+ 1029      455F4556 
+ 1029      545F4741 
+ 1029      5454435F 
+ 1029      52454144 
+ 1030              	.LASF34:
+ 1031 02bd 4359424C 		.ascii	"CYBLE_EVT_GAP_NUMERIC_COMPARISON_REQUEST\000"
+ 1031      455F4556 
+ 1031      545F4741 
+ 1031      505F4E55 
+ 1031      4D455249 
+ 1032              	.LASF39:
+ 1033 02e6 4359424C 		.ascii	"CYBLE_EVT_GAPC_DIRECT_ADV_REPORT\000"
+ 1033      455F4556 
+ 1033      545F4741 
+ 1033      50435F44 
+ 1033      49524543 
+ 1034              	.LASF7:
+ 1035 0307 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1035      206C6F6E 
+ 1035      6720756E 
+ 1035      7369676E 
+ 1035      65642069 
+ 1036              	.LASF43:
+ 1037 031e 4359424C 		.ascii	"CYBLE_EVT_GAP_AUTH_REQ_REPLY_ERR\000"
+ 1037      455F4556 
+ 1037      545F4741 
+ 1037      505F4155 
+ 1037      54485F52 
+ 1038              	.LASF4:
+ 1039 033f 6C6F6E67 		.ascii	"long int\000"
+ 1039      20696E74 
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc3oK69c.s 			page 23
+
+
+ 1039      00
+ 1040              	.LASF64:
+ 1041 0348 4359424C 		.ascii	"CYBLE_EVT_GATTC_HANDLE_VALUE_IND\000"
+ 1041      455F4556 
+ 1041      545F4741 
+ 1041      5454435F 
+ 1041      48414E44 
+ 1042              	.LASF28:
+ 1043 0369 4359424C 		.ascii	"CYBLE_EVT_GAP_DEVICE_CONNECTED\000"
+ 1043      455F4556 
+ 1043      545F4741 
+ 1043      505F4445 
+ 1043      56494345 
+ 1044              	.LASF27:
+ 1045 0388 4359424C 		.ascii	"CYBLE_EVT_GAPP_ADVERTISEMENT_START_STOP\000"
+ 1045      455F4556 
+ 1045      545F4741 
+ 1045      50505F41 
+ 1045      44564552 
+ 1046              	.LASF63:
+ 1047 03b0 4359424C 		.ascii	"CYBLE_EVT_GATTC_HANDLE_VALUE_NTF\000"
+ 1047      455F4556 
+ 1047      545F4741 
+ 1047      5454435F 
+ 1047      48414E44 
+ 1048              	.LASF19:
+ 1049 03d1 4359424C 		.ascii	"CYBLE_EVT_STACK_BUSY_STATUS\000"
+ 1049      455F4556 
+ 1049      545F5354 
+ 1049      41434B5F 
+ 1049      42555359 
+ 1050              	.LASF104:
+ 1051 03ed 626D6132 		.ascii	"bma2x2_t\000"
+ 1051      78325F74 
+ 1051      00
+ 1052              	.LASF24:
+ 1053 03f6 4359424C 		.ascii	"CYBLE_EVT_GAP_PASSKEY_DISPLAY_REQUEST\000"
+ 1053      455F4556 
+ 1053      545F4741 
+ 1053      505F5041 
+ 1053      53534B45 
+ 1054              	.LASF101:
+ 1055 041c 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1055      43313120 
+ 1055      352E342E 
+ 1055      31203230 
+ 1055      31363036 
+ 1056 044f 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m0 -mthumb -g -O"
+ 1056      20726576 
+ 1056      6973696F 
+ 1056      6E203233 
+ 1056      37373135 
+ 1057 0482 30202D66 		.ascii	"0 -ffunction-sections -ffat-lto-objects\000"
+ 1057      66756E63 
+ 1057      74696F6E 
+ 1057      2D736563 
+ 1057      74696F6E 
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc3oK69c.s 			page 24
+
+
+ 1058              	.LASF98:
+ 1059 04aa 626D6132 		.ascii	"bma2x2\000"
+ 1059      783200
+ 1060              	.LASF74:
+ 1061 04b1 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CBFC_CONN_CNF\000"
+ 1061      455F4556 
+ 1061      545F4C32 
+ 1061      4341505F 
+ 1061      43424643 
+ 1062              	.LASF38:
+ 1063 04cf 4359424C 		.ascii	"CYBLE_EVT_GAP_ENHANCE_CONN_COMPLETE\000"
+ 1063      455F4556 
+ 1063      545F4741 
+ 1063      505F454E 
+ 1063      48414E43 
+ 1064              	.LASF12:
+ 1065 04f3 6C6F6E67 		.ascii	"long double\000"
+ 1065      20646F75 
+ 1065      626C6500 
+ 1066              	.LASF70:
+ 1067 04ff 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CONN_PARAM_UPDATE_REQ\000"
+ 1067      455F4556 
+ 1067      545F4C32 
+ 1067      4341505F 
+ 1067      434F4E4E 
+ 1068              	.LASF1:
+ 1069 0525 756E7369 		.ascii	"unsigned char\000"
+ 1069      676E6564 
+ 1069      20636861 
+ 1069      7200
+ 1070              	.LASF60:
+ 1071 0533 4359424C 		.ascii	"CYBLE_EVT_GATTS_PREP_WRITE_REQ\000"
+ 1071      455F4556 
+ 1071      545F4741 
+ 1071      5454535F 
+ 1071      50524550 
+ 1072              	.LASF82:
+ 1073 0552 4359424C 		.ascii	"CYBLE_EVT_LE_PING_AUTH_TIMEOUT\000"
+ 1073      455F4556 
+ 1073      545F4C45 
+ 1073      5F50494E 
+ 1073      475F4155 
+ 1074              	.LASF107:
+ 1075 0571 6163635F 		.ascii	"acc_flag\000"
+ 1075      666C6167 
+ 1075      00
+ 1076              	.LASF89:
+ 1077 057a 6374726C 		.ascii	"ctrl_mode_reg\000"
+ 1077      5F6D6F64 
+ 1077      655F7265 
+ 1077      6700
+ 1078              	.LASF0:
+ 1079 0588 7369676E 		.ascii	"signed char\000"
+ 1079      65642063 
+ 1079      68617200 
+ 1080              	.LASF57:
+ 1081 0594 4359424C 		.ascii	"CYBLE_EVT_GATTS_WRITE_REQ\000"
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc3oK69c.s 			page 25
+
+
+ 1081      455F4556 
+ 1081      545F4741 
+ 1081      5454535F 
+ 1081      57524954 
+ 1082              	.LASF53:
+ 1083 05ae 4359424C 		.ascii	"CYBLE_EVT_GATTC_FIND_BY_TYPE_VALUE_RSP\000"
+ 1083      455F4556 
+ 1083      545F4741 
+ 1083      5454435F 
+ 1083      46494E44 
+ 1084              	.LASF25:
+ 1085 05d5 4359424C 		.ascii	"CYBLE_EVT_GAP_AUTH_COMPLETE\000"
+ 1085      455F4556 
+ 1085      545F4741 
+ 1085      505F4155 
+ 1085      54485F43 
+ 1086              	.LASF8:
+ 1087 05f1 756E7369 		.ascii	"unsigned int\000"
+ 1087      676E6564 
+ 1087      20696E74 
+ 1087      00
+ 1088              	.LASF46:
+ 1089 05fe 4359424C 		.ascii	"CYBLE_EVT_GATT_CONNECT_IND\000"
+ 1089      455F4556 
+ 1089      545F4741 
+ 1089      54545F43 
+ 1089      4F4E4E45 
+ 1090              	.LASF5:
+ 1091 0619 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1091      20756E73 
+ 1091      69676E65 
+ 1091      6420696E 
+ 1091      7400
+ 1092              	.LASF22:
+ 1093 062b 4359424C 		.ascii	"CYBLE_EVT_GAP_AUTH_REQ\000"
+ 1093      455F4556 
+ 1093      545F4741 
+ 1093      505F4155 
+ 1093      54485F52 
+ 1094              	.LASF75:
+ 1095 0642 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CBFC_DISCONN_IND\000"
+ 1095      455F4556 
+ 1095      545F4C32 
+ 1095      4341505F 
+ 1095      43424643 
+ 1096              	.LASF30:
+ 1097 0663 4359424C 		.ascii	"CYBLE_EVT_GAP_ENCRYPT_CHANGE\000"
+ 1097      455F4556 
+ 1097      545F4741 
+ 1097      505F454E 
+ 1097      43525950 
+ 1098              	.LASF41:
+ 1099 0680 4359424C 		.ascii	"CYBLE_EVT_GAP_CONN_ESTB\000"
+ 1099      455F4556 
+ 1099      545F4741 
+ 1099      505F434F 
+ 1099      4E4E5F45 
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc3oK69c.s 			page 26
+
+
+ 1100              	.LASF69:
+ 1101 0698 4359424C 		.ascii	"CYBLE_EVT_GATTC_LONG_PROCEDURE_END\000"
+ 1101      455F4556 
+ 1101      545F4741 
+ 1101      5454435F 
+ 1101      4C4F4E47 
+ 1102              	.LASF3:
+ 1103 06bb 73686F72 		.ascii	"short unsigned int\000"
+ 1103      7420756E 
+ 1103      7369676E 
+ 1103      65642069 
+ 1103      6E7400
+ 1104              	.LASF84:
+ 1105 06ce 4359424C 		.ascii	"CYBLE_EVT_FLASH_CORRUPT\000"
+ 1105      455F4556 
+ 1105      545F464C 
+ 1105      4153485F 
+ 1105      434F5252 
+ 1106              	.LASF31:
+ 1107 06e6 4359424C 		.ascii	"CYBLE_EVT_GAP_CONNECTION_UPDATE_COMPLETE\000"
+ 1107      455F4556 
+ 1107      545F4741 
+ 1107      505F434F 
+ 1107      4E4E4543 
+ 1108              	.LASF40:
+ 1109 070f 4359424C 		.ascii	"CYBLE_EVT_GAP_SMP_NEGOTIATED_AUTH_INFO\000"
+ 1109      455F4556 
+ 1109      545F4741 
+ 1109      505F534D 
+ 1109      505F4E45 
+ 1110              	.LASF81:
+ 1111 0736 4359424C 		.ascii	"CYBLE_EVT_PENDING_FLASH_WRITE\000"
+ 1111      455F4556 
+ 1111      545F5045 
+ 1111      4E44494E 
+ 1111      475F464C 
+ 1112              	.LASF11:
+ 1113 0754 63686172 		.ascii	"char\000"
+ 1113      00
+ 1114              	.LASF72:
+ 1115 0759 4359424C 		.ascii	"CYBLE_EVT_L2CAP_COMMAND_REJ\000"
+ 1115      455F4556 
+ 1115      545F4C32 
+ 1115      4341505F 
+ 1115      434F4D4D 
+ 1116              	.LASF86:
+ 1117 0775 75696E74 		.ascii	"uint8\000"
+ 1117      3800
+ 1118              	.LASF87:
+ 1119 077b 706F7765 		.ascii	"power_mode_u8\000"
+ 1119      725F6D6F 
+ 1119      64655F75 
+ 1119      3800
+ 1120              	.LASF21:
+ 1121 0789 4359424C 		.ascii	"CYBLE_EVT_GAPC_SCAN_PROGRESS_RESULT\000"
+ 1121      455F4556 
+ 1121      545F4741 
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc3oK69c.s 			page 27
+
+
+ 1121      50435F53 
+ 1121      43414E5F 
+ 1122              	.LASF55:
+ 1123 07ad 4359424C 		.ascii	"CYBLE_EVT_GATTC_READ_BLOB_RSP\000"
+ 1123      455F4556 
+ 1123      545F4741 
+ 1123      5454435F 
+ 1123      52454144 
+ 1124              	.LASF62:
+ 1125 07cb 4359424C 		.ascii	"CYBLE_EVT_GATTC_EXEC_WRITE_RSP\000"
+ 1125      455F4556 
+ 1125      545F4741 
+ 1125      5454435F 
+ 1125      45584543 
+ 1126              	.LASF32:
+ 1127 07ea 4359424C 		.ascii	"CYBLE_EVT_GAPC_SCAN_START_STOP\000"
+ 1127      455F4556 
+ 1127      545F4741 
+ 1127      50435F53 
+ 1127      43414E5F 
+ 1128              	.LASF102:
+ 1129 0809 6D61696E 		.ascii	"main.c\000"
+ 1129      2E6300
+ 1130              	.LASF78:
+ 1131 0810 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CBFC_RX_CREDIT_IND\000"
+ 1131      455F4556 
+ 1131      545F4C32 
+ 1131      4341505F 
+ 1131      43424643 
+ 1132              	.LASF10:
+ 1133 0833 646F7562 		.ascii	"double\000"
+ 1133      6C6500
+ 1134              	.LASF79:
+ 1135 083a 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CBFC_TX_CREDIT_IND\000"
+ 1135      455F4556 
+ 1135      545F4C32 
+ 1135      4341505F 
+ 1135      43424643 
+ 1136              	.LASF88:
+ 1137 085d 63686970 		.ascii	"chip_id\000"
+ 1137      5F696400 
+ 1138              	.LASF42:
+ 1139 0865 4359424C 		.ascii	"CYBLE_EVT_GAP_SCAN_REQ_RECVD\000"
+ 1139      455F4556 
+ 1139      545F4741 
+ 1139      505F5343 
+ 1139      414E5F52 
+ 1140              	.LASF6:
+ 1141 0882 6C6F6E67 		.ascii	"long long int\000"
+ 1141      206C6F6E 
+ 1141      6720696E 
+ 1141      7400
+ 1142              	.LASF99:
+ 1143 0890 7265675F 		.ascii	"reg_data\000"
+ 1143      64617461 
+ 1143      00
+ 1144              	.LASF17:
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc3oK69c.s 			page 28
+
+
+ 1145 0899 4359424C 		.ascii	"CYBLE_EVT_HARDWARE_ERROR\000"
+ 1145      455F4556 
+ 1145      545F4841 
+ 1145      52445741 
+ 1145      52455F45 
+ 1146              	.LASF77:
+ 1147 08b2 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CBFC_DATA_READ\000"
+ 1147      455F4556 
+ 1147      545F4C32 
+ 1147      4341505F 
+ 1147      43424643 
+ 1148              	.LASF71:
+ 1149 08d1 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CONN_PARAM_UPDATE_RSP\000"
+ 1149      455F4556 
+ 1149      545F4C32 
+ 1149      4341505F 
+ 1149      434F4E4E 
+ 1150              	.LASF91:
+ 1151 08f7 6465765F 		.ascii	"dev_addr\000"
+ 1151      61646472 
+ 1151      00
+ 1152              	.LASF103:
+ 1153 0900 433A5C55 		.ascii	"C:\\Users\\Tudor\\Documents\\PSoC Creator\\Workspac"
+ 1153      73657273 
+ 1153      5C547564 
+ 1153      6F725C44 
+ 1153      6F63756D 
+ 1154 092e 6530335C 		.ascii	"e03\\Design01.cydsn\000"
+ 1154      44657369 
+ 1154      676E3031 
+ 1154      2E637964 
+ 1154      736E00
+ 1155              	.LASF96:
+ 1156 0941 64656C61 		.ascii	"delay_msec\000"
+ 1156      795F6D73 
+ 1156      656300
+ 1157              	.LASF50:
+ 1158 094c 4359424C 		.ascii	"CYBLE_EVT_GATTC_READ_BY_GROUP_TYPE_RSP\000"
+ 1158      455F4556 
+ 1158      545F4741 
+ 1158      5454435F 
+ 1158      52454144 
+ 1159              	.LASF59:
+ 1160 0973 4359424C 		.ascii	"CYBLE_EVT_GATTS_WRITE_CMD_REQ\000"
+ 1160      455F4556 
+ 1160      545F4741 
+ 1160      5454535F 
+ 1160      57524954 
+ 1161              	.LASF100:
+ 1162 0991 636F6D5F 		.ascii	"com_rslt\000"
+ 1162      72736C74 
+ 1162      00
+ 1163              	.LASF49:
+ 1164 099a 4359424C 		.ascii	"CYBLE_EVT_GATTC_XCHNG_MTU_RSP\000"
+ 1164      455F4556 
+ 1164      545F4741 
+ 1164      5454435F 
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc3oK69c.s 			page 29
+
+
+ 1164      5843484E 
+ 1165              	.LASF80:
+ 1166 09b8 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CBFC_DATA_WRITE_IND\000"
+ 1166      455F4556 
+ 1166      545F4C32 
+ 1166      4341505F 
+ 1166      43424643 
+ 1167              	.LASF16:
+ 1168 09dc 4359424C 		.ascii	"CYBLE_EVT_TIMEOUT\000"
+ 1168      455F4556 
+ 1168      545F5449 
+ 1168      4D454F55 
+ 1168      5400
+ 1169              	.LASF85:
+ 1170 09ee 4359424C 		.ascii	"CYBLE_EVT_MAX\000"
+ 1170      455F4556 
+ 1170      545F4D41 
+ 1170      5800
+ 1171              	.LASF105:
+ 1172 09fc 50494E31 		.ascii	"PIN1_Handler\000"
+ 1172      5F48616E 
+ 1172      646C6572 
+ 1172      00
+ 1173              	.LASF68:
+ 1174 0a09 4359424C 		.ascii	"CYBLE_EVT_GATTS_READ_CHAR_VAL_ACCESS_REQ\000"
+ 1174      455F4556 
+ 1174      545F4741 
+ 1174      5454535F 
+ 1174      52454144 
+ 1175              	.LASF52:
+ 1176 0a32 4359424C 		.ascii	"CYBLE_EVT_GATTC_FIND_INFO_RSP\000"
+ 1176      455F4556 
+ 1176      545F4741 
+ 1176      5454435F 
+ 1176      46494E44 
+ 1177              	.LASF67:
+ 1178 0a50 4359424C 		.ascii	"CYBLE_EVT_GATTC_STOP_CMD_COMPLETE\000"
+ 1178      455F4556 
+ 1178      545F4741 
+ 1178      5454435F 
+ 1178      53544F50 
+ 1179              	.LASF61:
+ 1180 0a72 4359424C 		.ascii	"CYBLE_EVT_GATTS_EXEC_WRITE_REQ\000"
+ 1180      455F4556 
+ 1180      545F4741 
+ 1180      5454535F 
+ 1180      45584543 
+ 1181              	.LASF29:
+ 1182 0a91 4359424C 		.ascii	"CYBLE_EVT_GAP_DEVICE_DISCONNECTED\000"
+ 1182      455F4556 
+ 1182      545F4741 
+ 1182      505F4445 
+ 1182      56494345 
+ 1183              	.LASF66:
+ 1184 0ab3 4359424C 		.ascii	"CYBLE_EVT_GATTS_DATA_SIGNED_CMD_REQ\000"
+ 1184      455F4556 
+ 1184      545F4741 
+ARM GAS  C:\Users\Tudor\AppData\Local\Temp\cc3oK69c.s 			page 30
+
+
+ 1184      5454535F 
+ 1184      44415441 
+ 1185              	.LASF83:
+ 1186 0ad7 4359424C 		.ascii	"CYBLE_EVT_HCI_PKT\000"
+ 1186      455F4556 
+ 1186      545F4843 
+ 1186      495F504B 
+ 1186      5400
+ 1187              	.LASF36:
+ 1188 0ae9 4359424C 		.ascii	"CYBLE_EVT_GAP_OOB_GENERATED_NOTIFICATION\000"
+ 1188      455F4556 
+ 1188      545F4741 
+ 1188      505F4F4F 
+ 1188      425F4745 
+ 1189              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran
